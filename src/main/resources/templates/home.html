@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
@@ -22,36 +22,7 @@
 		<title>MentcareProject</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/home.html">MentcareProject</a>
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/medici.html">Medici</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/pazienti.html">Pazienti</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/appuntamenti.html">Appuntamenti</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<div th:insert="/components/navbar :: navbar" />
 
 		<div class="container-lg p-3">
 			<!-- Prossimi appuntameti -->
@@ -61,7 +32,7 @@
 						<b>APPUNTAMENTI DI OGGI</b>
 					</div>
 					<div class="col text-end">
-						<a href="/appuntamenti.html" role="button" class="btn btn-secondary"><i class="fas fa-search-plus"></i> Vedi tutti</a>
+						<a href="/appuntamenti" role="button" class="btn btn-secondary"><i class="fas fa-search-plus"></i> Vedi tutti</a>
 					</div>
 				</div>
 				<div class="card-body table-responsive">
@@ -76,16 +47,40 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">06/12/21</th>
-								<td><a href="medico.html">Nome Cognome</a></td>
-								<td><a href="paziente.html">Nome Cognome</a></td>
-								<td>Venezia</td>
+							<tr th:each="appointment: ${appointments}">
+								<th scope="row" th:text="${appointment.appointmentDate}">06/12/21</th>
 								<td>
-									<a href="appuntamento.html" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
+									<a
+										href="/medico/1"
+										th:href="'/medico/' + ${appointment.medic.medicID}"
+										th:text="${appointment.medic.firstname} + ' ' + ${appointment.medic.lastname}"
+									>
+										Nome Cognome
+									</a>
+								</td>
+								<td>
+									<a
+										href="/paziente/1"
+										th:href="'/patient/' + ${appointment.patient.patientID}"
+										th:text="${appointment.patient.firstname} + ' ' + ${appointment.patient.lastname}"
+									>
+										Nome Cognome
+									</a>
+								</td>
+								<td th:text="${appointment.clinic}">Venezia</td>
+								<td>
+									<a
+										href="/appuntamento/1"
+										th:href="'/appointment/' + ${appointment.appointmentID}"
+										role="button"
+										class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
 										><i class="fas fa-search-plus"></i
 									></a>
-									<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"
+									<a
+										href="/modifica-appuntamento/1"
+										th:href="'/modifica-appuntamento/' + ${appointment.appointmentID}"
+										role="button"
+										class="btn btn-primary d-block m-1 d-md-inline m-md-0"
 										><i class="fas fa-edit"></i
 									></a>
 								</td>
@@ -123,60 +118,8 @@
 									<a href="form_paziente.html" role="button" class="btn btn-success d-block m-1 d-md-inline m-md-0"
 										><i class="fas fa-check"></i
 									></a>
-									<a href="home.html" role="button" class="btn btn-danger d-block m-1 d-md-inline m-md-0"
-										><i class="fas fa-times"></i
-									></a>
+									<a href="/" role="button" class="btn btn-danger d-block m-1 d-md-inline m-md-0"><i class="fas fa-times"></i></a>
 								</td>
-
-								<!-- Modale di accettazione  
-								<div class="modal fade" id="AcceptModal" tabindex="-1" aria-labelledby="AcceptModalLabel" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="AcceptModalLabel">Assegnazione medico</h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<form action="/home.html">
-												<div class="modal-body">
-													<p>
-														Al paziente deve essere associato il medico più appropriato, basandosi sulla sua
-														specializzazione.
-													</p>
-													<div class="form-floating">
-														<select class="form-select" id="medic" aria-label="Seleziona il medico">
-															<option style="display: none" selected disabled>Nessun medico selezionato...</option>
-															<option value="1">Medico1 - Spec1</option>
-															<option value="2">Medico2 - Spec2</option>
-															<option value="3">Medico3 - Spec3</option>
-														</select>
-														<label for="medic">Seleziona un medico</label>
-													</div>
-												</div>
-												<div class="modal-footer">
-													<div class="col text-end">
-														<div>
-															<a
-																role="button"
-																href="pazienti.html"
-																class="btn btn-warning d-block d-sm-inline mb-1 mb-sm-0"
-																><i class="fas fa-times"></i> Annulla</a
-															>
-															<div class="d-grid d-sm-inline">
-																<button
-																	style="font-size: 0.95rem; max-height: 35px; margin-top: -1px"
-																	type="submit"
-																	class="btn btn-success"
-																>
-																	<i class="fas fa-save"></i> Salva
-																</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>-->
 							</tr>
 						</tbody>
 					</table>

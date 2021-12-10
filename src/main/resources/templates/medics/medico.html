@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
@@ -22,36 +22,8 @@
 		<title>Medici</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/home.html">MentcareProject</a>
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span class="navbar-toggler-icon"></span>
-				</button>
+		<div th:insert="/components/navbar :: navbar" />
 
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link " aria-current="page" href="/medici.html">Medici</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="pazienti.html">Pazienti</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/appuntamenti.html">Appuntamenti</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
 
 		<div class="container-lg">
 			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
@@ -134,10 +106,10 @@
 								<tbody>
 									<tr>
 										<th scope="row">06/12/21</th>
-										<td><a href="paziente.html">Nome Cognome</a></td>
+										<td><a href="/paziente/1">Nome Cognome</a></td>
 										<td>Venezia</td>
 										<td>
-											<a href="appuntamento.html" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
+											<a href="/appuntamento/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
 											<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"><i class="fas fa-edit"></i></a>
 										</td>
 									</tr>
@@ -169,10 +141,10 @@
 								<tbody>
 									<tr>
 										<th scope="row">06/12/21</th>
-										<td><a href="paziente.html">Nome Cognome</a></td>
+										<td><a href="/paziente/1">Nome Cognome</a></td>
 										<td>Venezia</td>
 										<td>
-											<a href="appuntamento.html" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
+											<a href="/appuntamento/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
 											<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"><i class="fas fa-edit"></i></a>
 										</td>
 									</tr>
@@ -203,7 +175,7 @@
 										<td>Nome Cognome</td>
 										<td>12</td>
 										<td>
-											<a href="paziente.html" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0""><i class="fas fa-search-plus"></i></a>
+											<a href="/paziente/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0""><i class="fas fa-search-plus"></i></a>
 										</td>
 									</tr>
 								</tbody>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
@@ -22,36 +22,7 @@
 		<title>Medici</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/home.html">MentcareProject</a>
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/medici.html">Medici</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="pazienti.html">Pazienti</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/appuntamenti.html">Appuntamenti</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<div th:insert="/components/navbar :: navbar" />
 
 		<div class="container-lg">
 			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
@@ -67,7 +38,7 @@
 					<div class="col text-end">
 						<div class="col text-end">
 							<div>
-								<a role="button" href="appuntamenti.html" class="btn btn-danger d-block d-sm-inline mb-1 mb-sm-0"
+								<a role="button" href="/appuntamenti" class="btn btn-danger d-block d-sm-inline mb-1 mb-sm-0"
 									><i class="fas fa-trash-alt"></i> Elimina</a
 								>
 								<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block d-sm-inline mb-1 mb-sm-0"
@@ -85,12 +56,12 @@
 									<h5 class="card-title mb-3">Informazioni appuntamento</h5>
 									<div class="row mb-2">
 										<div class="col-4 col-md-3">MEDICO</div>
-										<div class="col-auto"><a href="medico.html">Nome Cognome</a></div>
+										<div class="col-auto"><a href="/medico/1">Nome Cognome</a></div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-4 col-md-3">PAZIENTE</div>
 										<div class="col-auto">
-											<a href="paziente.html">Nome Cognome</a>
+											<a href="/paziente/1">Nome Cognome</a>
 											<i class="fas fa-times text-success"></i>
 											<i class="fas fa-check text-danger"></i>
 										</div>

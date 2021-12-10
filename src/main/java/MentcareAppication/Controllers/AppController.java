@@ -11,6 +11,7 @@ import MentcareAppication.Repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -38,6 +43,7 @@ public class AppController {
     private static class fillRepositoriesWithFakeData {
         public fillRepositoriesWithFakeData(AppointmentRepository appointmentRepository, CommunicationRepository communicationRepository, MedicRepository medicRepository, PatientRepository patientRepository) throws ParseException {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            LocalDate date = LocalDate.now();
 
             Medic medic1 = new Medic("Brad", "Pitt", "Psicologo", "Svolge attività di prevenzione, diagnosi, intervento, promozione della salute, abilitazione-riabilitazione, sostegno e consulenza in ambito psicologico.");
             medicRepository.save(medic1);
@@ -89,7 +95,15 @@ public class AppController {
     *  ATTRIBUTES: -
     */
     @RequestMapping("/")
-    public String home(){
+    public String home(Model model){
+        List<Appointment> l = new ArrayList<>();
+        for(Appointment a : appointmentRepository.findAll()){
+            if(a.getAppointmentDate().toInstant().isAfter(Calendar.getInstance().toInstant())){
+                l.add(a);
+            }
+        }
+
+        model.addAttribute("appointments", l);
         return "home";
     }
 
@@ -100,8 +114,8 @@ public class AppController {
      *  ATTRIBUTES: -
      */
     @RequestMapping("/medici")
-    public String medics(){
-        return "medici";
+    public String medics(Model model){
+        return "medics/medici";
     }
 
     /* ROUTE: /pazienti
@@ -111,8 +125,8 @@ public class AppController {
      *  ATTRIBUTES: -
      */
     @RequestMapping("/pazienti")
-    public String patients(){
-        return "pazienti";
+    public String patients(Model model){
+        return "patients/pazienti";
     }
 
     /* ROUTE: /appuntamenti
@@ -122,8 +136,8 @@ public class AppController {
      *  ATTRIBUTES: -
      */
     @RequestMapping("/appuntamenti")
-    public String appointments(){
-        return "appuntamenti";
+    public String appointments(Model model){
+        return "appointments/appuntamenti";
     }
 
     /* ROUTE: /medico/{idMedico}
@@ -134,9 +148,10 @@ public class AppController {
      */
     @RequestMapping("/medico/{idMedico}")
     public String medicById(
-            @PathVariable(value = "idMedico") long medicID
+            @PathVariable(value = "idMedico") long medicID,
+            Model model
     ){
-        return "medico";
+        return "medics/medico";
     }
 
     /* ROUTE: /medico/{idPaziente}
@@ -147,9 +162,10 @@ public class AppController {
      */
     @RequestMapping("/paziente/{idPaziente}")
     public String patientById(
-            @PathVariable(value = "idPaziente") long patientID
+            @PathVariable(value = "idPaziente") long patientID,
+            Model model
     ){
-        return "paziente";
+        return "patients/paziente";
     }
 
     /* ROUTE: /appuntamento/{idAppuntamento}
@@ -160,9 +176,10 @@ public class AppController {
      */
     @RequestMapping("/appuntamento/{idAppuntamento}")
     public String appointmentById(
-            @PathVariable(value = "idAppuntamento") long appointmentID
+            @PathVariable(value = "idAppuntamento") long appointmentID,
+            Model model
     ){
-        return "appuntamento";
+        return "appointments/appuntamento";
     }
 
     /* ROUTE: /nuovo-appuntamento
@@ -172,8 +189,8 @@ public class AppController {
      *  ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.GET)
-    public String formNewAppointment(){
-        return "form_appuntamento";
+    public String formNewAppointment(Model model){
+        return "appointments/form_appuntamento";
     }
 
     /* ROUTE: /nuovo-appuntamento
@@ -184,7 +201,8 @@ public class AppController {
      */
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.POST)
     public String insertNewAppointment(
-            @RequestParam(name = "test") String test
+            @RequestParam(name = "test") String test,
+            Model model
     ){
         return "redirect:/appuntamenti";
     }
@@ -196,8 +214,8 @@ public class AppController {
      *  ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuovo-paziente", method = RequestMethod.GET)
-    public String formNewPatient(){
-        return "form_paziente";
+    public String formNewPatient(Model model){
+        return "patients/form_paziente";
     }
 
     /* ROUTE: /nuovo-paziente
@@ -208,7 +226,8 @@ public class AppController {
      */
     @RequestMapping(value = "/nuovo-paziente", method = RequestMethod.POST)
     public String insertNewPatient(
-            @RequestParam(name = "test") String test
+            @RequestParam(name = "test") String test,
+            Model model
     ){
         return "redirect:/pazienti";
     }
@@ -221,9 +240,10 @@ public class AppController {
      */
     @RequestMapping(value = "/modifica-paziente/{idPaziente}", method = RequestMethod.GET)
     public String formEditPatient(
-            @PathVariable(name = "idPaziente") long patientID
+            @PathVariable(name = "idPaziente") long patientID,
+            Model model
     ){
-        return "form_paziente";
+        return "patients/form_paziente";
     }
 
     /* ROUTE: /modifica-paziente/{idPaziente}
@@ -235,7 +255,8 @@ public class AppController {
     @RequestMapping(value = "/modifica-paziente/{idPaziente}", method = RequestMethod.PUT)
     public String editPatient(
             @PathVariable(name = "idPaziente") long patientID,
-            @RequestParam(name = "test") String test
+            @RequestParam(name = "test") String test,
+            Model model
     ){
         return "redirect:/pazienti";
     }
@@ -248,9 +269,10 @@ public class AppController {
      */
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.GET)
     public String formEditAppointment(
-            @PathVariable(name = "idAppuntamento") long appointmentID
+            @PathVariable(name = "idAppuntamento") long appointmentID,
+            Model model
     ){
-        return "form_appuntamento";
+        return "appointments/form_appuntamento";
     }
 
     /* ROUTE: /modifica-appuntamento/{idAppuntamento}
@@ -262,7 +284,8 @@ public class AppController {
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.PUT)
     public String editAppointment(
             @PathVariable(name = "idAppuntamento") long appointmentID,
-            @RequestParam(name = "test") String test
+            @RequestParam(name = "test") String test,
+            Model model
     ){
         return "redirect:/appuntamenti";
     }
@@ -275,7 +298,8 @@ public class AppController {
      */
     @RequestMapping(value = "/elimina-appuntamento/{idAppuntamento}", method = RequestMethod.DELETE)
     public String deleteAppointment(
-            @PathVariable(name = "idAppuntamento") long appointmentID
+            @PathVariable(name = "idAppuntamento") long appointmentID,
+            Model model
     ){
         return "redirect:/appuntamenti";
     }
@@ -288,9 +312,10 @@ public class AppController {
      */
     @RequestMapping(value = "/nuova-comunicazione/{idAppuntamento}", method = RequestMethod.GET)
     public String formNewCommunication(
-            @PathVariable(name = "idAppuntamento") long appointmentID
+            @PathVariable(name = "idAppuntamento") long appointmentID,
+            Model model
     ){
-        return "form_comunicazione";
+        return "communications/form_comunicazione";
     }
 
     /* ROUTE: /nuovo-paziente
@@ -302,7 +327,8 @@ public class AppController {
     @RequestMapping(value = "/nuova-comunicazione/{idAppuntamento}", method = RequestMethod.POST)
     public String insertNewCommunication(
             @PathVariable(name = "idAppuntamento") long appointmentID,
-            @RequestParam(name = "test") String test
+            @RequestParam(name = "test") String test,
+            Model model
     ){
         return "redirect:/appuntamento/" + appointmentID;
     }
