@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+			integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+			crossorigin="anonymous"
+		/>
+
+		<title>Medici</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/home.html">MentcareProject</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="/medici.html">Medici</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="pazienti.html">Pazienti</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/appuntamenti.html">Appuntamenti</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container-lg">
+			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
+				<div><b>NOME E COGNOME</b></div>
+			</div>
+			<!-- Dati del paziente -->
+			<div class="card">
+				<form action="">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<div class="col text-start">
+							<div><b>INFORMAZIONI DEL PAZIENTE</b></div>
+						</div>
+						<div class="col text-end">
+							<div>
+								<a role="button" href="pazienti.html" class="btn btn-warning d-block d-sm-inline mb-1 mb-sm-0"
+									><i class="fas fa-times"></i> Annulla</a
+								>
+								<div class="d-grid d-sm-inline">
+									<button style="font-size: 0.95rem; max-height: 35px; margin-top: -1px" type="submit" class="btn btn-success">
+										<i class="fas fa-save"></i> Salva
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" value="" id="nome" placeholder="Nome" />
+									<label for="nome">Nome</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" value="" id="cognome" placeholder="Cognome" />
+									<label for="cognome">Cognome</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" value="" id="codiceFiscale" placeholder="Codice Fiscale" />
+									<label for="codiceFiscale">Codice Fiscale</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" value="" id="residenza" placeholder="Provincia di Residenza" />
+									<label for="residenza">Provincia di Residenza</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input type="text" class="form-control" value="" id="categoria" placeholder="Codice Fiscale" />
+									<label for="categoria">Categoria problematica</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<textarea class="form-control" placeholder="Leave a comment here" id="descProblematica"></textarea>
+									<label for="descProblematica">Descrizione Problematica</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input type="date" class="form-control" value="" id="dataNascita" placeholder="Data di Nascita" />
+									<label for="dataNascita">Data di Nascita</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating">
+									<select class="form-select" id="medic" aria-label="Seleziona il medico">
+										<option style="display: none" selected disabled>Nessun medico selezionato...</option>
+										<option value="1">Medico1 - Spec1</option>
+										<option value="2">Medico2 - Spec2</option>
+										<option value="3">Medico3 - Spec3</option>
+									</select>
+									<label for="medic">Seleziona un medico</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<input type="checkbox" class="form-check-input" id="isDangerous" />
+								<label class="form-check-label" for="isDangerous">Paziente pericoloso</label>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
