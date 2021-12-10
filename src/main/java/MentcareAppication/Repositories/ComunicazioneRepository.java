@@ -1,8 +1,8 @@
 package MentcareAppication.Repositories;
 
-import MentcareAppication.Models.Comunicazione;
+import MentcareAppication.Models.Communication;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ComunicazioneRepository extends CrudRepository<Comunicazione, Long> {
-    Comunicazione findById(long id);
+public interface ComunicazioneRepository extends CrudRepository<Communication, Long> {
+    Communication findById(long id);
 }

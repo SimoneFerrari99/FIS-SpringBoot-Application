@@ -1,8 +1,8 @@
 package MentcareAppication.Repositories;
 
-import MentcareAppication.Models.Appuntamento;
+import MentcareAppication.Models.Appointment;
 import org.springframework.data.repository.CrudRepository;
 
-public interface AppuntamentoRepository extends CrudRepository<Appuntamento, Long> {
-    Appuntamento findById(long id);
+public interface AppuntamentoRepository extends CrudRepository<Appointment, Long> {
+    Appointment findById(long id);
 }
