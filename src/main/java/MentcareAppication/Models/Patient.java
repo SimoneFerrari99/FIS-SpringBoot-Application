@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "PATIENT_ID")
     private long patientID;
 
@@ -23,6 +23,8 @@ public class Patient {
     private String problemDescription;
 
     private boolean dangerous;
+
+    public Patient(){}
 
     public Patient(Medic medic, String firstname, String lastname, String cf, Date birthDate, String cityOfResidence, String problemCategory, String problemDescription, boolean dangerous) {
         this.medic = medic;
@@ -110,5 +112,21 @@ public class Patient {
 
     public void setDangerous(boolean dangerous) {
         this.dangerous = dangerous;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "patientID=" + patientID +
+                ", medic=" + medic +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", cf='" + cf + '\'' +
+                ", birthDate=" + birthDate +
+                ", cityOfResidence='" + cityOfResidence + '\'' +
+                ", problemCategory='" + problemCategory + '\'' +
+                ", problemDescription='" + problemDescription + '\'' +
+                ", dangerous=" + dangerous +
+                '}';
     }
 }

@@ -6,18 +6,20 @@ import java.util.Date;
 @Entity
 public class Communication {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "COMMUNICATION_ID")
     private long communicationID;
 
     @ManyToOne(targetEntity = Appointment.class)
     @JoinColumn(name = "APPOINTMENT_ID")
-    private final Appointment appointment;
+    private Appointment appointment;
 
-    private final Date communicationDate;
-    private final String communicationText;
-    private final boolean forMedic;
-    private final boolean forPatient;
+    private Date communicationDate;
+    private String communicationText;
+    private boolean forMedic;
+    private boolean forPatient;
+
+    public Communication(){}
 
     public Communication(Appointment appointment, Date communicationDate, String communicationText, boolean forMedic, boolean forPatient){
         this.appointment = appointment;
@@ -49,5 +51,17 @@ public class Communication {
 
     public boolean isForPatient() {
         return forPatient;
+    }
+
+    @Override
+    public String toString() {
+        return "Communication{" +
+                "communicationID=" + communicationID +
+                ", appointment=" + appointment +
+                ", communicationDate=" + communicationDate +
+                ", communicationText='" + communicationText + '\'' +
+                ", forMedic=" + forMedic +
+                ", forPatient=" + forPatient +
+                '}';
     }
 }

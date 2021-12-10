@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "APPOINTMENT_ID")
     private long appointmentID;
 
@@ -20,6 +20,8 @@ public class Appointment {
 
     private Date appointmentDate;
     private String clinic;
+
+    public Appointment(){}
 
     public Appointment(Medic medic, Patient patient, Date appointmentDate, String clinic) {
         this.medic = medic;
@@ -62,5 +64,16 @@ public class Appointment {
 
     public void setClinic(String clinic) {
         this.clinic = clinic;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentID=" + appointmentID +
+                ", medic=" + medic +
+                ", patient=" + patient +
+                ", appointmentDate=" + appointmentDate +
+                ", clinic='" + clinic + '\'' +
+                '}';
     }
 }

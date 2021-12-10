@@ -5,14 +5,16 @@ import javax.persistence.*;
 @Entity
 public class Medic {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "MEDIC_ID")
     private long medicID;
 
-    private final String firstname;
-    private final String lastname;
-    private final String specialization;
-    private final String specializationDescription;
+    private String firstname;
+    private String lastname;
+    private String specialization;
+    private String specializationDescription;
+
+    public Medic(){ }
 
     public Medic(String firstname, String lastname, String specialization, String specializationDescription) {
         this.firstname = firstname;
@@ -39,5 +41,16 @@ public class Medic {
 
     public String getSpecializationDescription() {
         return specializationDescription;
+    }
+
+    @Override
+    public String toString() {
+        return "Medic{" +
+                "medicID=" + medicID +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", specialization='" + specialization + '\'' +
+                ", specializationDescription='" + specializationDescription + '\'' +
+                '}';
     }
 }
