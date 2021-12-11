@@ -1,7 +1,8 @@
 package MentcareAppication.Models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Patient {
@@ -17,7 +18,7 @@ public class Patient {
     private String firstname;
     private String lastname;
     private String cf;
-    private Date birthDate;
+    private String birthDate;
     private String cityOfResidence;
     private String problemCategory;
     private String problemDescription;
@@ -26,7 +27,7 @@ public class Patient {
 
     public Patient(){}
 
-    public Patient(Medic medic, String firstname, String lastname, String cf, Date birthDate, String cityOfResidence, String problemCategory, String problemDescription, boolean dangerous) {
+    public Patient(Medic medic, String firstname, String lastname, String cf, String birthDate, String cityOfResidence, String problemCategory, String problemDescription, boolean dangerous) {
         this.medic = medic;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -74,12 +75,20 @@ public class Patient {
         this.cf = cf;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public LocalDate getBirthDateToLocalDate() {
+        return LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(birthDate);
     }
 
     public String getCityOfResidence() {

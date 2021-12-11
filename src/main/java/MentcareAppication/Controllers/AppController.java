@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -42,45 +40,44 @@ public class AppController {
     @Component
     private static class fillRepositoriesWithFakeData {
         public fillRepositoriesWithFakeData(AppointmentRepository appointmentRepository, CommunicationRepository communicationRepository, MedicRepository medicRepository, PatientRepository patientRepository) throws ParseException {
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            LocalDate date = LocalDate.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             Medic medic1 = new Medic("Brad", "Pitt", "Psicologo", "Svolge attività di prevenzione, diagnosi, intervento, promozione della salute, abilitazione-riabilitazione, sostegno e consulenza in ambito psicologico.");
             medicRepository.save(medic1);
             Medic medic2 = new Medic("Tom", "Cruise", "Disturbo del sonno", "Studia con precisione eventuali alterazioni del sonno e della respirazione durante il sonno e offre le soluzioni terapeutiche adeguate.");
             medicRepository.save(medic2);
 
-            Patient patient1 = new Patient(medic1, "Johnny", "Depp", "JD63YP", format.parse("09/06/1963"), "Venezia", "Disturbo ossessivo compulsivo (DOC)", "Ossessione per le mani pulite. Dopo ogni singola azione svolta, il paziente necessita di un lavaggio delle mani", false);
+            Patient patient1 = new Patient(medic1, "Johnny", "Depp", "JD63YP", "09/06/1963", "Venezia", "Disturbo ossessivo compulsivo (DOC)", "Ossessione per le mani pulite. Dopo ogni singola azione svolta, il paziente necessita di un lavaggio delle mani", false);
             patientRepository.save(patient1);
-            Patient patient2 = new Patient(medic2, "Angelina", "Jolie", "AJ75AE", format.parse("04/06/1975"), "Padova", "Attacchi di panico", "Attacchi di panico molto frequenti, spesso manifestati a fine giornata, rendono la qualità del sonno molto scadente.", false);
+            Patient patient2 = new Patient(medic2, "Angelina", "Jolie", "AJ75AE", "04/06/1975", "Padova", "Attacchi di panico", "Attacchi di panico molto frequenti, spesso manifestati a fine giornata, rendono la qualità del sonno molto scadente.", false);
             patientRepository.save(patient2);
-            Patient patient3 = new Patient(medic1, "Robert", "De Niro", "RD75TO", format.parse("07/08/1943"), "Verona", "Attacchi di ira", "Repentini cambio d'umore caratterizzano la persona, spesso rendendola aggressiva e pericolosa.", true);
+            Patient patient3 = new Patient(medic1, "Robert", "De Niro", "RD75TO", "07/08/1943", "Verona", "Attacchi di ira", "Repentini cambio d'umore caratterizzano la persona, spesso rendendola aggressiva e pericolosa.", true);
             patientRepository.save(patient3);
 
-            Calendar tmp = Calendar.getInstance();
-            Appointment appointment1 = new Appointment(medic1, patient1, tmp.getTime(), "Mestre");
+            LocalDate now = LocalDate.now();
+
+            Appointment appointment1 = new Appointment(medic1, patient1, dtf.format(now), "Mestre");
             appointmentRepository.save(appointment1);
-            communicationRepository.save(new Communication(appointment1, tmp.getTime(), "Ti ricordiamo l'appuntamento di oggi!", false, true));
-            communicationRepository.save(new Communication(appointment1, tmp.getTime(), "Sarà presente anche il fratello del paziente, il quale vorrà porle delle domande.", true, false));
+            communicationRepository.save(new Communication(appointment1, dtf.format(now), "Ti ricordiamo l'appuntamento di oggi!", false, true));
+            communicationRepository.save(new Communication(appointment1, dtf.format(now), "Sarà presente anche il fratello del paziente, il quale vorrà porle delle domande.", true, false));
 
-            Appointment appointment2 = new Appointment(medic2, patient2, tmp.getTime(), "Vicenza");
+            Appointment appointment2 = new Appointment(medic2, patient2, dtf.format(now), "Vicenza");
             appointmentRepository.save(appointment2);
-            communicationRepository.save(new Communication(appointment2, tmp.getTime(), "L'appuntamento è stato spostato in data odierna", true, true));
+            communicationRepository.save(new Communication(appointment2, dtf.format(now), "L'appuntamento è stato spostato in data odierna", true, true));
 
-            Calendar tmp2 = Calendar.getInstance();
-            tmp2.add(Calendar.DAY_OF_MONTH, 1);
-            Appointment appointment3 = new Appointment(medic1, patient3, tmp2.getTime(), "Verona");
+            LocalDate tomorrow = now.plusDays(1);
+            Appointment appointment3 = new Appointment(medic1, patient3, dtf.format(now), "Verona");
             appointmentRepository.save(appointment3);
-            communicationRepository.save(new Communication(appointment3, tmp.getTime(), "Ti ricordiamo che domani l'appuntamento si svolgerà nella clinica di Verona!", false, true));
-            Appointment appointment4 = new Appointment(medic1, patient1, tmp2.getTime(), "Marghera");
+            communicationRepository.save(new Communication(appointment3, dtf.format(now), "Ti ricordiamo che domani l'appuntamento si svolgerà nella clinica di Verona!", false, true));
+            Appointment appointment4 = new Appointment(medic1, patient1, dtf.format(tomorrow), "Marghera");
             appointmentRepository.save(appointment4);
-            Appointment appointment5 = new Appointment(medic2, patient2, tmp2.getTime(), "Padova");
+            Appointment appointment5 = new Appointment(medic2, patient2, dtf.format(tomorrow), "Padova");
             appointmentRepository.save(appointment5);
 
-            tmp.add(Calendar.DAY_OF_MONTH, -2);
-            Appointment appointment6 = new Appointment(medic1, patient3, tmp.getTime(), "Bassano");
-            Appointment appointment7 = new Appointment(medic1, patient1, tmp.getTime(), "Oriago");
-            Appointment appointment8 = new Appointment(medic2, patient2, tmp.getTime(), "Monselice");
+            LocalDate yesterday = now.minusDays(2);
+            Appointment appointment6 = new Appointment(medic1, patient3, dtf.format(yesterday), "Bassano");
+            Appointment appointment7 = new Appointment(medic1, patient1, dtf.format(yesterday), "Oriago");
+            Appointment appointment8 = new Appointment(medic2, patient2, dtf.format(yesterday), "Monselice");
             appointmentRepository.save(appointment6);
             appointmentRepository.save(appointment7);
             appointmentRepository.save(appointment8);
@@ -96,9 +93,10 @@ public class AppController {
     */
     @RequestMapping("/")
     public String home(Model model){
+
         List<Appointment> l = new ArrayList<>();
         for(Appointment a : appointmentRepository.findAll()){
-            if(a.getAppointmentDate().toInstant().isAfter(Calendar.getInstance().toInstant())){
+            if(a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) == 0){
                 l.add(a);
             }
         }

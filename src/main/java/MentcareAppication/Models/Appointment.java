@@ -1,7 +1,8 @@
 package MentcareAppication.Models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Appointment {
@@ -18,12 +19,13 @@ public class Appointment {
     @JoinColumn(name = "PATIENT_ID")
     private Patient patient;
 
-    private Date appointmentDate;
+    private String appointmentDate;
     private String clinic;
 
+    
     public Appointment(){}
 
-    public Appointment(Medic medic, Patient patient, Date appointmentDate, String clinic) {
+    public Appointment(Medic medic, Patient patient, String appointmentDate, String clinic) {
         this.medic = medic;
         this.patient = patient;
         this.appointmentDate = appointmentDate;
@@ -50,13 +52,22 @@ public class Appointment {
         this.patient = patient;
     }
 
-    public Date getAppointmentDate() {
+    public String getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(Date appointmentDate) {
+    public LocalDate getAppointmentDateToLocalDate() {
+        return LocalDate.parse(appointmentDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(appointmentDate);
+    }
+
 
     public String getClinic() {
         return clinic;

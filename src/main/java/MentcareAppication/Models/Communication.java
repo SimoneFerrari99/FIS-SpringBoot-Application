@@ -1,7 +1,8 @@
 package MentcareAppication.Models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Communication {
@@ -14,14 +15,14 @@ public class Communication {
     @JoinColumn(name = "APPOINTMENT_ID")
     private Appointment appointment;
 
-    private Date communicationDate;
+    private String communicationDate;
     private String communicationText;
     private boolean forMedic;
     private boolean forPatient;
 
     public Communication(){}
 
-    public Communication(Appointment appointment, Date communicationDate, String communicationText, boolean forMedic, boolean forPatient){
+    public Communication(Appointment appointment, String communicationDate, String communicationText, boolean forMedic, boolean forPatient){
         this.appointment = appointment;
         this.communicationDate = communicationDate;
         this.communicationText = communicationText;
@@ -37,8 +38,12 @@ public class Communication {
         return appointment;
     }
 
-    public Date getCommunicationDate() {
+    public String getCommunicationDate() {
         return communicationDate;
+    }
+
+    public LocalDate getCommunicationDateToLocalDate() {
+        return LocalDate.parse(communicationDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getCommunicationText() {
