@@ -26,11 +26,12 @@
 
 		<div class="container-lg">
 			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
-				<div><b>NOME E COGNOME</b></div>
+				<div th:if="${nuovo == false}"><b th:text="${patient.FirstnameLastname}">NOME E COGNOME</b></div>
+				<div th:if="${nuovo == true}"><b>NUOVO PAZIENTE</b></div>
 			</div>
 			<!-- Dati del paziente -->
 			<div class="card">
-				<form action="">
+				<form th:if="${nuovo == true}" action="/nuovo-paziente" method="post">
 					<div class="card-header d-flex justify-content-between align-items-center">
 						<div class="col text-start">
 							<div><b>INFORMAZIONI DEL PAZIENTE</b></div>
@@ -52,13 +53,13 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" value="" id="nome" placeholder="Nome" />
+									<input required type="text" class="form-control" value="" id="nome" placeholder="Nome" name="nome" />
 									<label for="nome">Nome</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" value="" id="cognome" placeholder="Cognome" />
+									<input required type="text" class="form-control" value="" id="cognome" placeholder="Cognome" name="cognome" />
 									<label for="cognome">Cognome</label>
 								</div>
 							</div>
@@ -66,13 +67,29 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" value="" id="codiceFiscale" placeholder="Codice Fiscale" />
+									<input
+										required
+										type="text"
+										class="form-control"
+										value=""
+										id="codiceFiscale"
+										placeholder="Codice Fiscale"
+										name="cf"
+									/>
 									<label for="codiceFiscale">Codice Fiscale</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" value="" id="residenza" placeholder="Provincia di Residenza" />
+									<input
+										required
+										type="text"
+										class="form-control"
+										value=""
+										id="residenza"
+										placeholder="Provincia di Residenza"
+										name="cittaResidenza"
+									/>
 									<label for="residenza">Provincia di Residenza</label>
 								</div>
 							</div>
@@ -80,13 +97,27 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" value="" id="categoria" placeholder="Codice Fiscale" />
+									<input
+										required
+										type="text"
+										class="form-control"
+										value=""
+										id="categoria"
+										placeholder="Categoria"
+										name="categoriaProblematica"
+									/>
 									<label for="categoria">Categoria problematica</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<textarea class="form-control" placeholder="Leave a comment here" id="descProblematica"></textarea>
+									<textarea
+										required
+										class="form-control"
+										placeholder="Descrizione"
+										id="descProblematica"
+										name="descrizioneProblematica"
+									></textarea>
 									<label for="descProblematica">Descrizione Problematica</label>
 								</div>
 							</div>
@@ -94,23 +125,193 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="date" class="form-control" value="" id="dataNascita" placeholder="Data di Nascita" />
+									<input
+										required
+										type="date"
+										class="form-control"
+										value=""
+										id="dataNascita"
+										placeholder="Data di Nascita"
+										name="dataNascita"
+									/>
 									<label for="dataNascita">Data di Nascita</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating">
-									<select class="form-select" id="medic" aria-label="Seleziona il medico">
-										<option style="display: none" selected disabled>Nessun medico selezionato...</option>
-										<option value="1">Medico1 - Spec1</option>
-										<option value="2">Medico2 - Spec2</option>
-										<option value="3">Medico3 - Spec3</option>
+									<select required class="form-select" id="medic" aria-label="Seleziona il medico" name="medico">
+										<option
+											th:each="medic : ${medics}"
+											value="1"
+											th:value="${medic.medicID}"
+											th:text="${medic.FirstnameLastname} + ' - ' + ${medic.specialization}"
+										>
+											Medico1 - Spec1
+										</option>
 									</select>
 									<label for="medic">Seleziona un medico</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
-								<input type="checkbox" class="form-check-input" id="isDangerous" />
+								<input type="checkbox" class="form-check-input" value="true" id="isDangerous" name="pericoloso" />
+								<label class="form-check-label" for="isDangerous">Paziente pericoloso</label>
+							</div>
+						</div>
+					</div>
+				</form>
+
+				<form th:if="${nuovo == false}" action="/modifica-paziente/1" th:action="'/modifica-paziente/' + ${patient.patientID}" method="post">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<div class="col text-start">
+							<div><b>INFORMAZIONI DEL PAZIENTE</b></div>
+						</div>
+						<div class="col text-end">
+							<div>
+								<a
+									role="button"
+									href="/paziente/1"
+									th:href="'/paziente/' + ${patient.patientID}"
+									class="btn btn-warning d-block d-sm-inline mb-1 mb-sm-0"
+									><i class="fas fa-times"></i> Annulla</a
+								>
+								<div class="d-grid d-sm-inline">
+									<button style="font-size: 0.95rem; max-height: 35px; margin-top: -1px" type="submit" class="btn btn-success">
+										<i class="fas fa-save"></i> Salva
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										type="text"
+										class="form-control"
+										th:value="${patient.firstname}"
+										id="nome"
+										placeholder="Nome"
+										name="nome"
+									/>
+									<label for="nome">Nome</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										type="text"
+										class="form-control"
+										th:value="${patient.lastname}"
+										id="cognome"
+										placeholder="Cognome"
+										name="cognome"
+									/>
+									<label for="cognome">Cognome</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										type="text"
+										class="form-control"
+										th:value="${patient.cf}"
+										id="codiceFiscale"
+										placeholder="Codice Fiscale"
+										name="cf"
+									/>
+									<label for="codiceFiscale">Codice Fiscale</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										type="text"
+										class="form-control"
+										th:value="${patient.cityOfResidence}"
+										id="residenza"
+										placeholder="Provincia di Residenza"
+										name="cittaResidenza"
+									/>
+									<label for="residenza">Provincia di Residenza</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										type="text"
+										class="form-control"
+										th:value="${patient.problemCategory}"
+										id="categoria"
+										placeholder="Categoria"
+										name="categoriaProblematica"
+									/>
+									<label for="categoria">Categoria problematica</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										class="form-control"
+										placeholder="Descrizione"
+										th:value="${patient.problemDescription}"
+										id="descProblematica"
+										name="descrizioneProblematica"
+									></input>
+									<label for="descProblematica">Descrizione Problematica</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<input
+										required
+										type="date"
+										class="form-control"
+										th:value="${patient.BirthDateToDate}"
+										id="dataNascita"
+										placeholder="Data di Nascita"
+										name="dataNascita"
+									/>
+									<label for="dataNascita">Data di Nascita</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating">
+									<select required class="form-select" id="medic" aria-label="Seleziona il medico" name="medico">
+										<option
+											th:each="medic : ${medics}"
+											value="1"
+											th:value="${medic.medicID}"
+											th:selected="${medic.medicID == patient?.medic?.medicID}"
+											th:text="${medic.FirstnameLastname} + ' - ' + ${medic.specialization}"
+										>
+											Medico1 - Spec1
+										</option>
+									</select>
+									<label for="medic">Seleziona un medico</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<input
+									type="checkbox"
+									class="form-check-input"
+									value="true"
+									th:checked="${patient.dangerous}"
+									id="isDangerous"
+									name="pericoloso"
+								/>
 								<label class="form-check-label" for="isDangerous">Paziente pericoloso</label>
 							</div>
 						</div>
