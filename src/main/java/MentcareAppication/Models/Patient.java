@@ -22,6 +22,7 @@ public class Patient {
     private String cityOfResidence;
     private String problemCategory;
     private String problemDescription;
+    private boolean confirmed;
 
     private boolean dangerous;
 
@@ -37,6 +38,8 @@ public class Patient {
         this.problemCategory = problemCategory;
         this.problemDescription = problemDescription;
         this.dangerous = dangerous;
+        this.confirmed = medic != null;
+
     }
 
     public long getPatientID() {
@@ -49,6 +52,7 @@ public class Patient {
 
     public void setMedic(Medic medic) {
         this.medic = medic;
+        this.setConfirmed(medic != null);
     }
 
     public String getFirstname() {
@@ -81,6 +85,11 @@ public class Patient {
 
     public LocalDate getBirthDateToLocalDate() {
         return LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public String getBirthDateToDate(){
+        String[] parts = birthDate.split("/");
+        return parts[2]+'-'+parts[1]+'-'+parts[0];
     }
 
     public void setBirthDate(String birthDate) {
@@ -121,6 +130,18 @@ public class Patient {
 
     public void setDangerous(boolean dangerous) {
         this.dangerous = dangerous;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public String getFirstnameLastname(){
+        return firstname + ' ' + lastname;
     }
 
     @Override
