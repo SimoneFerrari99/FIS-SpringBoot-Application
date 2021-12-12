@@ -49,14 +49,18 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">06/12/21</th>
-								<td><a href="/medico/1">Nome Cognome</a></td>
-								<td><a href="/paziente/1">Nome Cognome</a></td>
-								<td>Venezia</td>
+							<tr  th:each="appointment : ${appointments}">
+								<th scope="row" th:text="${appointment.appointmentDate}">06/12/21</th>
+								<td><a href="/medico/1" th:href="'/medico/' + ${appointment.medic.medicID}" th:text="${appointment.medic.FirstnameLastname}">Nome Cognome</a></td>
+								<td><a href="/paziente/1" th:href="'/paziente/' + ${appointment.patient.patientID}" th:text="${appointment.patient.FirstnameLastname}">Nome Cognome</a>
+									<span th:if="${appointment.patient.dangerous == true}">
+										<i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i
+									></span>
+								</td>
+								<td th:text="${appointment.clinic}">Venezia</td>
 								<td>
-									<a href="/appuntamento/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
-									<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"><i class="fas fa-edit"></i></a>
+									<a href="/appuntamento/1" th:href="'/appuntamento/' + ${appointment.appointmentID}" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
+									<a href="/modifica-appuntamento/1" th:href="'/modifica-appuntamento/' + ${appointment.appointmentID}" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"><i class="fas fa-edit"></i></a>
 								</td>
 							</tr>
 						</tbody>

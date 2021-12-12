@@ -38,10 +38,18 @@
 					<div class="col text-end">
 						<div class="col text-end">
 							<div>
-								<a role="button" href="/appuntamenti" class="btn btn-danger d-block d-sm-inline mb-1 mb-sm-0"
+								<a
+									role="button"
+									href="/elimina-appuntamento/1"
+									th:href="'/elimina-appuntamento/' + ${appointment.appointmentID}"
+									class="btn btn-danger d-block d-sm-inline mb-1 mb-sm-0"
 									><i class="fas fa-trash-alt"></i> Elimina</a
 								>
-								<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block d-sm-inline mb-1 mb-sm-0"
+								<a
+									href="/modifica-appuntamento/1"
+									th:href="'/modifica-appuntamento/' + ${appointment.appointmentID}"
+									role="button"
+									class="btn btn-primary d-block d-sm-inline mb-1 mb-sm-0"
 									><i class="fas fa-edit"></i> Modifica</a
 								>
 							</div>
@@ -56,23 +64,36 @@
 									<h5 class="card-title mb-3">Informazioni appuntamento</h5>
 									<div class="row mb-2">
 										<div class="col-4 col-md-3">MEDICO</div>
-										<div class="col-auto"><a href="/medico/1">Nome Cognome</a></div>
+										<div class="col-auto">
+											<a
+												href="/medico/1"
+												th:href="'/medico/' + ${appointment.medic.medicID}"
+												th:text="${appointment.medic.FirstnameLastname}"
+												>Nome Cognome</a
+											>
+										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-4 col-md-3">PAZIENTE</div>
 										<div class="col-auto">
-											<a href="/paziente/1">Nome Cognome</a>
-											<i class="fas fa-times text-success"></i>
-											<i class="fas fa-check text-danger"></i>
+											<a
+												href="/paziente/1"
+												th:href="'/paziente/' + ${appointment.patient.patientID}"
+												th:text="${appointment.patient.FirstnameLastname}"
+												>Nome Cognome</a
+											>
+											<span th:if="${appointment.patient.dangerous == true}">
+												<i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i
+											></span>
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-4 col-md-3">DATA</div>
-										<div class="col-auto"><b>06/12/21</b></div>
+										<div class="col-auto"><b th:text="${appointment.appointmentDate}">06/12/21</b></div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-4 col-md-3">CLINICA</div>
-										<div class="col-auto"><b>Venezia</b></div>
+										<div class="col-auto"><b th:text="${appointment.clinic}">Venezia</b></div>
 									</div>
 								</div>
 							</div>
@@ -90,7 +111,13 @@
 						<b>COMUNICAZIONI</b>
 					</div>
 					<div class="col text-end">
-						<a href="form_comunicazione.html" role="button" class="btn btn-success"><i class="fas fa-plus"></i> Nuova</a>
+						<a
+							href="/nuova-comunicazione/1"
+							th:href="'/nuova-comunicazione/' + ${appointment.appointmentID}"
+							role="button"
+							class="btn btn-success"
+							><i class="fas fa-plus"></i> Nuova</a
+						>
 					</div>
 				</div>
 				<div class="card-body table-responsive">
@@ -99,20 +126,26 @@
 							<tr>
 								<th scope="col" style="width: 10%">Data</th>
 								<th scope="col" style="width: 70%">Testo</th>
-								<th scope="col" style="width: 10%">Medico</th>
-								<th scope="col" style="width: 10%">Paziente</th>
+								<th scope="col" style="width: 10%">Per il medico</th>
+								<th scope="col" style="width: 10%">Per il paziente</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">06/12/21</th>
-								<td class="text-start">
+							<tr th:each="communication : ${communications}">
+								<th scope="row" th:text="${communication.communicationDate}">06/12/21</th>
+								<td class="text-start" th:text="${communication.communicationText}">
 									Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio eius architecto error enim ipsam molestias
 									accusantium non, nulla mollitia, porro nobis incidunt dolore animi alias officiis nemo! Dignissimos, deleniti
 									deserunt.
 								</td>
-								<td class="text-success"><i class="fas fa-check"></i></td>
-								<td class="text-danger"><i class="fas fa-times"></i></td>
+								<td>
+									<span th:if="${communication.forMedic == false}"> NO <i class="fas fa-times text-danger"></i></span>
+									<span th:if="${communication.forMedic == true}"> SI <i class="fas fa-check text-success"></i></span>
+								</td>
+								<td>
+									<span th:if="${communication.forPatient == false}"> NO <i class="fas fa-times text-danger"></i></span>
+									<span th:if="${communication.forPatient == true}"> SI <i class="fas fa-check text-success"></i></span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
