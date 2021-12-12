@@ -43,6 +43,10 @@ public class Medic {
         return specializationDescription;
     }
 
+    public String getFirstnameLastname(){
+        return firstname + ' ' + lastname;
+    }
+
     @Override
     public String toString() {
         return "Medic{" +

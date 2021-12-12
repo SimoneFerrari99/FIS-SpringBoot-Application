@@ -41,12 +41,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">12</th>
-								<td>Nome</td>
-								<td>Cognome</td>
+							<tr th:each="medic : ${medics}">
+								<th scope="row" th:text="${medic.medicID}">12</th>
+								<td th:text="${medic.firstname}">Nome</td>
+								<td th:text="${medic.lastname}">Cognome</td>
 								<td>
-									<a href="/medico/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
+									<a
+										href="/medico/1"
+										th:href="'/medico/' + ${medic.medicID}"
+										role="button"
+										class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
 										><i class="fas fa-search-plus"></i
 									></a>
 								</td>

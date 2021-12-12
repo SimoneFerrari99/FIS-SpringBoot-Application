@@ -23,8 +23,13 @@
 	</head>
 	<body>
 		<div th:insert="/components/navbar :: navbar" />
+		
 
 		<div class="container-lg p-3">
+			<div th:if=${error==true}>
+				<div th:insert="/components/alert :: alert" />
+			</div>
+
 			<!-- Prossimi appuntameti -->
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
@@ -53,7 +58,7 @@
 									<a
 										href="/medico/1"
 										th:href="'/medico/' + ${appointment.medic.medicID}"
-										th:text="${appointment.medic.firstname} + ' ' + ${appointment.medic.lastname}"
+										th:text="${appointment.medic.FirstnameLastname}"
 									>
 										Nome Cognome
 									</a>
@@ -62,10 +67,14 @@
 									<a
 										href="/paziente/1"
 										th:href="'/paziente/' + ${appointment.patient.patientID}"
-										th:text="${appointment.patient.firstname} + ' ' + ${appointment.patient.lastname}"
+										th:text="${appointment.patient.FirstnameLastname}"
 									>
 										Nome Cognome
 									</a>
+									<span th:if="${appointment.patient.dangerous == true}">
+										<i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i
+									></span>
+
 								</td>
 								<td th:text="${appointment.clinic}">Venezia</td>
 								<td>
@@ -109,16 +118,26 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">11</th>
-								<th>06/12/21</th>
-								<td>Nome Cognome</td>
-								<td>Il paziente soffre di malattia 1</td>
+							<tr th:each="request: ${requests}">
+								<th scope="row" th:text="${request.requestID}">11</th>
+								<th th:text="${request.requestDate}">06/12/21</th>
+								<td th:text="${request.patient.FirstnameLastname}">Nome Cognome</td>
+								<td th:text="${request.patient.problemDescription}">Il paziente soffre di malattia 1</td>
 								<td>
-									<a href="form_paziente.html" role="button" class="btn btn-success d-block m-1 d-md-inline m-md-0"
+									<a
+										href="/modifica-paziente/1"
+										th:href="'/modifica-paziente/' + ${request.patient.patientID}"
+										role="button"
+										class="btn btn-success d-block m-1 d-md-inline m-md-0"
 										><i class="fas fa-check"></i
 									></a>
-									<a href="/" role="button" class="btn btn-danger d-block m-1 d-md-inline m-md-0"><i class="fas fa-times"></i></a>
+									<a
+										href="/elimina-richiesta/1"
+										th:href="'/elimina-richiesta/' + ${request.requestID}"
+										role="button"
+										class="btn btn-danger d-block m-1 d-md-inline m-md-0"
+										><i class="fas fa-times"></i
+									></a>
 								</td>
 							</tr>
 						</tbody>

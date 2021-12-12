@@ -24,10 +24,9 @@
 	<body>
 		<div th:insert="/components/navbar :: navbar" />
 
-
 		<div class="container-lg">
 			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
-				<div>Dott. <b>NOME E COGNOME</b></div>
+				<div>Dott. <b th:text="${medic.FirstnameLastname}" class="text-uppercase">NOME E COGNOME</b></div>
 			</div>
 			<!-- Informazioni sul medico -->
 			<div class="card">
@@ -47,11 +46,11 @@
 									<h5 class="card-title mb-3">Informazioni personali</h5>
 									<div class="row mb-2">
 										<div class="col-6 col-sm-4">NOME</div>
-										<div class="col-auto col-sm-8"><b>Nome</b></div>
+										<div class="col-auto col-sm-8"><b th:text="${medic.firstname}">Nome</b></div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-6 col-sm-4">COGNOME</div>
-										<div class="col-auto col-sm-8"><b>Cognome</b></div>
+										<div class="col-auto col-sm-8"><b th:text="${medic.lastname}">Cognome</b></div>
 									</div>
 								</div>
 							</div>
@@ -60,8 +59,8 @@
 							<div class="card w-100">
 								<div class="card-body">
 									<h5 class="card-title">Specializzazione</h5>
-									<p class="card-subtitle mb-2 text-muted">Nome Specializzazione</p>
-									<p class="card-text">
+									<p class="card-subtitle mb-2 text-muted" th:text="${medic.specialization}">Nome Specializzazione</p>
+									<p class="card-text" th:text="${medic.specializationDescription}">
 										Descrizione Specializzazione Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime assumenda ut ipsa
 										aliquid sit a fugiat accusantium.
 									</p>
@@ -72,15 +71,37 @@
 				</div>
 			</div>
 
-            <div class="my-5"></div>
+			<div class="my-5"></div>
 
 			<nav>
 				<div class="nav nav-pills mb-1" id="nav-tab" role="tablist">
-				  <button class="nav-link active" id="nav-appointment-tab" data-bs-toggle="tab" data-bs-target="#nav-appointment" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Appuntamenti</button>
-				  <button class="nav-link" id="nav-patients-tab" data-bs-toggle="tab" data-bs-target="#nav-patients" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Pazienti</button>
+					<button
+						class="nav-link active"
+						id="nav-appointment-tab"
+						data-bs-toggle="tab"
+						data-bs-target="#nav-appointment"
+						type="button"
+						role="tab"
+						aria-controls="nav-home"
+						aria-selected="true"
+					>
+						Appuntamenti
+					</button>
+					<button
+						class="nav-link"
+						id="nav-patients-tab"
+						data-bs-toggle="tab"
+						data-bs-target="#nav-patients"
+						type="button"
+						role="tab"
+						aria-controls="nav-profile"
+						aria-selected="false"
+					>
+						Pazienti
+					</button>
 				</div>
-			  </nav>
-			  <div class="tab-content" id="nav-tabContent">
+			</nav>
+			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-appointment" role="tabpanel" aria-labelledby="nav-appointment-tab">
 					<!-- Lista appuntamenti -->
 					<div class="card">
@@ -91,65 +112,100 @@
 							<div class="col text-end">
 								<a href="form_appuntamento.html" role="button" class="btn btn-success"><i class="fas fa-plus"></i> Nuovo</a>
 							</div>
-							
 						</div>
 						<div class="card-body table-responsive">
 							<table class="table table-hover" style="vertical-align: middle; text-align: center">
 								<thead>
 									<tr>
-										<th scope="col" style="width: 15%">Data </th>
-										<th scope="col" style="width: 23.33%">Paziente</th>
-										<th scope="col" style="width: 23.33%">Clinica</th>
+										<th scope="col" style="width: 15%">Data</th>
+										<th scope="col" style="width: 35%">Paziente</th>
+										<th scope="col" style="width: 35%">Clinica</th>
 										<th scope="col" style="width: 15%"></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<th scope="row">06/12/21</th>
-										<td><a href="/paziente/1">Nome Cognome</a></td>
-										<td>Venezia</td>
+									<tr th:each="appointment : ${futureAppointments}">
+										<th scope="row" th:text="${appointment.appointmentDate}">06/12/21</th>
 										<td>
-											<a href="/appuntamento/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
-											<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"><i class="fas fa-edit"></i></a>
+											<a
+												href="/paziente/1"
+												th:href="'/paziente/' + ${appointment.patient.patientID}"
+												th:text="${appointment.patient.FirstnameLastname}"
+												>Nome Cognome</a
+											>
+											<span th:if="${appointment.patient.dangerous == true}">
+												<i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i
+											></span>
+										</td>
+										<td th:text="${appointment.clinic}">Venezia</td>
+										<td>
+											<a
+												href="/appuntamento/1"
+												th:href="'/appuntamento/' + ${appointment.appointmentID}"
+												role="button"
+												class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
+												><i class="fas fa-search-plus"></i
+											></a>
+											<a
+												href="/modifica-appuntamento/1"
+												th:href="'/modifica-appuntamento/' + ${appointment.appointmentID}"
+												role="button"
+												class="btn btn-primary d-block m-1 d-md-inline m-md-0"
+												><i class="fas fa-edit"></i
+											></a>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-						</div>
-		
-						<div
-							class="d-flex justify-content-center pb-3 fs-6"
-							data-bs-toggle="collapse"
-							href="#StoricoAppuntamentiCollapse"
-							role="button"
-							aria-expanded="false"
-							aria-controls="StoricoAppuntamentiCollapse"
-						>
-						<a class="text-primary">Storico Appuntamenti</a>
-						</div>
-		
-						<div class="collapse table-responsive" id="StoricoAppuntamentiCollapse">
-							<table class="table table-hover" style="vertical-align: middle; text-align: center">
-								<thead>
-									<tr>
-										<th scope="col" style="width: 15%">Data </th>
-										<th scope="col" style="width: 23.33%">Paziente</th>
-										<th scope="col" style="width: 23.33%">Clinica</th>
-										<th scope="col" style="width: 15%"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">06/12/21</th>
-										<td><a href="/paziente/1">Nome Cognome</a></td>
-										<td>Venezia</td>
-										<td>
-											<a href="/appuntamento/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
-											<a href="form_appuntamento.html" role="button" class="btn btn-primary d-block m-1 d-md-inline m-md-0"><i class="fas fa-edit"></i></a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div
+								class="d-flex justify-content-center pb-3 fs-6"
+								data-bs-toggle="collapse"
+								href="#StoricoAppuntamentiCollapse"
+								role="button"
+								aria-expanded="false"
+								aria-controls="StoricoAppuntamentiCollapse"
+							>
+								<a class="text-primary">Storico Appuntamenti</a>
+							</div>
+
+							<div class="collapse table-responsive" id="StoricoAppuntamentiCollapse">
+								<table class="table table-hover" style="vertical-align: middle; text-align: center">
+									<thead>
+										<tr>
+											<th scope="col" style="width: 15%">Data</th>
+											<th scope="col" style="width: 35%">Paziente</th>
+											<th scope="col" style="width: 35%">Clinica</th>
+											<th scope="col" style="width: 15%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="appointment : ${pastAppointments}">
+											<th scope="row" th:text="${appointment.appointmentDate}">06/12/21</th>
+											<td>
+												<a
+													href="/paziente/1"
+													th:href="'/paziente/' + ${appointment.patient.patientID}"
+													th:text="${appointment.patient.FirstnameLastname}"
+													>Nome Cognome</a
+												>
+												<span th:if="${appointment.patient.dangerous == true}">
+													<i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i
+												></span>
+											</td>
+											<td th:text="${appointment.clinic}">Venezia</td>
+											<td>
+												<a
+													href="/appuntamento/1"
+													th:href="'/appuntamento/' + ${appointment.appointmentID}"
+													role="button"
+													class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
+													><i class="fas fa-search-plus"></i
+												></a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -163,19 +219,34 @@
 							<table class="table table-hover" style="vertical-align: middle; text-align: center">
 								<thead>
 									<tr>
-										<th scope="col" style="width: 35%">CF</th>
-										<th scope="col" style="width: 25%">Nome e Cognome</th>
-										<th scope="col" style="width: 25%">Appuntamenti</th>
+										<th scope="col" style="width: 25%">CF</th>
+										<th scope="col" style="width: 25%">Nome</th>
+										<th scope="col" style="width: 25%">Cognome</th>
+										<th scope="col" style="width: 10%">Pericoloso</th>
 										<th scope="col" style="width: 15%"></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<th scope="row">ABCDEF12G34H567I</th>
-										<td>Nome Cognome</td>
-										<td>12</td>
+									<tr th:each="patient : ${patients}">
+										<th scope="row" th:text="${patient.cf}">ABCDEF12G34H567I</th>
+										<td th:text="${patient.firstname}">Nome</td>
+										<td th:text="${patient.lastname}">Cognome</td>
 										<td>
-											<a href="/paziente/1" role="button" class="btn btn-secondary d-block m-1 d-md-inline m-md-0"><i class="fas fa-search-plus"></i></a>
+											<span th:if="${patient.dangerous == false}"
+												>NO <i class="fas fa-check text-success" title="Non pericoloso"></i
+											></span>
+											<span th:if="${patient.dangerous == true}">
+												SI <i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i
+											></span>
+										</td>
+										<td>
+											<a
+												href="/paziente/1"
+												th:href="'/paziente/' + ${patient.patientID}"
+												role="button"
+												class="btn btn-secondary d-block m-1 d-md-inline m-md-0"
+												><i class="fas fa-search-plus"></i
+											></a>
 										</td>
 									</tr>
 								</tbody>
@@ -183,12 +254,9 @@
 						</div>
 					</div>
 				</div>
-			  </div>
+			</div>
 
-            <div class="my-5"></div>
-
-            
-
+			<div class="my-5"></div>
 		</div>
 
 		<script
