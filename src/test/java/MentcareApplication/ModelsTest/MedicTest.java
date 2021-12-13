@@ -43,11 +43,11 @@ public class MedicTest {
     @Test
     public void toStringTest() {
         assertEquals("Medic{" +
-                "medicID=" + medic.getMedicID() +
-                ", firstname='" + medic.getFirstname() + '\'' +
-                ", lastname='" + medic.getLastname() + '\'' +
-                ", specialization='" + medic.getSpecialization() + '\'' +
-                ", specializationDescription='" + medic.getSpecializationDescription() + '\'' +
+                "medicID=" + 0+
+                ", firstname='" + "Brad" + '\'' +
+                ", lastname='" + "Pitt" + '\'' +
+                ", specialization='" + "Psicologo" + '\'' +
+                ", specializationDescription='" + "Svolge attività di prevenzione, diagnosi, intervento, promozione della salute, abilitazione-riabilitazione, sostegno e consulenza in ambito psicologico." + '\'' +
                 '}', this.medic.toString());
     }
 

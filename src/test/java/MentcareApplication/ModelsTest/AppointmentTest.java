@@ -106,14 +106,12 @@ public class AppointmentTest {
     @Test
     public void toStringTest() {
         assertEquals("Appointment{" +
-                "appointmentID=" + appointment.getAppointmentID() +
-                ", medic=" + appointment.getMedic() +
-                ", patient=" + appointment.getPatient() +
-                ", appointmentDate=" + appointment.getAppointmentDate() +
-                ", clinic='" + appointment.getClinic() + '\'' +
+                "appointmentID=" + 0 +
+                ", medic=" + medic +
+                ", patient=" + patient +
+                ", appointmentDate=" + dtf.format(now) +
+                ", clinic='" + "Venezia" + '\'' +
                 '}', this.appointment.toString());
     }
-
-
 
 }

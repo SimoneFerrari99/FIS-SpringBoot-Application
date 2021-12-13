@@ -77,12 +77,12 @@ public class CommunicationTest {
     @Test
     public void toStringTest() {
         assertEquals("Communication{" +
-                "communicationID=" + communication1.getCommunicationID() +
-                ", appointment=" + communication1.getAppointment() +
-                ", communicationDate=" + communication1.getCommunicationDate() +
-                ", communicationText='" + communication1.getCommunicationText() + '\'' +
-                ", forMedic=" + communication1.isForMedic() +
-                ", forPatient=" + communication1.isForPatient() +
+                "communicationID=" + 0 +
+                ", appointment=" + appointment +
+                ", communicationDate=" + dtf.format(now) +
+                ", communicationText='" + "Le ricordo l'appuntamento di oggi." + '\'' +
+                ", forMedic=" + true +
+                ", forPatient=" + false +
                 '}', this.communication1.toString());
     }
 
