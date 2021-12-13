@@ -26,7 +26,7 @@ public class Patient {
 
     private boolean dangerous;
 
-    public Patient(){}
+    private Patient(){}
 
     public Patient(Medic medic, String firstname, String lastname, String cf, String birthDate, String cityOfResidence, String problemCategory, String problemDescription, boolean dangerous) {
         this.medic = medic;

@@ -14,7 +14,7 @@ public class Medic {
     private String specialization;
     private String specializationDescription;
 
-    public Medic(){ }
+    private Medic(){ }
 
     public Medic(String firstname, String lastname, String specialization, String specializationDescription) {
         this.firstname = firstname;

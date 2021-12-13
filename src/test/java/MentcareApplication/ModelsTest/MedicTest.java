@@ -16,6 +16,12 @@ public class MedicTest {
     }
 
     @Test
+    public void getMedicIdTest() {
+        assertEquals(0, this.medic.getMedicID());
+    }
+
+
+    @Test
     public void getFirstnameTest() {
         assertEquals("Brad", this.medic.getFirstname());
     }

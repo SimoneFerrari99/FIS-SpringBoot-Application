@@ -22,6 +22,7 @@ public class RequestTest {
 
     @Before
     public void setUp(){
+        now = LocalDate.now();
         patient = new Patient(null, "Angelina", "Jolie", "AJ75AE", "04/06/1975", "Padova", "Attacchi di panico", "Attacchi di panico molto frequenti, spesso manifestati a fine giornata, rendono la qualità del sonno molto scadente.", false);
         request = new Request(patient, dtf.format(now));
     }

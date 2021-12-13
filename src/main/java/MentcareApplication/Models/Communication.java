@@ -20,7 +20,7 @@ public class Communication {
     private boolean forMedic;
     private boolean forPatient;
 
-    public Communication(){}
+    private Communication(){}
 
     public Communication(Appointment appointment, String communicationDate, String communicationText, boolean forMedic, boolean forPatient){
         this.appointment = appointment;

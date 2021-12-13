@@ -22,8 +22,7 @@ public class Appointment {
     private String appointmentDate;
     private String clinic;
 
-    
-    public Appointment(){}
+    private Appointment(){}
 
     public Appointment(Medic medic, Patient patient, String appointmentDate, String clinic) {
         this.medic = medic;

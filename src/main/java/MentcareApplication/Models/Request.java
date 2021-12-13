@@ -18,7 +18,7 @@ public class Request {
     private String requestDate;
     private boolean active;
 
-    public Request(){}
+    private Request(){}
 
     public Request(Patient patient, String requestDate) {
         this.patient = patient;
