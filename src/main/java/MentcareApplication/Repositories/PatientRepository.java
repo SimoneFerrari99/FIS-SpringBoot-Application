@@ -1,6 +1,6 @@
-package MentcareAppication.Repositories;
+package MentcareApplication.Repositories;
 
-import MentcareAppication.Models.Patient;
+import MentcareApplication.Models.Patient;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package MentcareAppication.Models;
+package MentcareApplication.Models;
 
 import javax.persistence.*;
 import java.time.LocalDate;

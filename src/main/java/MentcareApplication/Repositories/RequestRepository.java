@@ -1,6 +1,6 @@
-package MentcareAppication.Repositories;
+package MentcareApplication.Repositories;
 
-import MentcareAppication.Models.Request;
+import MentcareApplication.Models.Request;
 import org.springframework.data.repository.CrudRepository;
 
 public interface RequestRepository extends CrudRepository<Request, Long> {

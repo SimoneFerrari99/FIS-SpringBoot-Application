@@ -1,7 +1,7 @@
-package MentcareAppication.Controllers;
+package MentcareApplication.Controllers;
 
-import MentcareAppication.Models.*;
-import MentcareAppication.Repositories.*;
+import MentcareApplication.Models.*;
+import MentcareApplication.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class AppController {

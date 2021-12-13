@@ -1,6 +1,6 @@
-package MentcareAppication.Repositories;
+package MentcareApplication.Repositories;
 
-import MentcareAppication.Models.Appointment;
+import MentcareApplication.Models.Appointment;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
