@@ -60,7 +60,7 @@ public class CommunicationRepositoryTest {
     public void findByAppointmentAppointmentIDTest(){
         assertEquals(communication, communicationRepository.findById(communication.getCommunicationID()));
 
-        List<Communication> l = communicationRepository.findByAppointmentAppointmentID(communication.getCommunicationID());
+        List<Communication> l = communicationRepository.findByAppointmentAppointmentID(appointment.getAppointmentID());
         assertEquals(l.get(0), communication);
     }
 
