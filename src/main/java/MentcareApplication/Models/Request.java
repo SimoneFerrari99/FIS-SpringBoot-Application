@@ -11,7 +11,7 @@ public class Request {
     @Column(unique = true, name = "REQUEST_ID")
     private long requestID;
 
-    @ManyToOne(targetEntity = Patient.class)
+    @OneToOne(targetEntity = Patient.class)
     @JoinColumn(name = "PATIENT_ID")
     private Patient patient;
 
