@@ -534,9 +534,6 @@ public class AppController {
     ){
         Appointment appointment = appointmentRepository.findById(appointmentID);
         if(appointment != null){
-            System.out.println(medicCheck);
-            System.out.println(patientCheck);
-
             Communication communication = new Communication(appointment, dtf.format(LocalDate.now()), communicationText, medicCheck, patientCheck);
             communicationRepository.save(communication);
 
