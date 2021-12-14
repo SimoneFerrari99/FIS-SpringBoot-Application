@@ -104,6 +104,19 @@ public class AppointmentTest {
     }
 
     @Test
+    public void isActiveTest() {
+        assertTrue(this.appointment.isActive());
+    }
+
+    @Test
+    public void setActiveTest() {
+        assertTrue(this.appointment.isActive());
+        appointment.setActive(false);
+        assertFalse(this.appointment.isActive());
+    }
+
+
+    @Test
     public void toStringTest() {
         assertEquals("Appointment{" +
                 "appointmentID=" + 0 +

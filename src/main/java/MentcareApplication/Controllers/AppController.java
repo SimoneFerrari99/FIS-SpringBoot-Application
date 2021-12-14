@@ -99,7 +99,7 @@ public class AppController {
 
         List<Appointment> appointments = new ArrayList<>();
         for(Appointment a : appointmentRepository.findAll()){
-            if(a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) == 0){
+            if(a.isActive() && a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) == 0){
                 appointments.add(a);
             }
         }
@@ -166,7 +166,7 @@ public class AppController {
 
         List<Appointment> appointments = new ArrayList<>();
         for(Appointment a : appointmentRepository.findAll()){
-            if(a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0){
+            if(a.isActive() && a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0){
                 appointments.add(a);
             }
         }
@@ -193,10 +193,12 @@ public class AppController {
             List<Appointment> futureAppointments = new ArrayList<>();
             List<Appointment> pastAppointments = new ArrayList<>();
             for(Appointment a : appointments){
-                if(a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0){
-                    futureAppointments.add(a);
-                }else{
-                    pastAppointments.add(a);
+                if(a.isActive()){
+                    if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
+                        futureAppointments.add(a);
+                    } else {
+                        pastAppointments.add(a);
+                    }
                 }
             }
 
@@ -231,10 +233,12 @@ public class AppController {
             List<Appointment> futureAppointments = new ArrayList<>();
             List<Appointment> pastAppointments = new ArrayList<>();
             for(Appointment a : appointments){
-                if(a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0){
-                    futureAppointments.add(a);
-                }else{
-                    pastAppointments.add(a);
+                if(a.isActive()){
+                    if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
+                        futureAppointments.add(a);
+                    } else {
+                        pastAppointments.add(a);
+                    }
                 }
             }
 
@@ -283,6 +287,7 @@ public class AppController {
      *  PARAMS: -
      *  ATTRIBUTES: -
      */
+    // TODO: 14/12/2021
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.GET)
     public String formNewAppointment(Model model){
         return "appointments/form_appuntamento";
@@ -294,6 +299,7 @@ public class AppController {
      *  PARAMS: -
      *  ATTRIBUTES: -
      */
+    // TODO: 14/12/2021
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.POST)
     public String insertNewAppointment(
             @RequestParam(name = "test") String test,
@@ -399,8 +405,10 @@ public class AppController {
             patient.setDangerous(dangerous);
 
             Request request = requestRepository.findByPatientPatientID(patientID);
-            request.setActive(false);
-            requestRepository.save(request);
+            if(request!=null) {
+                request.setActive(false);
+                requestRepository.save(request);
+            }
 
             patientRepository.save(patient);
             return "redirect:/paziente/" + patientID;
@@ -415,6 +423,7 @@ public class AppController {
      *  PARAMS: idAppuntamento è l'id dell'appuntamento
      *  ATTRIBUTES: -
      */
+    // TODO: 14/12/2021
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.GET)
     public String formEditAppointment(
             @PathVariable(name = "idAppuntamento") long appointmentID,
@@ -429,6 +438,7 @@ public class AppController {
      *  PARAMS: idAppuntamento è l'id dell'appuntamento
      *  ATTRIBUTES: -
      */
+    // TODO: 14/12/2021
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.POST)
     public String editAppointment(
             @PathVariable(name = "idAppuntamento") long appointmentID,
@@ -452,8 +462,10 @@ public class AppController {
         Appointment appointment = appointmentRepository.findById(appointmentID);
         if(appointment != null){
             List<Communication> communications = communicationRepository.findByAppointmentAppointmentID(appointmentID);
-            communicationRepository.deleteAll(communications);
-            appointmentRepository.deleteById(appointmentID);
+            /*communicationRepository.deleteAll(communications);
+            appointmentRepository.deleteById(appointmentID);*/
+            appointment.setActive(false);
+            appointmentRepository.save(appointment);
 
             return "redirect:/appuntamenti";
         }else{
@@ -474,9 +486,11 @@ public class AppController {
     ){
         Request request = requestRepository.findById(requestID);
         if(request != null){
-            Patient patient = request.getPatient();
+            /*Patient patient = request.getPatient();
             requestRepository.deleteById(requestID);
-            patientRepository.deleteById(patient.getPatientID());
+            patientRepository.deleteById(patient.getPatientID());*/
+            request.setActive(false);
+            requestRepository.save(request);
             return "redirect:/";
         }else{
             return "redirect:/?error=true";

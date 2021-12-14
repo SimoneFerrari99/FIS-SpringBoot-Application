@@ -21,6 +21,7 @@ public class Appointment {
 
     private String appointmentDate;
     private String clinic;
+    private boolean active;
 
     private Appointment(){}
 
@@ -29,6 +30,7 @@ public class Appointment {
         this.patient = patient;
         this.appointmentDate = appointmentDate;
         this.clinic = clinic;
+        this.active = true;
     }
 
     public long getAppointmentID() {
@@ -74,6 +76,14 @@ public class Appointment {
 
     public void setClinic(String clinic) {
         this.clinic = clinic;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
