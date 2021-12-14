@@ -52,7 +52,7 @@ public class AppController {
 
             LocalDate now = LocalDate.now();
 
-            Patient patient4 = new Patient(null, "Harrison", "Ford", "HF75ND", "13/07/1942", "Belluno", "Disturbi dell'attenzione", "Difficoltà nel mantenere l'attenzione, anche per brevi periodi di tempo", false);
+            Patient patient4 = new Patient(null, "Harrison", "Ford", "HF75ND", "13/07/1942", "Belluno", "", "Difficoltà nel mantenere l'attenzione, anche per brevi periodi di tempo", false);
             patientRepository.save(patient4);
             requestRepository.save(new Request(patient4, dtf.format(now)));
 

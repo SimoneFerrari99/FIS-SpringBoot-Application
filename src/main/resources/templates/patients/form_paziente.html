@@ -188,6 +188,7 @@
 								<div class="form-floating mb-3">
 									<input
 										required
+										th:disabled="${!patient.confirmed}"
 										type="text"
 										class="form-control"
 										th:value="${patient.firstname}"
@@ -202,6 +203,7 @@
 								<div class="form-floating mb-3">
 									<input
 										required
+										th:disabled="${!patient.confirmed}"
 										type="text"
 										class="form-control"
 										th:value="${patient.lastname}"
@@ -218,6 +220,7 @@
 								<div class="form-floating mb-3">
 									<input
 										required
+										th:disabled="${!patient.confirmed}"
 										type="text"
 										class="form-control"
 										th:value="${patient.cf}"
@@ -232,6 +235,7 @@
 								<div class="form-floating mb-3">
 									<input
 										required
+										th:disabled="${!patient.confirmed}"
 										type="text"
 										class="form-control"
 										th:value="${patient.cityOfResidence}"
@@ -277,6 +281,7 @@
 								<div class="form-floating mb-3">
 									<input
 										required
+										th:disabled="${!patient.confirmed}"
 										type="date"
 										class="form-control"
 										th:value="${patient.BirthDateToDate}"
