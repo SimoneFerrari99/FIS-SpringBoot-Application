@@ -90,13 +90,42 @@ Attenzione: una comunicazione deve sempre avere almeno un destinatario.
 
 ## Ulteriori requisiti soddisfatti
 Oltre agli scenari descritti in precedenza, sono stati soddisfatti ulteriori requisiti, impliciti ed espliciti, raccolti dalla descrizione del sistema Mentcare. In particolare, si vedano di seguito i vari requisiti funzionali e non funzionali soddisfatti. 
-### 1. Cliniche
-### 2. Associazione del medico al paziente
-### 3. Layout responsive per dispositivi mobili
-### 4. Riservatezza delle cartelle cliniche
-### 5. Reperibilità
-### 6. Pericolosità dei pazienti
-### 7. Traccia delle eliminazioni
+### 1. Cliniche e medico associato
+Facendo riferimento a *"I pazienti non necessitano di cure ospedaliere dedicate, ma devono frequentare regolarmente cliniche specializzate e incontrare un medico che abbia una conoscenza dettagliata dei loro problemi."*, per lo sviluppo del modulo è stato deciso di gestire sia la clinica che il medico associato. 
+In particolare:
+- Ogni appuntamento prevede, tra le varie informazioni, anche una clinica di riferimento, che, per motivi di facilità implementativa, è rappresentata da una stringa contenuta nel modello *Appointment*.
+L'idea alla base è di associare una clinica ad ogni appuntamento, in modo tale che sia medico che paziente possano sempre essere consapevoli del luogo in cui si svolgerà la visita. 
+- Ogni paziente deve sempre essere associato ad uno e un solo medico. Questa associazione è obbligatoria, e deve essere svolta con criterio, in quanto deve essere associato il medico più pertinente in risposta alle problematiche del paziente. A tale scopo, quindi, il campo per la scelta del medico (posti in aggiunta/modifica paziente) contiene non solo il nome e cognome di esso, ma anche la sua specializzazione. In questo modo, sulla base della descrizione della problematica del paziente, il receptionist può associare il medico più appropriato. 
+### 2. Layout responsive per dispositivi mobili
+In risposta a *"Il sistema deve essere accessibile da host remoti, i quali possono essere di diverse tipologie: PC Desktop, Laptop, Tablet, Smartphone, ..."*, si è deciso di progettare l'interfaccia grafica a partire dal layout mobile, per poi passare al layout tablet ed infine adattare il tutto al layout desktop. Si è quindi posta molta attenzione ai comportamenti Responsive della parte Front-End del sistema.  
+Il sistema, inoltre, in una situazione reale, prevede un database centrale, posto su un server (o eventualmente distribuito) accessibile da qualsiasi dispositivo remoto.  
+L'applicativo è stato infine sviluppato in ambiente Web, rendendolo quindi accessibile da qualsiasi dispositivo dotato di un Web Browser.  
+### 3. Riservatezza delle cartelle cliniche
+Per quanto riguarda la specifica *"Non tutti gli utenti del sistema hanno accesso alla cartella clinica del paziente: questa, infatti, può essere consultata solo dal medico e dal paziente stesso."*, si è pensato di non rendere visibili le informazioni cliniche del paziente all'interno della sua pagina di dettaglio. Tali informazioni, infatti, non sono e non devono essere in perimetro del Receptionist.   
+Una possibile idea, non sviluppata perchè non ritenuta di fondamentale importanza, vede un pulsate, all'interno della pagina di dettaglio del paziente, che, al click, apra un piccolo form di "richiesta accesso alla cartella clinica". Tale form è diretto al medico associato, il quale dovrà valutare la richiesta ed approvarla o meno. Questa funzionalità potrebbe essere utile nel caso in cui sia necessario trasferire le informaioni all'esterno del sistema Mentcare, ad esempio per inoltrarle ad un medico esterno al network. 
+
+### 4. Reperibilità
+Una possibile soluzione a "*Ne segue che il paziente (o il tutore) debba poter essere contattato da parte del medico o della segreteria con delle comunicazioni di qualsiasi genere.*" risiede nella funzionalità di invio comunicazioni, descritta anche nello Scenario 6. In questo modo, un Receptionist può sempre comunicare con medico e paziente, o eventualmente il suo tutor.
+
+### 5. Pericolosità dei pazienti
+Un requisito importante risiede nel fatto che "*Alcuni pazienti potrebbero presentare delle problematiche gravi, che li renda classificabili come "pericolosi". In tal caso, l'intero staff (medico e non) deve essere sempre avvertito, in maniera tale che si possano prendere le dovute precauzioni a tutela del medico, del personale di segreteria e degli altri pazienti.*".
+A tale scopo, il Model del paziente contiene un flag booleano che indica se il paziente è pericoloso o meno. Tale flag può essere gestito sia dal medico, che dal Receptionist, e, ove attivo per un paziente, farà comparire un simbolo rosso <i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i>, accanto ad ogni occorrenza del paziente, all'interno dell'intero sistema (ad esempio, nel dettaglio di un appuntamento). 
+
+### 6. Traccia delle eliminazioni
+Per questioni leegali, "*si deve sempre tenere traccia delle azioni svolte dal medico all'interno della cartella clinica, le quali, in caso di eventuale indagine di polizia o revisione giudiziaria, devono poter essere estratte.*". In risposta, quindi, si è pensato di implementare le azioni di DELETE di appuntamenti/pazienti/richieste come azioni di PUT, le quali andranno semplicemente a disattivare i record coinvolti. Infatti, ogni paziente e ogni appuntamento contengono all'interno del Model un flag booleano che indica se il record è attivo o meno. A Front-End, sono visualizzati solo i dati attivi, mentre quelli disattivati sono esplusi, ma presenti a Back-End e recuperabili per eventuali estrazioni (ed utilizzabili in possibili applicazioni amministrative). 
+
+### 8. Funzionalità secondarie implementate
+Per rendere il modulo sviluppato usabile, è stato necessario implementare ulteriori route e funzionalità all'interno del sistema.  
+In particolare, sono presenti le routes utili alla visualizzazione dei dettagli di un medico e di un paziente. Inoltre, vi sono le routes per la visualizzazione dei pazienti, degli appuntamenti e dei medici.  
+Per comodità di navigazione, inoltre, ogniqualvolta appaia il nome e cognome di un medico/paziente, effettuando un click su diesso si può accedere direttamente a maggiori dettagli.  
+
+### Altre scelte progettuali
+Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali a scopo unico di facilitarne e semplificarne l'implementazione. Ove il sistema dovesse essere relamente implementato, allora tali assunzioni verrebbo a meno. 
+- **Data**: Gli appuntamenti e le richieste sono gestite solamente con una data, nel formato gg/mm/aaaa. Ovviamente, in una situazione reale, si dovrebbe tenere conto anche dell'ora, in formato hh:mm, ma per lo scopo del progetto si è deciso di ometterla.
+- **Controlli sugli appuntamenti**: Per semplicità, non è stato effettuato alcun controllo in merito a possibili appuntamenti duplicati e/o in conflitto. Si assume che il Receptionist effettui le dovute verifiche prima di prenotare appuntamenti incompatibili. 
+- **Clinica**: Come già detto, la clinica è gestita mediante una stringa di testo libero, ma in un reale sistema completo, potrebbe essere gestita con un Model a parte, di nome *Clinic*, in cui al suo interno siano contenuti diversi dati. In questo modo, risulterebbe più semplice effettuare analisi e verifiche circa l'approvigionamento dei medicinali e la disponibilità di slot per ulteriori appuntamenti. 
+- **Un solo medico per paziente**: Si è assunto che un paziente abbia uno e un solo medico associato. Esso può essere cambiato, ma non potrà mai essere seguito da due medici nello stesso periodo di tempo. 
+
 
 <link
     rel="stylesheet"
