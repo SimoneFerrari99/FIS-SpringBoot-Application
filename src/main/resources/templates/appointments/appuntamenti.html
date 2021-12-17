@@ -86,15 +86,19 @@
 							<div class="tab-content" id="nav-tabContent">
 							<div class="tab-pane fade show active" id="nav-medic" role="tabpanel" aria-labelledby="nav-medic-tab">
 								<!-- Medico -->
-								<form action="form_appuntamento.html">
+								<form action="/nuovo-appuntamento">
 									<div class="form-floating mb-3">
-										<select class="form-select" id="medic" aria-label="Seleziona il medico">
-											<option style="display: none" selected disabled>Nessun medico selezionato...</option>
-											<option value="1">Medico1</option>
-											<option value="2">Medico2</option>
-											<option value="3">Medico3</option>
+										<select required class="form-select" id="medic" aria-label="Seleziona il medico" name="IDMedico">
+											<option
+												th:each="medic : ${medics}"
+												value="1"
+												th:value="${medic.medicID}"
+												th:text="${medic.FirstnameLastname}"
+											>
+												Medico1
+											</option>
 										</select>
-										<label for="medic">Seleziona il medico</label>
+										<label for="medic">Seleziona un medico</label>
 									</div>
 									<button style="font-size: 0.95rem; max-height: 35px;" type="submit" class="btn btn-success w-100">
 										<i class="fas fa-check"></i> Conferma Medico
@@ -104,21 +108,24 @@
 							</div>
 							<div class="tab-pane fade" id="nav-patients" role="tabpanel" aria-labelledby="nav-patients-tab">
 								<!-- Paziente -->
-								<form action="form_appuntamento.html">
+								<form action="/nuovo-appuntamento">
 									<div class="form-floating mb-3">
-										<select class="form-select" id="patient" aria-label="Seleziona il medico">
-											<option style="display: none" selected disabled>Nessun paziente selezionato...</option>
-											<option value="1">Paziente1</option>
-											<option value="2">Paziente2</option>
-											<option value="3">Paziente3</option>
+										<select required class="form-select" id="patient" aria-label="Seleziona il paziente" name="IDPaziente">
+											<option
+												th:each="patient : ${patients}"
+												value="1"
+												th:value="${patient.patientID}"
+												th:text="${patient.FirstnameLastname}"
+											>
+												Paziente1
+											</option>
 										</select>
-										<label for="patient">Seleziona il paziente</label>
+										<label for="medic">Seleziona un paziente</label>
 									</div>
 									<button style="font-size: 0.95rem; max-height: 35px;" type="submit" class="btn btn-success w-100">
 										<i class="fas fa-check"></i> Conferma Paziente
 									</button>
 								</form>
-							</div>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -127,7 +134,7 @@
 					</div>
 				</div>
 			</div>
-
+		</div>
 			
 
 			

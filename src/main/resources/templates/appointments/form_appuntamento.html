@@ -26,18 +26,19 @@
 
 		<div class="container-lg">
 			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
-				<div><b>NUOVO APPUNTAMENTO</b></div>
+				<div th:if="${nuovo == false}">Appuntmaneto numero <b th:text="${appointment.appointmentID}">ID</b></div>
+				<div th:if="${nuovo == true}"><b>NUOVO APPUNTAMENTO</b></div>
 			</div>
-			<!-- Dati del medico -->
+
 			<div class="card">
-				<form action="">
+				<form th:if="${nuovo == true}" action="/nuovo-appuntamento" method="post">
 					<div class="card-header d-flex justify-content-between align-items-center">
 						<div class="col text-start">
 							<div><b>DETTAGLI APPUNTAMENTO</b></div>
 						</div>
 						<div class="col text-end">
 							<div>
-								<a role="button" href="/appuntamento/1" class="btn btn-warning d-block d-sm-inline mb-1 mb-sm-0"
+								<a role="button" href="/appuntamenti" class="btn btn-warning d-block d-sm-inline mb-1 mb-sm-0"
 									><i class="fas fa-times"></i> Annulla</a
 								>
 								<div class="d-grid d-sm-inline">
@@ -52,23 +53,64 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<select class="form-select" id="medic" aria-label="Seleziona il medico">
-										<option style="display: none" selected disabled>Nessun medico selezionato...</option>
-										<option value="1">Medico1</option>
-										<option value="2">Medico2</option>
-										<option value="3">Medico3</option>
+									<select
+										th:if="${byMedic == true}"
+										class="form-select"
+										id="medic"
+										name="medic"
+										aria-label="Seleziona il medico"
+										style="background: #e9ecef"
+										required
+									>
+										<option value="1" th:value="${medic.medicID}" th:text="${medic.FirstnameLastname}">Medico1</option>
+									</select>
+									<select
+										th:if="${byPatient == true}"
+										class="form-select"
+										id="medic"
+										name="medic"
+										aria-label="Seleziona il medico"
+										style="background: #e9ecef"
+										required
+									>
+										<option value="1" th:value="${patient.medic.medicID}" th:text="${patient.medic.FirstnameLastname}">
+											Medico1
+										</option>
 									</select>
 									<label for="medic">Seleziona il medico</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<select class="form-select" id="patient" aria-label="Seleziona il medico">
-										<option style="display: none" selected disabled>Nessun paziente selezionato...</option>
-										<option value="1">Paziente1</option>
-										<option value="2">Paziente2</option>
-										<option value="3">Paziente3</option>
+									<select
+										th:if="${byMedic == true}"
+										class="form-select"
+										id="patient"
+										name="patient"
+										aria-label="Seleziona il paziente"
+										required
+									>
+										<option
+											th:each="patient : ${medicPatients}"
+											value="1"
+											th:value="${patient.patientID}"
+											th:text="${patient.FirstnameLastname}"
+										>
+											Paziente1
+										</option>
 									</select>
+									<select
+										th:if="${byPatient == true}"
+										class="form-select"
+										id="patient"
+										name="patient"
+										aria-label="Seleziona il paziente"
+										style="background: #e9ecef"
+										required
+									>
+										<option value="1" th:value="${patient.patientID}" th:text="${patient.FirstnameLastname}">Paziente1</option>
+									</select>
+
 									<label for="patient">Seleziona il paziente</label>
 								</div>
 							</div>
@@ -76,13 +118,21 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
-									<input type="text" class="form-control" value="" id="clinic" placeholder="Specializzazione" />
+									<input
+										type="text"
+										class="form-control"
+										value=""
+										id="clinic"
+										name="clinic"
+										placeholder="Specializzazione"
+										required
+									/>
 									<label for="clinic">Clinica</label>
 								</div>
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-">
-									<input type="date" class="form-control" value="" id="date" placeholder="Specializzazione" />
+									<input type="date" class="form-control" value="" id="date" name="date" placeholder="Specializzazione" required />
 									<label for="date">Data</label>
 								</div>
 							</div>

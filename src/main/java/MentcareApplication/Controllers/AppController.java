@@ -171,7 +171,21 @@ public class AppController {
             }
         }
 
+        List<Medic> medics = new ArrayList<>();
+        for(Medic m : medicRepository.findAll()){
+            medics.add(m);
+        }
+
+        List<Patient> patients = new ArrayList<>();
+        for(Patient p : patientRepository.findAll()){
+            if(p.isConfirmed()){
+                patients.add(p);
+            }
+        }
+
         model.addAttribute("appointments", appointments);
+        model.addAttribute("medics", medics);
+        model.addAttribute("patients", patients);
 
         return "appointments/appuntamenti";
     }
@@ -289,8 +303,44 @@ public class AppController {
      */
     // TODO: 14/12/2021
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.GET)
-    public String formNewAppointment(Model model){
-        return "appointments/form_appuntamento";
+    public String formNewAppointment(
+            @RequestParam(name="IDMedico", required = false, defaultValue = "-1") long medicID,
+            @RequestParam(name="IDPaziente", required = false, defaultValue = "-1") long patientID,
+            Model model
+    ){
+        boolean error = false;
+
+        if(medicID != -1){
+            Medic medic = medicRepository.findById(medicID);
+            if(medic != null){
+                List<Patient> patients = new ArrayList<>();
+                for(Patient p : patientRepository.findAll()){
+                    if(p.isConfirmed() && p.getMedic().getMedicID()==medicID){
+                        patients.add(p);
+                    }
+                }
+                model.addAttribute("byMedic", true);
+                model.addAttribute("medic", medic);
+                model.addAttribute("medicPatients", patients);
+            }else{
+                error = true;
+            }
+        } else if(patientID != -1){
+            Patient patient = patientRepository.findById(patientID);
+            if(patient != null){
+                model.addAttribute("byPatient", true);
+                model.addAttribute("patient", patient);
+            }else{
+                error = true;
+            }
+        } else{ error = true; }
+
+        if(error){
+            return "redirect:/?error=true";
+        }else{
+            model.addAttribute("nuovo", true);
+            return "appointments/form_appuntamento";
+        }
     }
 
     /*  ROUTE: /nuovo-appuntamento
@@ -302,9 +352,19 @@ public class AppController {
     // TODO: 14/12/2021
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.POST)
     public String insertNewAppointment(
-            @RequestParam(name = "test") String test,
+            @RequestParam(name = "medic", required = true) String medicID,
+            @RequestParam(name = "patient", required = true) String patientID,
+            @RequestParam(name = "clinic", required = true) String clinic,
+            @RequestParam(name = "date", required = true) String appointmentDate,
             Model model
     ){
+
+        String[] parts = appointmentDate.split("-");
+        appointmentDate = parts[2]+'/'+parts[1]+'/'+parts[0];
+
+        Appointment appointment = new Appointment(medicRepository.findById(Long.parseLong(medicID)), patientRepository.findById(Long.parseLong(patientID)), appointmentDate, clinic);
+        appointmentRepository.save(appointment);
+
         return "redirect:/appuntamenti";
     }
 
