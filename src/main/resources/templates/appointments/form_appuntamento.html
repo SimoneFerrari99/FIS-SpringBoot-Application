@@ -118,13 +118,104 @@
 						<div class="row mb-sm-3">
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-3">
+									<input type="text" class="form-control" value="" id="clinic" name="clinic" placeholder="Clinica" required />
+									<label for="clinic">Clinica</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-">
+									<input type="date" class="form-control" value="" id="date" name="date" placeholder="Specializzazione" required />
+									<label for="date">Data</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+
+				<form
+					th:if="${nuovo == false}"
+					action="/modifica-appuntamento"
+					th:action="'/modifica-appuntamento/' + ${appointment.appointmentID}"
+					method="post"
+				>
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<div class="col text-start">
+							<div><b>DETTAGLI APPUNTAMENTO</b></div>
+						</div>
+						<div class="col text-end">
+							<div>
+								<a
+									role="button"
+									href="/appuntamenti"
+									th:href="'/appuntamento/' + ${appointment.appointmentID}"
+									class="btn btn-warning d-block d-sm-inline mb-1 mb-sm-0"
+									><i class="fas fa-times"></i> Annulla</a
+								>
+								<div class="d-grid d-sm-inline">
+									<button style="font-size: 0.95rem; max-height: 35px; margin-top: -1px" type="submit" class="btn btn-success">
+										<i class="fas fa-save"></i> Salva
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<select
+										class="form-select"
+										id="medic"
+										name="medic"
+										aria-label="Seleziona il medico"
+										style="background: #e9ecef"
+										required
+									>
+										<option
+											value="1"
+											th:value="${appointment.patient.medic.medicID}"
+											th:text="${appointment.patient.medic.FirstnameLastname}"
+										>
+											Medico1
+										</option>
+									</select>
+									<label for="medic">Seleziona il medico</label>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
+									<select
+										class="form-select"
+										id="patient"
+										name="patient"
+										aria-label="Seleziona il paziente"
+										style="background: #e9ecef"
+										required
+									>
+										<option
+											value="1"
+											th:value="${appointment.patient.patientID}"
+											th:text="${appointment.patient.FirstnameLastname}"
+										>
+											Paziente1
+										</option>
+									</select>
+
+									<label for="patient">Seleziona il paziente</label>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-sm-3">
+							<div class="col-12 col-sm-6">
+								<div class="form-floating mb-3">
 									<input
 										type="text"
 										class="form-control"
 										value=""
+										th:value="${appointment.clinic}"
 										id="clinic"
 										name="clinic"
-										placeholder="Specializzazione"
+										placeholder="Clinica"
 										required
 									/>
 									<label for="clinic">Clinica</label>
@@ -132,7 +223,16 @@
 							</div>
 							<div class="col-12 col-sm-6">
 								<div class="form-floating mb-">
-									<input type="date" class="form-control" value="" id="date" name="date" placeholder="Specializzazione" required />
+									<input
+										type="date"
+										class="form-control"
+										value=""
+										th:value="${appointment.appointmentDateToDate}"
+										id="date"
+										name="date"
+										placeholder="Specializzazione"
+										required
+									/>
 									<label for="date">Data</label>
 								</div>
 							</div>

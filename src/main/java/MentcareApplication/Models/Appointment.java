@@ -61,6 +61,11 @@ public class Appointment {
         return LocalDate.parse(appointmentDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
+    public String getAppointmentDateToDate(){
+        String[] parts = appointmentDate.split("/");
+        return parts[2]+'-'+parts[1]+'-'+parts[0];
+    }
+
     public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
     }

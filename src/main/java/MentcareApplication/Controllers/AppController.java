@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -111,6 +112,7 @@ public class AppController {
 
         model.addAttribute("appointments", appointments);
         model.addAttribute("requests", requests);
+
         if(error) model.addAttribute("error", true);
 
         return "home";
@@ -171,6 +173,8 @@ public class AppController {
             }
         }
 
+        appointments.sort(Comparator.comparing((Appointment a) -> LocalDate.parse(a.getAppointmentDate(), dtf)));
+
         List<Medic> medics = new ArrayList<>();
         for(Medic m : medicRepository.findAll()){
             medics.add(m);
@@ -210,8 +214,10 @@ public class AppController {
                 if(a.isActive()){
                     if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
                         futureAppointments.add(a);
+                        futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     } else {
                         pastAppointments.add(a);
+                        futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     }
                 }
             }
@@ -250,8 +256,10 @@ public class AppController {
                 if(a.isActive()){
                     if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
                         futureAppointments.add(a);
+                        futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     } else {
                         pastAppointments.add(a);
+                        pastAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     }
                 }
             }
@@ -301,7 +309,6 @@ public class AppController {
      *  PARAMS: -
      *  ATTRIBUTES: -
      */
-    // TODO: 14/12/2021
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.GET)
     public String formNewAppointment(
             @RequestParam(name="IDMedico", required = false, defaultValue = "-1") long medicID,
@@ -349,7 +356,6 @@ public class AppController {
      *  PARAMS: -
      *  ATTRIBUTES: -
      */
-    // TODO: 14/12/2021
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.POST)
     public String insertNewAppointment(
             @RequestParam(name = "medic", required = true) String medicID,
@@ -489,7 +495,16 @@ public class AppController {
             @PathVariable(name = "idAppuntamento") long appointmentID,
             Model model
     ){
-        return "appointments/form_appuntamento";
+        Appointment appointment = appointmentRepository.findById(appointmentID);
+        if(appointment != null){
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("nuovo", false);
+
+            return "appointments/form_appuntamento";
+        }
+        else {
+            return "redirect:/?error=true";
+        }
     }
 
     /*  ROUTE: /modifica-appuntamento/{idAppuntamento}
@@ -502,10 +517,25 @@ public class AppController {
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.POST)
     public String editAppointment(
             @PathVariable(name = "idAppuntamento") long appointmentID,
-            @RequestParam(name = "test") String test,
+            @RequestParam(name = "medic", required = false) String medicID,
+            @RequestParam(name = "patient", required = false) String patientID,
+            @RequestParam(name = "clinic", required = true) String clinic,
+            @RequestParam(name = "date", required = true) String appointmentDate,
             Model model
     ){
-        return "redirect:/appuntamenti";
+
+        String[] parts = appointmentDate.split("-");
+        appointmentDate = parts[2]+'/'+parts[1]+'/'+parts[0];
+
+        Appointment appointment = appointmentRepository.findById(appointmentID);
+        if(appointment != null){
+            appointment.setClinic(clinic);
+            appointment.setAppointmentDate(appointmentDate);
+            appointmentRepository.save(appointment);
+            return "redirect:/appuntamento/" + appointmentID;
+        }else{
+            return "redirect:/?error=true";
+        }
     }
 
     /*  ROUTE: /elimina-appuntamento/{idAppuntamento}

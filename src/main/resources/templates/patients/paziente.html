@@ -116,7 +116,10 @@
 						<b>APPUNTAMENTI</b>
 					</div>
 					<div class="col text-end">
-						<a href="/nuovo-appuntamento" role="button" class="btn btn-success"><i class="fas fa-plus"></i> Nuovo</a>
+						<form action="/nuovo-appuntamento" method="get">
+							<input type="text" name="IDPaziente" id="IDPaziente" value="1" th:value="${patient.patientID}" readonly hidden />
+							<button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Nuovo</button>
+						</form>
 					</div>
 				</div>
 				<div class="card-body">
