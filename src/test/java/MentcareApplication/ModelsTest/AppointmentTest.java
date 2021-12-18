@@ -69,6 +69,14 @@ public class AppointmentTest {
     }
 
     @Test
+    public void getAppointmentDateToDateTest(){
+        String[] parts = appointment.getAppointmentDate().split("/");
+        String date = parts[2]+'-'+parts[1]+'-'+parts[0];
+
+        assertEquals(date, this.appointment.getAppointmentDateToDate());
+    }
+
+    @Test
     public void setAppointmentDateTest() {
         assertEquals(dtf.format(now), this.appointment.getAppointmentDate());
         appointment.setAppointmentDate(dtf.format(now.plusDays(1)));
