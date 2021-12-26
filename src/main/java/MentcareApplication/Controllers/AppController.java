@@ -214,14 +214,14 @@ public class AppController {
                 if(a.isActive()){
                     if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
                         futureAppointments.add(a);
-                        futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     } else {
                         pastAppointments.add(a);
-                        futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     }
                 }
             }
 
+            futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
+            pastAppointments.sort((Appointment a1, Appointment a2) -> LocalDate.parse(a2.getAppointmentDate(), dtf).compareTo(LocalDate.parse(a1.getAppointmentDate(), dtf)));
             List<Patient> patients = patientRepository.findByMedicMedicID(medicID);
 
 
@@ -236,7 +236,7 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /medico/{idPaziente}
+    /*  ROUTE: /paziente/{idPaziente}
      *  METHOD: GET
      *  DESC: Dettaglio di un paziente
      *  PARAMS: idPaziente è l'id del paziente
@@ -256,13 +256,14 @@ public class AppController {
                 if(a.isActive()){
                     if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
                         futureAppointments.add(a);
-                        futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     } else {
                         pastAppointments.add(a);
-                        pastAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
                     }
                 }
             }
+
+            futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
+            pastAppointments.sort((Appointment a1, Appointment a2) -> LocalDate.parse(a2.getAppointmentDate(), dtf).compareTo(LocalDate.parse(a1.getAppointmentDate(), dtf)));
 
             Medic medic = patient.getMedic();
 

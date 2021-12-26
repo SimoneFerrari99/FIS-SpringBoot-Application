@@ -119,11 +119,21 @@ In particolare, sono presenti le routes utili alla visualizzazione dei dettagli 
 Per comodità di navigazione, inoltre, ogniqualvolta appaia il nome e cognome di un medico/paziente, effettuando un click su diesso si può accedere direttamente a maggiori dettagli.  
 
 ### Altre scelte progettuali
-Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali a scopo unico di facilitarne e semplificarne l'implementazione. Ove il sistema dovesse essere relamente implementato, allora tali assunzioni verrebbo a meno. 
+Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali a scopo unico di facilitarne e semplificarne l'implementazione. Ove il sistema dovesse essere relamente implementato, allora tali assunzioni non verrebbero prese. 
 - **Data**: Gli appuntamenti e le richieste sono gestite solamente con una data, nel formato gg/mm/aaaa. Ovviamente, in una situazione reale, si dovrebbe tenere conto anche dell'ora, in formato hh:mm, ma per lo scopo del progetto si è deciso di ometterla.
 - **Controlli sugli appuntamenti**: Per semplicità, non è stato effettuato alcun controllo in merito a possibili appuntamenti duplicati e/o in conflitto. Si assume che il Receptionist effettui le dovute verifiche prima di prenotare appuntamenti incompatibili. 
 - **Clinica**: Come già detto, la clinica è gestita mediante una stringa di testo libero, ma in un reale sistema completo, potrebbe essere gestita con un Model a parte, di nome *Clinic*, in cui al suo interno siano contenuti diversi dati. In questo modo, risulterebbe più semplice effettuare analisi e verifiche circa l'approvigionamento dei medicinali e la disponibilità di slot per ulteriori appuntamenti. 
 - **Un solo medico per paziente**: Si è assunto che un paziente abbia uno e un solo medico associato. Esso può essere cambiato, ma non potrà mai essere seguito da due medici nello stesso periodo di tempo. 
+
+## Testing
+### Test effettuati
+
+### Coverage
+
+## Tecnologie impiegate
+
+## Avvio del progetto
+
 
 
 <link
