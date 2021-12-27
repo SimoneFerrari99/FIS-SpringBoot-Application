@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -30,7 +31,7 @@ public class MentcareApplicationTest {
     @Before
     public void setUp() {
         org.openqa.selenium.chrome.ChromeOptions chrome_options = new ChromeOptions();
-        chrome_options.addArguments("--headless");
+        //chrome_options.addArguments("--headless");
         if(SystemUtils.IS_OS_WINDOWS){
             System.setProperty("webdriver.chrome.driver",
                     Paths.get("src/test/resources/chromedriver_win32_96/chromedriver.exe").toString());
@@ -50,7 +51,7 @@ public class MentcareApplicationTest {
     @After
     public void tearDown() {
         if (driver != null) {
-            driver.quit();
+            //driver.quit();
         }
     }
 
@@ -61,10 +62,9 @@ public class MentcareApplicationTest {
         String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
         assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
 
-        // test pulsante "maggiori dettagli"
         WebElement moreDetails = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
         moreDetails.click();
-        String title1 = driver.findElement(By.xpath("//b[contains(text(),'DETTAGLI APPUNTAMENTO')]")).getText();
+        String title1 = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
         assertEquals("DETTAGLI APPUNTAMENTO", title1);
     }
 
@@ -75,7 +75,6 @@ public class MentcareApplicationTest {
         String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
         assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
 
-        // Test pulsante "modifica"
         WebElement edit = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[2]"));
         edit.click();
         String title = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
@@ -89,26 +88,38 @@ public class MentcareApplicationTest {
         String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
         assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
 
-        // Test pulsante "vedi tutti"
         WebElement all = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/a[1]"));
         all.click();
-        String title = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI')]")).getText();
+        String title = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
         assertEquals("APPUNTAMENTI", title);
     }
 
     @Test
-    //TODO
-    public void scenario2_Rifiuto(){
+    public void scenario2(){
         driver.get("http://localhost:8080/");
 
         String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
         assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
 
-        // Test pulsante "vedi tutti"
-        WebElement all = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/a[1]"));
-        all.click();
-        String title = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI')]")).getText();
-        assertEquals("APPUNTAMENTI", title);
+        // Click pulsante di accettazione
+        WebElement accept = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/a[1]"));
+        accept.click();
+
+        String title = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
+        assertEquals("Harrison Ford", title);
+
+        // Inserimento medico
+        WebElement medic = driver.findElement(By.xpath("//select[@id='medic']"));
+        medic.sendKeys("1");
+
+        // Submit del form
+        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
+        submitButton.submit();
+
+        // Controllo della pagina d'arrivo
+        String patient = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
+        assertEquals("Harrison Ford", patient);
+
     }
 
 }
