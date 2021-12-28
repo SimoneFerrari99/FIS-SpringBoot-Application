@@ -5,6 +5,9 @@
 [1. Il sistema Mentcare](#il-sistema-mentcare)  
 [2. Ingegneria dei requisiti: scenari](#ingegneria-dei-requisiti-scenari)  
 [3. Ulteriori requisiti soddisfatti](#ulteriori-requisiti-soddisfatti)
+[4. Testing](#testing)
+[5. Tecnologie impiegate](#tecnologie-impiegate)
+[6. Avvio del progetto](#avvio-del-progetto)
 
 ## Il sistema Mentcare
 **Descrizione generale**  
@@ -102,21 +105,18 @@ L'applicativo è stato infine sviluppato in ambiente Web, rendendolo quindi acce
 ### 3. Riservatezza delle cartelle cliniche
 Per quanto riguarda la specifica *"Non tutti gli utenti del sistema hanno accesso alla cartella clinica del paziente: questa, infatti, può essere consultata solo dal medico e dal paziente stesso."*, si è pensato di non rendere visibili le informazioni cliniche del paziente all'interno della sua pagina di dettaglio. Tali informazioni, infatti, non sono e non devono essere in perimetro del Receptionist.   
 Una possibile idea, non sviluppata perchè non ritenuta di fondamentale importanza, vede un pulsate, all'interno della pagina di dettaglio del paziente, che, al click, apra un piccolo form di "richiesta accesso alla cartella clinica". Tale form è diretto al medico associato, il quale dovrà valutare la richiesta ed approvarla o meno. Questa funzionalità potrebbe essere utile nel caso in cui sia necessario trasferire le informaioni all'esterno del sistema Mentcare, ad esempio per inoltrarle ad un medico esterno al network. 
-
 ### 4. Reperibilità
 Una possibile soluzione a "*Ne segue che il paziente (o il tutore) debba poter essere contattato da parte del medico o della segreteria con delle comunicazioni di qualsiasi genere.*" risiede nella funzionalità di invio comunicazioni, descritta anche nello Scenario 6. In questo modo, un Receptionist può sempre comunicare con medico e paziente, o eventualmente il suo tutor.
-
 ### 5. Pericolosità dei pazienti
 Un requisito importante risiede nel fatto che "*Alcuni pazienti potrebbero presentare delle problematiche gravi, che li renda classificabili come "pericolosi". In tal caso, l'intero staff (medico e non) deve essere sempre avvertito, in maniera tale che si possano prendere le dovute precauzioni a tutela del medico, del personale di segreteria e degli altri pazienti.*".
 A tale scopo, il Model del paziente contiene un flag booleano che indica se il paziente è pericoloso o meno. Tale flag può essere gestito sia dal medico, che dal Receptionist, e, ove attivo per un paziente, farà comparire un simbolo rosso <i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i>, accanto ad ogni occorrenza del paziente, all'interno dell'intero sistema (ad esempio, nel dettaglio di un appuntamento). 
-
 ### 6. Traccia delle eliminazioni
 Per questioni leegali, "*si deve sempre tenere traccia delle azioni svolte dal medico all'interno della cartella clinica, le quali, in caso di eventuale indagine di polizia o revisione giudiziaria, devono poter essere estratte.*". In risposta, quindi, si è pensato di implementare le azioni di DELETE di appuntamenti/pazienti/richieste come azioni di PUT, le quali andranno semplicemente a disattivare i record coinvolti. Infatti, ogni paziente e ogni appuntamento contengono all'interno del Model un flag booleano che indica se il record è attivo o meno. A Front-End, sono visualizzati solo i dati attivi, mentre quelli disattivati sono esplusi, ma presenti a Back-End e recuperabili per eventuali estrazioni (ed utilizzabili in possibili applicazioni amministrative). 
-
 ### 8. Funzionalità secondarie implementate
 Per rendere il modulo sviluppato usabile, è stato necessario implementare ulteriori route e funzionalità all'interno del sistema.  
 In particolare, sono presenti le routes utili alla visualizzazione dei dettagli di un medico e di un paziente. Inoltre, vi sono le routes per la visualizzazione dei pazienti, degli appuntamenti e dei medici.  
-Per comodità di navigazione, inoltre, ogniqualvolta appaia il nome e cognome di un medico/paziente, effettuando un click su diesso si può accedere direttamente a maggiori dettagli.  
+Per comodità di navigazione, inoltre, ogniqualvolta appaia il nome e cognome di un medico/paziente, effettuando un click su di esso si può accedere direttamente a maggiori dettagli.  
+E' inoltre possibile modificare ed eliminare un appuntamento. 
 
 ### Altre scelte progettuali
 Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali a scopo unico di facilitarne e semplificarne l'implementazione. Ove il sistema dovesse essere relamente implementato, allora tali assunzioni non verrebbero prese. 
