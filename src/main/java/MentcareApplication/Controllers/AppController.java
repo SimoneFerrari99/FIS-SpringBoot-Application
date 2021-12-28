@@ -362,7 +362,7 @@ public class AppController {
             @RequestParam(name = "medic", required = true) String medicID,
             @RequestParam(name = "patient", required = true) String patientID,
             @RequestParam(name = "clinic", required = true) String clinic,
-            @RequestParam(name = "date", required = true) String appointmentDate,
+            @RequestParam(name = "appointmentDate", required = true) String appointmentDate,
             Model model
     ){
 
@@ -519,7 +519,7 @@ public class AppController {
             @RequestParam(name = "medic", required = false) String medicID,
             @RequestParam(name = "patient", required = false) String patientID,
             @RequestParam(name = "clinic", required = true) String clinic,
-            @RequestParam(name = "date", required = true) String appointmentDate,
+            @RequestParam(name = "appointmentDate", required = true) String appointmentDate,
             Model model
     ){
 
