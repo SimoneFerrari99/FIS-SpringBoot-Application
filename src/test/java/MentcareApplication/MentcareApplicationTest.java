@@ -178,7 +178,6 @@ public class MentcareApplicationTest {
         assertEquals("PAZIENTI", patientsTitle2);
 
         // Controllo presenza nuovo paziente
-        boolean founded = false;
         String patientCF = driver.findElement(By.xpath("//th[contains(text(),'SF99EI')]")).getText();
         assertEquals("SF99EI", patientCF);
 
