@@ -127,8 +127,24 @@ Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali
 
 ## Testing
 ### Test effettuati
+#### Unit Test
+Sono stati eseguiti Unit test per:
+- Models: 64 test con coverage 100% (72/72) sui metodi e 100% (102/102) sulle righe di codice totali.
+- Repositories: 6 test con coverage 85% (17/20) sui metodi e 86% (204/237) sulle righe di codice totali;
+- Utils: ******TODO******
+
+#### Acceptance Test
+Sono stati eseguiti gli Acceptance Test per gli scenari descritti in precedenza. In particolare:
+- Generale: 13 test con coverage 85% (17/20) sui metodi e 86% (204/237) sulle righe di codice totali;
+- Scenario 1: 3 test.
+- Scenario 2: 1 test.
+- Scenario 3: 1 test.
+- Scenario 4: 3 test.
+- Scenario 5: 4 test.
+- Scenario 6: 1 test.
 
 ### Coverage
+Il report dettagliato della coverage dei test è contenuto nel file *\MentcareApplication\coverage.html* .
 
 ## Tecnologie impiegate
 
