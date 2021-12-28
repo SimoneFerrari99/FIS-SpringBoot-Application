@@ -490,7 +490,6 @@ public class AppController {
      *  PARAMS: idAppuntamento è l'id dell'appuntamento
      *  ATTRIBUTES: -
      */
-    // TODO: 14/12/2021
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.GET)
     public String formEditAppointment(
             @PathVariable(name = "idAppuntamento") long appointmentID,
@@ -514,7 +513,6 @@ public class AppController {
      *  PARAMS: idAppuntamento è l'id dell'appuntamento
      *  ATTRIBUTES: -
      */
-    // TODO: 14/12/2021
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.POST)
     public String editAppointment(
             @PathVariable(name = "idAppuntamento") long appointmentID,
