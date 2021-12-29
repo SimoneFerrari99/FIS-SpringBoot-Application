@@ -4,10 +4,10 @@
 ## Indice
 [1. Il sistema Mentcare](#il-sistema-mentcare)  
 [2. Ingegneria dei requisiti: scenari](#ingegneria-dei-requisiti-scenari)  
-[3. Ulteriori requisiti soddisfatti](#ulteriori-requisiti-soddisfatti)
-[4. Testing](#testing)
-[5. Tecnologie impiegate](#tecnologie-impiegate)
-[6. Avvio del progetto](#avvio-del-progetto)
+[3. Ulteriori requisiti soddisfatti](#ulteriori-requisiti-soddisfatti)  
+[4. Testing](#testing)  
+[5. Tecnologie impiegate](#tecnologie-impiegate)  
+[6. Avvio del progetto](#avvio-del-progetto)  
 
 ## Il sistema Mentcare
 **Descrizione generale**  
