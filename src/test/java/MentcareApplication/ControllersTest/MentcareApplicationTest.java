@@ -2,15 +2,17 @@ package MentcareApplication.ControllersTest;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -19,12 +21,12 @@ import org.openqa.selenium.WebDriver;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MentcareApplicationTest {
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private WebDriver driver;
@@ -76,8 +78,8 @@ public class MentcareApplicationTest {
 
         WebElement edit = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[2]"));
         edit.click();
-        String title = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("MODIFICA APPUNTAMENTO ID: 1", title);
+        String title = driver.findElement(By.xpath("//span[contains(text(),'MODIFICA APPUNTAMENTO')]")).getText();
+        assertEquals("MODIFICA APPUNTAMENTO", title);
     }
 
     @Test
@@ -94,6 +96,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario2_AcceptNewRequest() {
         driver.get("http://localhost:8080/");
 
@@ -122,6 +125,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario3_newPatient() {
         driver.get("http://localhost:8080/");
 
@@ -182,6 +186,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario4_newAppointmentFromAppointmentsPage() {
         driver.get("http://localhost:8080/");
 
@@ -229,6 +234,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario4_newAppointmentFromMedicPage() {
         driver.get("http://localhost:8080/");
 
@@ -280,6 +286,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario4_newAppointmentFromPatientPage() {
         driver.get("http://localhost:8080/");
 
@@ -344,6 +351,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario5_appointmentDetailsFromAppointments() {
         driver.get("http://localhost:8080/");
 
@@ -369,7 +377,8 @@ public class MentcareApplicationTest {
     }
 
     @Test
-    public void scenario5_appointmentDetailsFromPatient() {
+    @DirtiesContext
+    public void scenario5_appointmentDetailsFromPatient() throws InterruptedException {
         driver.get("http://localhost:8080/");
 
         String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
@@ -395,7 +404,6 @@ public class MentcareApplicationTest {
         /*WebElement appointmentMoreDetails = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[4]/div[2]/div[2]/table[1]/tbody[1]/tr[1]/td[2]/a[1]"));
         appointmentMoreDetails.click();*/
         driver.navigate().to("http://localhost:8080/appuntamento/1");
-
 
         String appointentPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
         assertEquals("DETTAGLI APPUNTAMENTO", appointentPageTitle);
@@ -435,6 +443,7 @@ public class MentcareApplicationTest {
     }
 
     @Test
+    @DirtiesContext
     public void scenario6_newCommunication() {
         driver.get("http://localhost:8080/");
 
@@ -473,5 +482,93 @@ public class MentcareApplicationTest {
         String newCommunication = driver.findElement(By.xpath("//td[contains(text(),'Testo di prova per la comunicazione.')]")).getText();
         assertEquals("Testo di prova per la comunicazione.", newCommunication);
 
+    }
+
+    @Test
+    @DirtiesContext
+    public void extra1_editAppointment() {
+        driver.get("http://localhost:8080/");
+
+        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
+        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+
+        // Click modifica appuntamento
+        WebElement edit = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[2]"));
+        edit.click();
+        String title = driver.findElement(By.xpath("//span[contains(text(),'MODIFICA APPUNTAMENTO')]")).getText();
+        assertEquals("MODIFICA APPUNTAMENTO", title);
+
+        // Modifica di alcuni campi del form appuntamento
+        WebElement clinic = driver.findElement(By.xpath("//input[@id='clinic']"));
+        clinic.sendKeys("MODIFICATO");
+
+        WebElement appointmentDateForm = driver.findElement(By.xpath("//input[@id='appointmentDate']"));
+        appointmentDateForm.sendKeys(dtf.format(LocalDate.now().plusDays(2)));
+
+        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
+        submitButton.submit();
+
+        // Controllo redirect a pagina appuntamento modificato e verifica modifica appuntamento
+        String appointmentsPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
+        assertEquals("DETTAGLI APPUNTAMENTO", appointmentsPageTitle);
+
+        String editedAppointmentByClinic = driver.findElement(By.xpath("//body/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[4]/div[2]")).getText();
+        assertEquals("MestreMODIFICATO", editedAppointmentByClinic);
+
+        String editedAppointmentDate = driver.findElement(By.xpath("//body/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[3]/div[2]")).getText();
+        assertEquals(dtf.format(LocalDate.now().plusDays(2)), editedAppointmentDate);
+    }
+
+    @Test
+    @DirtiesContext
+    public void extra2_deleteAppointment() {
+        driver.get("http://localhost:8080/");
+
+        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
+        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+
+        // Click maggiori dettagli appuntamento
+        WebElement moreDetails = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
+        moreDetails.click();
+        String title1 = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
+        assertEquals("DETTAGLI APPUNTAMENTO", title1);
+
+        // Click elimina appuntamento
+        WebElement deleteButton = driver.findElement(By.xpath("//body/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/a[1]"));
+        deleteButton.click();
+
+        // Controllo redirect a pagina appuntamenti
+        String appointmentsPageTitle2 = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
+        assertEquals("APPUNTAMENTI", appointmentsPageTitle2);
+
+    }
+
+    @Test
+    @DirtiesContext
+    public void extra3_deleteRequest() {
+        driver.get("http://localhost:8080/");
+
+        String todayAppointments1 = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
+        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments1);
+
+        // Click pulsante di rifiuto
+        WebElement reject = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/a[2]"));
+        reject.click();
+
+        // Verifica di non redirect
+        String todayAppointments2 = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
+        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments2);
+
+        WebElement deletedElement = null;
+        try{
+            deletedElement = driver.findElement(By.xpath("//body[1]/div[2]/div[3]/div[2]/table[1]/tbody[1]/tr[1]/th[1]"));
+        }catch(NoSuchElementException e){
+            assertNull(deletedElement);
+            System.out.println("SUCCESS: Element not found.");
+            return;
+        }
+
+        System.out.println("FAIL: Element found.");
+        assertNull(deletedElement);
     }
 }
