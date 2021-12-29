@@ -1,0 +1,783 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AppController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">MentcareApplication.Controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: AppController (MentcareApplication.Controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AppController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93%
+  </span>
+  <span class="absValue">
+    (185/199)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AppController$fillRepositoriesWithFakeData</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (38/38)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,1%
+  </span>
+  <span class="absValue">
+    (223/237)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package MentcareApplication.Controllers;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import MentcareApplication.Models.*;
+<i class="no-highlight">4</i>&nbsp;import MentcareApplication.Repositories.*;
+<i class="no-highlight">5</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.stereotype.Component;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.stereotype.Controller;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.ui.Model;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import java.text.ParseException;
+<i class="no-highlight">12</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">13</i>&nbsp;import java.time.format.DateTimeFormatter;
+<i class="no-highlight">14</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">15</i>&nbsp;import java.util.Comparator;
+<i class="no-highlight">16</i>&nbsp;import java.util.List;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;@Controller
+<b class="fc"><i class="no-highlight">19</i>&nbsp;public class AppController {</b>
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    @Autowired
+<i class="no-highlight">22</i>&nbsp;    private AppointmentRepository appointmentRepository;
+<i class="no-highlight">23</i>&nbsp;    @Autowired
+<i class="no-highlight">24</i>&nbsp;    private CommunicationRepository communicationRepository;
+<i class="no-highlight">25</i>&nbsp;    @Autowired
+<i class="no-highlight">26</i>&nbsp;    private MedicRepository medicRepository;
+<i class="no-highlight">27</i>&nbsp;    @Autowired
+<i class="no-highlight">28</i>&nbsp;    private PatientRepository patientRepository;
+<i class="no-highlight">29</i>&nbsp;    @Autowired
+<i class="no-highlight">30</i>&nbsp;    private RequestRepository requestRepository;
+<i class="no-highlight">31</i>&nbsp;
+<b class="fc"><i class="no-highlight">32</i>&nbsp;    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;);</b>
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;    /* Classe eseguita all&#39;avvio dell&#39;applicazione.
+<i class="no-highlight">35</i>&nbsp;     * Utilizzata per inserire alcuni dati d&#39;esempio all&#39;interno del Database. */
+<i class="no-highlight">36</i>&nbsp;    @Component
+<i class="no-highlight">37</i>&nbsp;    private static class fillRepositoriesWithFakeData {
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        public fillRepositoriesWithFakeData(AppointmentRepository appointmentRepository, CommunicationRepository communicationRepository, MedicRepository medicRepository, PatientRepository patientRepository, RequestRepository requestRepository) throws ParseException {</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;);</b>
+<i class="no-highlight">40</i>&nbsp;
+<b class="fc"><i class="no-highlight">41</i>&nbsp;            Medic medic1 = new Medic(&quot;Brad&quot;, &quot;Pitt&quot;, &quot;Psicologo&quot;, &quot;Svolge attività di prevenzione, diagnosi, intervento, promozione della salute, abilitazione-riabilitazione, sostegno e consulenza in ambito psicologico.&quot;);</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;            medicRepository.save(medic1);</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;            Medic medic2 = new Medic(&quot;Tom&quot;, &quot;Cruise&quot;, &quot;Disturbo del sonno&quot;, &quot;Studia con precisione eventuali alterazioni del sonno e della respirazione durante il sonno e offre le soluzioni terapeutiche adeguate.&quot;);</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;            medicRepository.save(medic2);</b>
+<i class="no-highlight">45</i>&nbsp;
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            Patient patient1 = new Patient(medic1, &quot;Johnny&quot;, &quot;Depp&quot;, &quot;JD63YP&quot;, &quot;09/06/1963&quot;, &quot;Venezia&quot;, &quot;Disturbo ossessivo compulsivo (DOC)&quot;, &quot;Ossessione per le mani pulite. Dopo ogni singola azione svolta, il paziente necessita di un lavaggio delle mani&quot;, false);</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;            patientRepository.save(patient1);</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;            Patient patient2 = new Patient(medic2, &quot;Angelina&quot;, &quot;Jolie&quot;, &quot;AJ75AE&quot;, &quot;04/06/1975&quot;, &quot;Padova&quot;, &quot;Attacchi di panico&quot;, &quot;Attacchi di panico molto frequenti, spesso manifestati a fine giornata, rendono la qualità del sonno molto scadente.&quot;, false);</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;            patientRepository.save(patient2);</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;            Patient patient3 = new Patient(medic1, &quot;Robert&quot;, &quot;De Niro&quot;, &quot;RD75TO&quot;, &quot;07/08/1943&quot;, &quot;Verona&quot;, &quot;Attacchi di ira&quot;, &quot;Repentini cambio d&#39;umore caratterizzano la persona, spesso rendendola aggressiva e pericolosa.&quot;, true);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;            patientRepository.save(patient3);</b>
+<i class="no-highlight">52</i>&nbsp;
+<b class="fc"><i class="no-highlight">53</i>&nbsp;            LocalDate now = LocalDate.now();</b>
+<i class="no-highlight">54</i>&nbsp;
+<b class="fc"><i class="no-highlight">55</i>&nbsp;            Patient patient4 = new Patient(null, &quot;Harrison&quot;, &quot;Ford&quot;, &quot;HF75ND&quot;, &quot;13/07/1942&quot;, &quot;Belluno&quot;, &quot;&quot;, &quot;Difficoltà nel mantenere l&#39;attenzione, anche per brevi periodi di tempo&quot;, false);</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;            patientRepository.save(patient4);</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;            requestRepository.save(new Request(patient4, dtf.format(now)));</b>
+<i class="no-highlight">58</i>&nbsp;
+<b class="fc"><i class="no-highlight">59</i>&nbsp;            Appointment appointment1 = new Appointment(medic1, patient1, dtf.format(now), &quot;Mestre&quot;);</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;            appointmentRepository.save(appointment1);</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;            communicationRepository.save(new Communication(appointment1, dtf.format(now.minusDays(1)), &quot;Sarà presente anche il fratello del paziente, il quale vorrà porle delle domande.&quot;, true, false));</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            communicationRepository.save(new Communication(appointment1, dtf.format(now), &quot;Ti ricordiamo l&#39;appuntamento di oggi!&quot;, false, true));</b>
+<i class="no-highlight">63</i>&nbsp;
+<b class="fc"><i class="no-highlight">64</i>&nbsp;            Appointment appointment2 = new Appointment(medic2, patient2, dtf.format(now), &quot;Vicenza&quot;);</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;            appointmentRepository.save(appointment2);</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;            communicationRepository.save(new Communication(appointment2, dtf.format(now), &quot;L&#39;appuntamento è stato spostato in data odierna&quot;, true, true));</b>
+<i class="no-highlight">67</i>&nbsp;
+<b class="fc"><i class="no-highlight">68</i>&nbsp;            LocalDate tomorrow = now.plusDays(1);</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;            Appointment appointment3 = new Appointment(medic1, patient3, dtf.format(now), &quot;Verona&quot;);</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;            appointmentRepository.save(appointment3);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;            communicationRepository.save(new Communication(appointment3, dtf.format(now), &quot;Ti ricordiamo che domani l&#39;appuntamento si svolgerà nella clinica di Verona!&quot;, false, true));</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;            Appointment appointment4 = new Appointment(medic1, patient1, dtf.format(tomorrow), &quot;Marghera&quot;);</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;            appointmentRepository.save(appointment4);</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;            Appointment appointment5 = new Appointment(medic2, patient2, dtf.format(tomorrow), &quot;Padova&quot;);</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;            appointmentRepository.save(appointment5);</b>
+<i class="no-highlight">76</i>&nbsp;
+<b class="fc"><i class="no-highlight">77</i>&nbsp;            LocalDate yesterday = now.minusDays(2);</b>
+<b class="fc"><i class="no-highlight">78</i>&nbsp;            Appointment appointment6 = new Appointment(medic1, patient3, dtf.format(yesterday), &quot;Bassano&quot;);</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;            Appointment appointment7 = new Appointment(medic1, patient1, dtf.format(yesterday), &quot;Oriago&quot;);</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;            Appointment appointment8 = new Appointment(medic2, patient2, dtf.format(yesterday), &quot;Monselice&quot;);</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;            appointmentRepository.save(appointment6);</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;            appointmentRepository.save(appointment7);</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;            appointmentRepository.save(appointment8);</b>
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;        }
+<i class="no-highlight">86</i>&nbsp;    }
+<i class="no-highlight">87</i>&nbsp;
+<i class="no-highlight">88</i>&nbsp;    /* ROUTE: /clean-database
+<i class="no-highlight">89</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">90</i>&nbsp;     *  DESC: route temporanea di sviluppo per svuotare il database.
+<i class="no-highlight">91</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">92</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">93</i>&nbsp;     *
+<i class="no-highlight">94</i>&nbsp;    @RequestMapping(&quot;/clean-database&quot;)
+<i class="no-highlight">95</i>&nbsp;    public String cleanDatabase(){
+<i class="no-highlight">96</i>&nbsp;        requestRepository.deleteAll();
+<i class="no-highlight">97</i>&nbsp;        communicationRepository.deleteAll();
+<i class="no-highlight">98</i>&nbsp;        appointmentRepository.deleteAll();
+<i class="no-highlight">99</i>&nbsp;        patientRepository.deleteAll();
+<i class="no-highlight">100</i>&nbsp;        medicRepository.deleteAll();
+<i class="no-highlight">101</i>&nbsp;        return &quot;redirect:/&quot;;
+<i class="no-highlight">102</i>&nbsp;    }*/
+<i class="no-highlight">103</i>&nbsp;
+<i class="no-highlight">104</i>&nbsp;    // ****************************************************************************************************************
+<i class="no-highlight">105</i>&nbsp;
+<i class="no-highlight">106</i>&nbsp;    /* ROUTE: /
+<i class="no-highlight">107</i>&nbsp;    *  METHOD: GET
+<i class="no-highlight">108</i>&nbsp;    *  DESC: Homepage dell&#39;applicazione web.
+<i class="no-highlight">109</i>&nbsp;    *  PARAMS: -
+<i class="no-highlight">110</i>&nbsp;    *  ATTRIBUTES: -
+<i class="no-highlight">111</i>&nbsp;    */
+<i class="no-highlight">112</i>&nbsp;    @RequestMapping(&quot;/&quot;)
+<i class="no-highlight">113</i>&nbsp;    public String home(
+<i class="no-highlight">114</i>&nbsp;            @RequestParam(name=&quot;error&quot;, required = false) boolean error,
+<i class="no-highlight">115</i>&nbsp;            Model model
+<i class="no-highlight">116</i>&nbsp;    ){
+<i class="no-highlight">117</i>&nbsp;
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        List&lt;Appointment&gt; appointments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        for(Appointment a : appointmentRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">120</i>&nbsp;            if(a.isActive() &amp;&amp; a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) == 0){</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;                appointments.add(a);</b>
+<i class="no-highlight">122</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">123</i>&nbsp;        }</b>
+<i class="no-highlight">124</i>&nbsp;
+<b class="fc"><i class="no-highlight">125</i>&nbsp;        List&lt;Request&gt; requests = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">126</i>&nbsp;        for(Request r : requestRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;            if(r.isActive()) requests.add(r);</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;        }</b>
+<i class="no-highlight">129</i>&nbsp;
+<b class="fc"><i class="no-highlight">130</i>&nbsp;        model.addAttribute(&quot;appointments&quot;, appointments);</b>
+<b class="fc"><i class="no-highlight">131</i>&nbsp;        model.addAttribute(&quot;requests&quot;, requests);</b>
+<i class="no-highlight">132</i>&nbsp;
+<b class="fc"><i class="no-highlight">133</i>&nbsp;        if(error) model.addAttribute(&quot;error&quot;, true);</b>
+<i class="no-highlight">134</i>&nbsp;
+<b class="fc"><i class="no-highlight">135</i>&nbsp;        return &quot;home&quot;;</b>
+<i class="no-highlight">136</i>&nbsp;    }
+<i class="no-highlight">137</i>&nbsp;
+<i class="no-highlight">138</i>&nbsp;    /*  ROUTE: /medici
+<i class="no-highlight">139</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">140</i>&nbsp;     *  DESC: Lista dei medici
+<i class="no-highlight">141</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">142</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">143</i>&nbsp;     */
+<i class="no-highlight">144</i>&nbsp;    @RequestMapping(&quot;/medici&quot;)
+<i class="no-highlight">145</i>&nbsp;    public String medics(Model model){
+<i class="no-highlight">146</i>&nbsp;
+<b class="fc"><i class="no-highlight">147</i>&nbsp;        List&lt;Medic&gt; medics = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">148</i>&nbsp;        for(Medic m : medicRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">149</i>&nbsp;            medics.add(m);</b>
+<b class="fc"><i class="no-highlight">150</i>&nbsp;        }</b>
+<i class="no-highlight">151</i>&nbsp;
+<b class="fc"><i class="no-highlight">152</i>&nbsp;        model.addAttribute(&quot;medics&quot;, medics);</b>
+<b class="fc"><i class="no-highlight">153</i>&nbsp;        return &quot;medics/medici&quot;;</b>
+<i class="no-highlight">154</i>&nbsp;    }
+<i class="no-highlight">155</i>&nbsp;
+<i class="no-highlight">156</i>&nbsp;    /*  ROUTE: /pazienti
+<i class="no-highlight">157</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">158</i>&nbsp;     *  DESC: Lista dei pazienti
+<i class="no-highlight">159</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">160</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">161</i>&nbsp;     */
+<i class="no-highlight">162</i>&nbsp;    @RequestMapping(&quot;/pazienti&quot;)
+<i class="no-highlight">163</i>&nbsp;    public String patients(Model model){
+<i class="no-highlight">164</i>&nbsp;
+<b class="fc"><i class="no-highlight">165</i>&nbsp;        List&lt;Patient&gt; patients = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">166</i>&nbsp;        for(Patient p : patientRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">167</i>&nbsp;            if(p.isConfirmed()){</b>
+<b class="fc"><i class="no-highlight">168</i>&nbsp;                patients.add(p);</b>
+<i class="no-highlight">169</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">170</i>&nbsp;        }</b>
+<i class="no-highlight">171</i>&nbsp;
+<b class="fc"><i class="no-highlight">172</i>&nbsp;        model.addAttribute(&quot;patients&quot;, patients);</b>
+<i class="no-highlight">173</i>&nbsp;
+<b class="fc"><i class="no-highlight">174</i>&nbsp;        return &quot;patients/pazienti&quot;;</b>
+<i class="no-highlight">175</i>&nbsp;    }
+<i class="no-highlight">176</i>&nbsp;
+<i class="no-highlight">177</i>&nbsp;    /*  ROUTE: /appuntamenti
+<i class="no-highlight">178</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">179</i>&nbsp;     *  DESC: Lista degli appuntamenti
+<i class="no-highlight">180</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">181</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">182</i>&nbsp;     */
+<i class="no-highlight">183</i>&nbsp;    @RequestMapping(&quot;/appuntamenti&quot;)
+<i class="no-highlight">184</i>&nbsp;    public String appointments(Model model){
+<i class="no-highlight">185</i>&nbsp;
+<b class="fc"><i class="no-highlight">186</i>&nbsp;        List&lt;Appointment&gt; appointments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">187</i>&nbsp;        for(Appointment a : appointmentRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">188</i>&nbsp;            if(a.isActive() &amp;&amp; a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) &gt;= 0){</b>
+<b class="fc"><i class="no-highlight">189</i>&nbsp;                appointments.add(a);</b>
+<i class="no-highlight">190</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">191</i>&nbsp;        }</b>
+<i class="no-highlight">192</i>&nbsp;
+<b class="fc"><i class="no-highlight">193</i>&nbsp;        appointments.sort(Comparator.comparing((Appointment a) -&gt; LocalDate.parse(a.getAppointmentDate(), dtf)));</b>
+<i class="no-highlight">194</i>&nbsp;
+<b class="fc"><i class="no-highlight">195</i>&nbsp;        List&lt;Medic&gt; medics = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">196</i>&nbsp;        for(Medic m : medicRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">197</i>&nbsp;            medics.add(m);</b>
+<b class="fc"><i class="no-highlight">198</i>&nbsp;        }</b>
+<i class="no-highlight">199</i>&nbsp;
+<b class="fc"><i class="no-highlight">200</i>&nbsp;        List&lt;Patient&gt; patients = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">201</i>&nbsp;        for(Patient p : patientRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">202</i>&nbsp;            if(p.isConfirmed()){</b>
+<b class="fc"><i class="no-highlight">203</i>&nbsp;                patients.add(p);</b>
+<i class="no-highlight">204</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">205</i>&nbsp;        }</b>
+<i class="no-highlight">206</i>&nbsp;
+<b class="fc"><i class="no-highlight">207</i>&nbsp;        model.addAttribute(&quot;appointments&quot;, appointments);</b>
+<b class="fc"><i class="no-highlight">208</i>&nbsp;        model.addAttribute(&quot;medics&quot;, medics);</b>
+<b class="fc"><i class="no-highlight">209</i>&nbsp;        model.addAttribute(&quot;patients&quot;, patients);</b>
+<i class="no-highlight">210</i>&nbsp;
+<b class="fc"><i class="no-highlight">211</i>&nbsp;        return &quot;appointments/appuntamenti&quot;;</b>
+<i class="no-highlight">212</i>&nbsp;    }
+<i class="no-highlight">213</i>&nbsp;
+<i class="no-highlight">214</i>&nbsp;    /*  ROUTE: /medico/{idMedico}
+<i class="no-highlight">215</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">216</i>&nbsp;     *  DESC: Dettaglio di un medico
+<i class="no-highlight">217</i>&nbsp;     *  PARAMS: idMedico è l&#39;id del medico
+<i class="no-highlight">218</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">219</i>&nbsp;     */
+<i class="no-highlight">220</i>&nbsp;    @RequestMapping(&quot;/medico/{idMedico}&quot;)
+<i class="no-highlight">221</i>&nbsp;    public String medicById(
+<i class="no-highlight">222</i>&nbsp;            @PathVariable(value = &quot;idMedico&quot;) long medicID,
+<i class="no-highlight">223</i>&nbsp;            Model model
+<i class="no-highlight">224</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">225</i>&nbsp;        Medic medic = medicRepository.findById(medicID);</b>
+<b class="fc"><i class="no-highlight">226</i>&nbsp;        if(medic != null){</b>
+<b class="fc"><i class="no-highlight">227</i>&nbsp;            List&lt;Appointment&gt; appointments = appointmentRepository.findByMedicMedicID(medicID);</b>
+<b class="fc"><i class="no-highlight">228</i>&nbsp;            List&lt;Appointment&gt; futureAppointments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">229</i>&nbsp;            List&lt;Appointment&gt; pastAppointments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">230</i>&nbsp;            for(Appointment a : appointments){</b>
+<b class="fc"><i class="no-highlight">231</i>&nbsp;                if(a.isActive()){</b>
+<b class="fc"><i class="no-highlight">232</i>&nbsp;                    if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) &gt;= 0) {</b>
+<b class="fc"><i class="no-highlight">233</i>&nbsp;                        futureAppointments.add(a);</b>
+<i class="no-highlight">234</i>&nbsp;                    } else {
+<b class="fc"><i class="no-highlight">235</i>&nbsp;                        pastAppointments.add(a);</b>
+<i class="no-highlight">236</i>&nbsp;                    }
+<i class="no-highlight">237</i>&nbsp;                }
+<b class="fc"><i class="no-highlight">238</i>&nbsp;            }</b>
+<i class="no-highlight">239</i>&nbsp;
+<b class="fc"><i class="no-highlight">240</i>&nbsp;            futureAppointments.sort(Comparator.comparing((Appointment a1) -&gt; LocalDate.parse(a1.getAppointmentDate(), dtf)));</b>
+<b class="fc"><i class="no-highlight">241</i>&nbsp;            pastAppointments.sort((Appointment a1, Appointment a2) -&gt; LocalDate.parse(a2.getAppointmentDate(), dtf).compareTo(LocalDate.parse(a1.getAppointmentDate(), dtf)));</b>
+<b class="fc"><i class="no-highlight">242</i>&nbsp;            List&lt;Patient&gt; patients = patientRepository.findByMedicMedicID(medicID);</b>
+<i class="no-highlight">243</i>&nbsp;
+<i class="no-highlight">244</i>&nbsp;
+<b class="fc"><i class="no-highlight">245</i>&nbsp;            model.addAttribute(&quot;medic&quot;, medic);</b>
+<b class="fc"><i class="no-highlight">246</i>&nbsp;            model.addAttribute(&quot;patients&quot;, patients);</b>
+<b class="fc"><i class="no-highlight">247</i>&nbsp;            model.addAttribute(&quot;futureAppointments&quot;, futureAppointments);</b>
+<b class="fc"><i class="no-highlight">248</i>&nbsp;            model.addAttribute(&quot;pastAppointments&quot;, pastAppointments);</b>
+<b class="fc"><i class="no-highlight">249</i>&nbsp;            return &quot;medics/medico&quot;;</b>
+<i class="no-highlight">250</i>&nbsp;
+<i class="no-highlight">251</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">252</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">253</i>&nbsp;        }
+<i class="no-highlight">254</i>&nbsp;    }
+<i class="no-highlight">255</i>&nbsp;
+<i class="no-highlight">256</i>&nbsp;    /*  ROUTE: /paziente/{idPaziente}
+<i class="no-highlight">257</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">258</i>&nbsp;     *  DESC: Dettaglio di un paziente
+<i class="no-highlight">259</i>&nbsp;     *  PARAMS: idPaziente è l&#39;id del paziente
+<i class="no-highlight">260</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">261</i>&nbsp;     */
+<i class="no-highlight">262</i>&nbsp;    @RequestMapping(&quot;/paziente/{idPaziente}&quot;)
+<i class="no-highlight">263</i>&nbsp;    public String patientById(
+<i class="no-highlight">264</i>&nbsp;            @PathVariable(value = &quot;idPaziente&quot;) long patientID,
+<i class="no-highlight">265</i>&nbsp;            Model model
+<i class="no-highlight">266</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">267</i>&nbsp;        Patient patient = patientRepository.findById(patientID);</b>
+<b class="fc"><i class="no-highlight">268</i>&nbsp;        if(patient != null){</b>
+<b class="fc"><i class="no-highlight">269</i>&nbsp;            List&lt;Appointment&gt; appointments = appointmentRepository.findByPatientPatientID(patientID);</b>
+<b class="fc"><i class="no-highlight">270</i>&nbsp;            List&lt;Appointment&gt; futureAppointments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">271</i>&nbsp;            List&lt;Appointment&gt; pastAppointments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">272</i>&nbsp;            for(Appointment a : appointments){</b>
+<b class="fc"><i class="no-highlight">273</i>&nbsp;                if(a.isActive()){</b>
+<b class="fc"><i class="no-highlight">274</i>&nbsp;                    if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) &gt;= 0) {</b>
+<b class="fc"><i class="no-highlight">275</i>&nbsp;                        futureAppointments.add(a);</b>
+<i class="no-highlight">276</i>&nbsp;                    } else {
+<b class="fc"><i class="no-highlight">277</i>&nbsp;                        pastAppointments.add(a);</b>
+<i class="no-highlight">278</i>&nbsp;                    }
+<i class="no-highlight">279</i>&nbsp;                }
+<b class="fc"><i class="no-highlight">280</i>&nbsp;            }</b>
+<i class="no-highlight">281</i>&nbsp;
+<b class="fc"><i class="no-highlight">282</i>&nbsp;            futureAppointments.sort(Comparator.comparing((Appointment a1) -&gt; LocalDate.parse(a1.getAppointmentDate(), dtf)));</b>
+<b class="fc"><i class="no-highlight">283</i>&nbsp;            pastAppointments.sort((Appointment a1, Appointment a2) -&gt; LocalDate.parse(a2.getAppointmentDate(), dtf).compareTo(LocalDate.parse(a1.getAppointmentDate(), dtf)));</b>
+<i class="no-highlight">284</i>&nbsp;
+<b class="fc"><i class="no-highlight">285</i>&nbsp;            Medic medic = patient.getMedic();</b>
+<i class="no-highlight">286</i>&nbsp;
+<b class="fc"><i class="no-highlight">287</i>&nbsp;            model.addAttribute(&quot;patient&quot;, patient);</b>
+<b class="fc"><i class="no-highlight">288</i>&nbsp;            model.addAttribute(&quot;medic&quot;, medic);</b>
+<b class="fc"><i class="no-highlight">289</i>&nbsp;            model.addAttribute(&quot;futureAppointments&quot;, futureAppointments);</b>
+<b class="fc"><i class="no-highlight">290</i>&nbsp;            model.addAttribute(&quot;pastAppointments&quot;, pastAppointments);</b>
+<b class="fc"><i class="no-highlight">291</i>&nbsp;            return &quot;patients/paziente&quot;;</b>
+<i class="no-highlight">292</i>&nbsp;
+<i class="no-highlight">293</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">294</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">295</i>&nbsp;        }
+<i class="no-highlight">296</i>&nbsp;    }
+<i class="no-highlight">297</i>&nbsp;
+<i class="no-highlight">298</i>&nbsp;    /*  ROUTE: /appuntamento/{idAppuntamento}
+<i class="no-highlight">299</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">300</i>&nbsp;     *  DESC: Dettaglio di un Appuntamento
+<i class="no-highlight">301</i>&nbsp;     *  PARAMS: idAppuntamento è l&#39;id dell&#39;appuntamento
+<i class="no-highlight">302</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">303</i>&nbsp;     */
+<i class="no-highlight">304</i>&nbsp;    @RequestMapping(&quot;/appuntamento/{idAppuntamento}&quot;)
+<i class="no-highlight">305</i>&nbsp;    public String appointmentById(
+<i class="no-highlight">306</i>&nbsp;            @PathVariable(value = &quot;idAppuntamento&quot;) long appointmentID,
+<i class="no-highlight">307</i>&nbsp;            Model model
+<i class="no-highlight">308</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">309</i>&nbsp;        Appointment appointment = appointmentRepository.findById(appointmentID);</b>
+<b class="fc"><i class="no-highlight">310</i>&nbsp;        if(appointment != null){</b>
+<b class="fc"><i class="no-highlight">311</i>&nbsp;            List&lt;Communication&gt; communications = communicationRepository.findByAppointmentAppointmentID(appointmentID);</b>
+<b class="fc"><i class="no-highlight">312</i>&nbsp;            communications.sort((Communication c1, Communication c2) -&gt; ((int) c2.getCommunicationID()) - ((int) c1.getCommunicationID()));</b>
+<i class="no-highlight">313</i>&nbsp;
+<i class="no-highlight">314</i>&nbsp;
+<b class="fc"><i class="no-highlight">315</i>&nbsp;            model.addAttribute(&quot;appointment&quot;, appointment);</b>
+<b class="fc"><i class="no-highlight">316</i>&nbsp;            model.addAttribute(&quot;communications&quot;, communications);</b>
+<b class="fc"><i class="no-highlight">317</i>&nbsp;            return &quot;appointments/appuntamento&quot;;</b>
+<i class="no-highlight">318</i>&nbsp;
+<i class="no-highlight">319</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">320</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">321</i>&nbsp;        }
+<i class="no-highlight">322</i>&nbsp;    }
+<i class="no-highlight">323</i>&nbsp;
+<i class="no-highlight">324</i>&nbsp;    /*  ROUTE: /nuovo-appuntamento
+<i class="no-highlight">325</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">326</i>&nbsp;     *  DESC: Form nuovo appuntamento
+<i class="no-highlight">327</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">328</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">329</i>&nbsp;     */
+<i class="no-highlight">330</i>&nbsp;    @RequestMapping(value = &quot;/nuovo-appuntamento&quot;, method = RequestMethod.GET)
+<i class="no-highlight">331</i>&nbsp;    public String formNewAppointment(
+<i class="no-highlight">332</i>&nbsp;            @RequestParam(name=&quot;IDMedico&quot;, required = false, defaultValue = &quot;-1&quot;) long medicID,
+<i class="no-highlight">333</i>&nbsp;            @RequestParam(name=&quot;IDPaziente&quot;, required = false, defaultValue = &quot;-1&quot;) long patientID,
+<i class="no-highlight">334</i>&nbsp;            Model model
+<i class="no-highlight">335</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">336</i>&nbsp;        boolean error = false;</b>
+<i class="no-highlight">337</i>&nbsp;
+<b class="fc"><i class="no-highlight">338</i>&nbsp;        if(medicID != -1){</b>
+<b class="fc"><i class="no-highlight">339</i>&nbsp;            Medic medic = medicRepository.findById(medicID);</b>
+<b class="fc"><i class="no-highlight">340</i>&nbsp;            if(medic != null){</b>
+<b class="fc"><i class="no-highlight">341</i>&nbsp;                List&lt;Patient&gt; patients = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">342</i>&nbsp;                for(Patient p : patientRepository.findAll()){</b>
+<b class="fc"><i class="no-highlight">343</i>&nbsp;                    if(p.isConfirmed() &amp;&amp; p.getMedic().getMedicID()==medicID){</b>
+<b class="fc"><i class="no-highlight">344</i>&nbsp;                        patients.add(p);</b>
+<i class="no-highlight">345</i>&nbsp;                    }
+<b class="fc"><i class="no-highlight">346</i>&nbsp;                }</b>
+<b class="fc"><i class="no-highlight">347</i>&nbsp;                model.addAttribute(&quot;byMedic&quot;, true);</b>
+<b class="fc"><i class="no-highlight">348</i>&nbsp;                model.addAttribute(&quot;medic&quot;, medic);</b>
+<b class="fc"><i class="no-highlight">349</i>&nbsp;                model.addAttribute(&quot;medicPatients&quot;, patients);</b>
+<b class="fc"><i class="no-highlight">350</i>&nbsp;            }else{</b>
+<b class="nc"><i class="no-highlight">351</i>&nbsp;                error = true;</b>
+<i class="no-highlight">352</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">353</i>&nbsp;        } else if(patientID != -1){</b>
+<b class="fc"><i class="no-highlight">354</i>&nbsp;            Patient patient = patientRepository.findById(patientID);</b>
+<b class="fc"><i class="no-highlight">355</i>&nbsp;            if(patient != null){</b>
+<b class="fc"><i class="no-highlight">356</i>&nbsp;                model.addAttribute(&quot;byPatient&quot;, true);</b>
+<b class="fc"><i class="no-highlight">357</i>&nbsp;                model.addAttribute(&quot;patient&quot;, patient);</b>
+<i class="no-highlight">358</i>&nbsp;            }else{
+<b class="nc"><i class="no-highlight">359</i>&nbsp;                error = true;</b>
+<i class="no-highlight">360</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">361</i>&nbsp;        } else{ error = true; }</b>
+<i class="no-highlight">362</i>&nbsp;
+<b class="fc"><i class="no-highlight">363</i>&nbsp;        if(error){</b>
+<b class="nc"><i class="no-highlight">364</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">365</i>&nbsp;        }else{
+<b class="fc"><i class="no-highlight">366</i>&nbsp;            model.addAttribute(&quot;nuovo&quot;, true);</b>
+<b class="fc"><i class="no-highlight">367</i>&nbsp;            return &quot;appointments/form_appuntamento&quot;;</b>
+<i class="no-highlight">368</i>&nbsp;        }
+<i class="no-highlight">369</i>&nbsp;    }
+<i class="no-highlight">370</i>&nbsp;
+<i class="no-highlight">371</i>&nbsp;    /*  ROUTE: /nuovo-appuntamento
+<i class="no-highlight">372</i>&nbsp;     *  METHOD: POST
+<i class="no-highlight">373</i>&nbsp;     *  DESC: Inserimento nuovo appuntamento
+<i class="no-highlight">374</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">375</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">376</i>&nbsp;     */
+<i class="no-highlight">377</i>&nbsp;    @RequestMapping(value = &quot;/nuovo-appuntamento&quot;, method = RequestMethod.POST)
+<i class="no-highlight">378</i>&nbsp;    public String insertNewAppointment(
+<i class="no-highlight">379</i>&nbsp;            @RequestParam(name = &quot;medic&quot;, required = true) String medicID,
+<i class="no-highlight">380</i>&nbsp;            @RequestParam(name = &quot;patient&quot;, required = true) String patientID,
+<i class="no-highlight">381</i>&nbsp;            @RequestParam(name = &quot;clinic&quot;, required = true) String clinic,
+<i class="no-highlight">382</i>&nbsp;            @RequestParam(name = &quot;appointmentDate&quot;, required = true) String appointmentDate,
+<i class="no-highlight">383</i>&nbsp;            Model model
+<i class="no-highlight">384</i>&nbsp;    ){
+<i class="no-highlight">385</i>&nbsp;
+<b class="fc"><i class="no-highlight">386</i>&nbsp;        String[] parts = appointmentDate.split(&quot;-&quot;);</b>
+<b class="fc"><i class="no-highlight">387</i>&nbsp;        appointmentDate = parts[2]+&#39;/&#39;+parts[1]+&#39;/&#39;+parts[0];</b>
+<i class="no-highlight">388</i>&nbsp;
+<b class="fc"><i class="no-highlight">389</i>&nbsp;        Appointment appointment = new Appointment(medicRepository.findById(Long.parseLong(medicID)), patientRepository.findById(Long.parseLong(patientID)), appointmentDate, clinic);</b>
+<b class="fc"><i class="no-highlight">390</i>&nbsp;        appointmentRepository.save(appointment);</b>
+<i class="no-highlight">391</i>&nbsp;
+<b class="fc"><i class="no-highlight">392</i>&nbsp;        return &quot;redirect:/appuntamenti&quot;;</b>
+<i class="no-highlight">393</i>&nbsp;    }
+<i class="no-highlight">394</i>&nbsp;
+<i class="no-highlight">395</i>&nbsp;    /*  ROUTE: /nuovo-paziente
+<i class="no-highlight">396</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">397</i>&nbsp;     *  DESC: Form nuovo paziente
+<i class="no-highlight">398</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">399</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">400</i>&nbsp;     */
+<i class="no-highlight">401</i>&nbsp;    @RequestMapping(value = &quot;/nuovo-paziente&quot;, method = RequestMethod.GET)
+<i class="no-highlight">402</i>&nbsp;    public String formNewPatient(Model model){
+<b class="fc"><i class="no-highlight">403</i>&nbsp;        model.addAttribute(&quot;nuovo&quot;, true);</b>
+<b class="fc"><i class="no-highlight">404</i>&nbsp;        model.addAttribute(&quot;medics&quot;, medicRepository.findAll());</b>
+<b class="fc"><i class="no-highlight">405</i>&nbsp;        return &quot;patients/form_paziente&quot;;</b>
+<i class="no-highlight">406</i>&nbsp;    }
+<i class="no-highlight">407</i>&nbsp;
+<i class="no-highlight">408</i>&nbsp;    /*  ROUTE: /nuovo-paziente
+<i class="no-highlight">409</i>&nbsp;     *  METHOD: POST
+<i class="no-highlight">410</i>&nbsp;     *  DESC: Inserimento nuovo paziente
+<i class="no-highlight">411</i>&nbsp;     *  PARAMS: -
+<i class="no-highlight">412</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">413</i>&nbsp;     */
+<i class="no-highlight">414</i>&nbsp;    @RequestMapping(value = &quot;/nuovo-paziente&quot;, method = RequestMethod.POST)
+<i class="no-highlight">415</i>&nbsp;    public String insertNewPatient(
+<i class="no-highlight">416</i>&nbsp;            @RequestParam(name = &quot;nome&quot;, required = true) String firstname,
+<i class="no-highlight">417</i>&nbsp;            @RequestParam(name = &quot;cognome&quot;, required = true) String lastname,
+<i class="no-highlight">418</i>&nbsp;            @RequestParam(name = &quot;cf&quot;, required = true) String cf,
+<i class="no-highlight">419</i>&nbsp;            @RequestParam(name = &quot;cittaResidenza&quot;, required = true) String cityOfResidence,
+<i class="no-highlight">420</i>&nbsp;            @RequestParam(name = &quot;categoriaProblematica&quot;, required = true) String problemCategory,
+<i class="no-highlight">421</i>&nbsp;            @RequestParam(name = &quot;descrizioneProblematica&quot;, required = true) String problemDescription,
+<i class="no-highlight">422</i>&nbsp;            @RequestParam(name = &quot;dataNascita&quot;, required = true) String birthDate,
+<i class="no-highlight">423</i>&nbsp;            @RequestParam(name = &quot;medico&quot;, required = true) String medicID,
+<i class="no-highlight">424</i>&nbsp;            @RequestParam(name = &quot;pericoloso&quot;, defaultValue = &quot;false&quot;) boolean dangerous
+<i class="no-highlight">425</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">426</i>&nbsp;        String[] parts = birthDate.split(&quot;-&quot;);</b>
+<b class="fc"><i class="no-highlight">427</i>&nbsp;        birthDate = parts[2]+&#39;/&#39;+parts[1]+&#39;/&#39;+parts[0];</b>
+<i class="no-highlight">428</i>&nbsp;
+<b class="fc"><i class="no-highlight">429</i>&nbsp;        Patient patient = new Patient(medicRepository.findById(Long.parseLong(medicID)), firstname, lastname, cf, birthDate, cityOfResidence, problemCategory, problemDescription, dangerous);</b>
+<b class="fc"><i class="no-highlight">430</i>&nbsp;        patientRepository.save(patient);</b>
+<i class="no-highlight">431</i>&nbsp;
+<b class="fc"><i class="no-highlight">432</i>&nbsp;        return &quot;redirect:/pazienti&quot;;</b>
+<i class="no-highlight">433</i>&nbsp;    }
+<i class="no-highlight">434</i>&nbsp;
+<i class="no-highlight">435</i>&nbsp;    /*  ROUTE: /modifica-paziente/{idPaziente}
+<i class="no-highlight">436</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">437</i>&nbsp;     *  DESC: Form modifica paziente
+<i class="no-highlight">438</i>&nbsp;     *  PARAMS: idPaziente è l&#39;id del paziente
+<i class="no-highlight">439</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">440</i>&nbsp;     */
+<i class="no-highlight">441</i>&nbsp;    @RequestMapping(value = &quot;/modifica-paziente/{idPaziente}&quot;, method = RequestMethod.GET)
+<i class="no-highlight">442</i>&nbsp;    public String formEditPatient(
+<i class="no-highlight">443</i>&nbsp;            @PathVariable(name = &quot;idPaziente&quot;) long patientID,
+<i class="no-highlight">444</i>&nbsp;            Model model
+<i class="no-highlight">445</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">446</i>&nbsp;        Patient patient = patientRepository.findById(patientID);</b>
+<b class="fc"><i class="no-highlight">447</i>&nbsp;        if(patient != null){</b>
+<b class="fc"><i class="no-highlight">448</i>&nbsp;            model.addAttribute(&quot;patient&quot;, patient);</b>
+<b class="fc"><i class="no-highlight">449</i>&nbsp;            model.addAttribute(&quot;medics&quot;, medicRepository.findAll());</b>
+<b class="fc"><i class="no-highlight">450</i>&nbsp;            model.addAttribute(&quot;nuovo&quot;, false);</b>
+<b class="fc"><i class="no-highlight">451</i>&nbsp;            return &quot;patients/form_paziente&quot;;</b>
+<i class="no-highlight">452</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">453</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">454</i>&nbsp;        }
+<i class="no-highlight">455</i>&nbsp;    }
+<i class="no-highlight">456</i>&nbsp;
+<i class="no-highlight">457</i>&nbsp;    /*  ROUTE: /modifica-paziente/{idPaziente}
+<i class="no-highlight">458</i>&nbsp;     *  METHOD: dovrebbe essere PUT, ma i form HTML permettono solo GET e POST
+<i class="no-highlight">459</i>&nbsp;     *  DESC: Modifica di un paziente
+<i class="no-highlight">460</i>&nbsp;     *  PARAMS: idPaziente è l&#39;id del paziente
+<i class="no-highlight">461</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">462</i>&nbsp;     */
+<i class="no-highlight">463</i>&nbsp;    @RequestMapping(value = &quot;/modifica-paziente/{idPaziente}&quot;, method = RequestMethod.POST)
+<i class="no-highlight">464</i>&nbsp;    public String editPatient(
+<i class="no-highlight">465</i>&nbsp;            @PathVariable(name = &quot;idPaziente&quot;) long patientID,
+<i class="no-highlight">466</i>&nbsp;            @RequestParam(name = &quot;nome&quot;, required = true) String firstname,
+<i class="no-highlight">467</i>&nbsp;            @RequestParam(name = &quot;cognome&quot;, required = true) String lastname,
+<i class="no-highlight">468</i>&nbsp;            @RequestParam(name = &quot;cf&quot;, required = true) String cf,
+<i class="no-highlight">469</i>&nbsp;            @RequestParam(name = &quot;cittaResidenza&quot;, required = true) String cityOfResidence,
+<i class="no-highlight">470</i>&nbsp;            @RequestParam(name = &quot;categoriaProblematica&quot;, required = true) String problemCategory,
+<i class="no-highlight">471</i>&nbsp;            @RequestParam(name = &quot;descrizioneProblematica&quot;, required = true) String problemDescription,
+<i class="no-highlight">472</i>&nbsp;            @RequestParam(name = &quot;dataNascita&quot;, required = true) String birthDate,
+<i class="no-highlight">473</i>&nbsp;            @RequestParam(name = &quot;medico&quot;, required = true) String medicID,
+<i class="no-highlight">474</i>&nbsp;            @RequestParam(name = &quot;pericoloso&quot;, defaultValue = &quot;false&quot;) boolean dangerous
+<i class="no-highlight">475</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">476</i>&nbsp;        String[] parts = birthDate.split(&quot;-&quot;);</b>
+<b class="fc"><i class="no-highlight">477</i>&nbsp;        birthDate = parts[2]+&#39;/&#39;+parts[1]+&#39;/&#39;+parts[0];</b>
+<i class="no-highlight">478</i>&nbsp;
+<b class="fc"><i class="no-highlight">479</i>&nbsp;        Patient patient = patientRepository.findById(patientID);</b>
+<b class="fc"><i class="no-highlight">480</i>&nbsp;        if(patient != null){</b>
+<b class="fc"><i class="no-highlight">481</i>&nbsp;            patient.setFirstname(firstname);</b>
+<b class="fc"><i class="no-highlight">482</i>&nbsp;            patient.setLastname(lastname);</b>
+<b class="fc"><i class="no-highlight">483</i>&nbsp;            patient.setCf(cf);</b>
+<b class="fc"><i class="no-highlight">484</i>&nbsp;            patient.setCityOfResidence(cityOfResidence);</b>
+<b class="fc"><i class="no-highlight">485</i>&nbsp;            patient.setProblemCategory(problemCategory);</b>
+<b class="fc"><i class="no-highlight">486</i>&nbsp;            patient.setProblemDescription(problemDescription);</b>
+<b class="fc"><i class="no-highlight">487</i>&nbsp;            patient.setBirthDate(birthDate);</b>
+<b class="fc"><i class="no-highlight">488</i>&nbsp;            patient.setMedic(medicRepository.findById(Long.parseLong(medicID)));</b>
+<b class="fc"><i class="no-highlight">489</i>&nbsp;            patient.setDangerous(dangerous);</b>
+<i class="no-highlight">490</i>&nbsp;
+<b class="fc"><i class="no-highlight">491</i>&nbsp;            Request request = requestRepository.findByPatientPatientID(patientID);</b>
+<b class="fc"><i class="no-highlight">492</i>&nbsp;            if(request!=null) {</b>
+<b class="fc"><i class="no-highlight">493</i>&nbsp;                request.setActive(false);</b>
+<b class="fc"><i class="no-highlight">494</i>&nbsp;                requestRepository.save(request);</b>
+<i class="no-highlight">495</i>&nbsp;            }
+<i class="no-highlight">496</i>&nbsp;
+<b class="fc"><i class="no-highlight">497</i>&nbsp;            patientRepository.save(patient);</b>
+<b class="fc"><i class="no-highlight">498</i>&nbsp;            return &quot;redirect:/paziente/&quot; + patientID;</b>
+<i class="no-highlight">499</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">500</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">501</i>&nbsp;        }
+<i class="no-highlight">502</i>&nbsp;    }
+<i class="no-highlight">503</i>&nbsp;
+<i class="no-highlight">504</i>&nbsp;    /*  ROUTE: /modifica-appuntamento/{idAppuntamento}
+<i class="no-highlight">505</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">506</i>&nbsp;     *  DESC: Form modifica appuntamento
+<i class="no-highlight">507</i>&nbsp;     *  PARAMS: idAppuntamento è l&#39;id dell&#39;appuntamento
+<i class="no-highlight">508</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">509</i>&nbsp;     */
+<i class="no-highlight">510</i>&nbsp;    @RequestMapping(value = &quot;/modifica-appuntamento/{idAppuntamento}&quot;, method = RequestMethod.GET)
+<i class="no-highlight">511</i>&nbsp;    public String formEditAppointment(
+<i class="no-highlight">512</i>&nbsp;            @PathVariable(name = &quot;idAppuntamento&quot;) long appointmentID,
+<i class="no-highlight">513</i>&nbsp;            Model model
+<i class="no-highlight">514</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">515</i>&nbsp;        Appointment appointment = appointmentRepository.findById(appointmentID);</b>
+<b class="fc"><i class="no-highlight">516</i>&nbsp;        if(appointment != null){</b>
+<b class="fc"><i class="no-highlight">517</i>&nbsp;            model.addAttribute(&quot;appointment&quot;, appointment);</b>
+<b class="fc"><i class="no-highlight">518</i>&nbsp;            model.addAttribute(&quot;nuovo&quot;, false);</b>
+<i class="no-highlight">519</i>&nbsp;
+<b class="fc"><i class="no-highlight">520</i>&nbsp;            return &quot;appointments/form_appuntamento&quot;;</b>
+<i class="no-highlight">521</i>&nbsp;        }
+<i class="no-highlight">522</i>&nbsp;        else {
+<b class="nc"><i class="no-highlight">523</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">524</i>&nbsp;        }
+<i class="no-highlight">525</i>&nbsp;    }
+<i class="no-highlight">526</i>&nbsp;
+<i class="no-highlight">527</i>&nbsp;    /*  ROUTE: /modifica-appuntamento/{idAppuntamento}
+<i class="no-highlight">528</i>&nbsp;     *  METHOD: dovrebbe essere PUT, ma i form HTML permettono solo GET e POST
+<i class="no-highlight">529</i>&nbsp;     *  DESC: Modifica di un appuntamento
+<i class="no-highlight">530</i>&nbsp;     *  PARAMS: idAppuntamento è l&#39;id dell&#39;appuntamento
+<i class="no-highlight">531</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">532</i>&nbsp;     */
+<i class="no-highlight">533</i>&nbsp;    @RequestMapping(value = &quot;/modifica-appuntamento/{idAppuntamento}&quot;, method = RequestMethod.POST)
+<i class="no-highlight">534</i>&nbsp;    public String editAppointment(
+<i class="no-highlight">535</i>&nbsp;            @PathVariable(name = &quot;idAppuntamento&quot;) long appointmentID,
+<i class="no-highlight">536</i>&nbsp;            @RequestParam(name = &quot;medic&quot;, required = false) String medicID,
+<i class="no-highlight">537</i>&nbsp;            @RequestParam(name = &quot;patient&quot;, required = false) String patientID,
+<i class="no-highlight">538</i>&nbsp;            @RequestParam(name = &quot;clinic&quot;, required = true) String clinic,
+<i class="no-highlight">539</i>&nbsp;            @RequestParam(name = &quot;appointmentDate&quot;, required = true) String appointmentDate,
+<i class="no-highlight">540</i>&nbsp;            Model model
+<i class="no-highlight">541</i>&nbsp;    ){
+<i class="no-highlight">542</i>&nbsp;
+<b class="fc"><i class="no-highlight">543</i>&nbsp;        String[] parts = appointmentDate.split(&quot;-&quot;);</b>
+<b class="fc"><i class="no-highlight">544</i>&nbsp;        appointmentDate = parts[2]+&#39;/&#39;+parts[1]+&#39;/&#39;+parts[0];</b>
+<i class="no-highlight">545</i>&nbsp;
+<b class="fc"><i class="no-highlight">546</i>&nbsp;        Appointment appointment = appointmentRepository.findById(appointmentID);</b>
+<b class="fc"><i class="no-highlight">547</i>&nbsp;        if(appointment != null){</b>
+<b class="fc"><i class="no-highlight">548</i>&nbsp;            appointment.setClinic(clinic);</b>
+<b class="fc"><i class="no-highlight">549</i>&nbsp;            appointment.setAppointmentDate(appointmentDate);</b>
+<b class="fc"><i class="no-highlight">550</i>&nbsp;            appointmentRepository.save(appointment);</b>
+<b class="fc"><i class="no-highlight">551</i>&nbsp;            return &quot;redirect:/appuntamento/&quot; + appointmentID;</b>
+<i class="no-highlight">552</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">553</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">554</i>&nbsp;        }
+<i class="no-highlight">555</i>&nbsp;    }
+<i class="no-highlight">556</i>&nbsp;
+<i class="no-highlight">557</i>&nbsp;    /*  ROUTE: /elimina-appuntamento/{idAppuntamento}
+<i class="no-highlight">558</i>&nbsp;     *  METHOD: dovrebbe essere DELETE, ma i form HTML permettono solo GET e POST
+<i class="no-highlight">559</i>&nbsp;     *  DESC: Eliminazione di un appuntamento
+<i class="no-highlight">560</i>&nbsp;     *  PARAMS: idAppuntamento è l&#39;id dell&#39;appuntamento
+<i class="no-highlight">561</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">562</i>&nbsp;     */
+<i class="no-highlight">563</i>&nbsp;    @RequestMapping(value = &quot;/elimina-appuntamento/{idAppuntamento}&quot;, method = RequestMethod.GET)
+<i class="no-highlight">564</i>&nbsp;    public String deleteAppointment(
+<i class="no-highlight">565</i>&nbsp;            @PathVariable(name = &quot;idAppuntamento&quot;) long appointmentID,
+<i class="no-highlight">566</i>&nbsp;            Model model
+<i class="no-highlight">567</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">568</i>&nbsp;        Appointment appointment = appointmentRepository.findById(appointmentID);</b>
+<b class="fc"><i class="no-highlight">569</i>&nbsp;        if(appointment != null){</b>
+<b class="fc"><i class="no-highlight">570</i>&nbsp;            List&lt;Communication&gt; communications = communicationRepository.findByAppointmentAppointmentID(appointmentID);</b>
+<i class="no-highlight">571</i>&nbsp;            /*communicationRepository.deleteAll(communications);
+<i class="no-highlight">572</i>&nbsp;            appointmentRepository.deleteById(appointmentID);*/
+<b class="fc"><i class="no-highlight">573</i>&nbsp;            appointment.setActive(false);</b>
+<b class="fc"><i class="no-highlight">574</i>&nbsp;            appointmentRepository.save(appointment);</b>
+<i class="no-highlight">575</i>&nbsp;
+<b class="fc"><i class="no-highlight">576</i>&nbsp;            return &quot;redirect:/appuntamenti&quot;;</b>
+<i class="no-highlight">577</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">578</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">579</i>&nbsp;        }
+<i class="no-highlight">580</i>&nbsp;    }
+<i class="no-highlight">581</i>&nbsp;
+<i class="no-highlight">582</i>&nbsp;    /*  ROUTE: /elimina-richiesta/{idRichiesta}
+<i class="no-highlight">583</i>&nbsp;     *  METHOD: dovrebbe essere DELETE, ma i form HTML permettono solo GET e POST
+<i class="no-highlight">584</i>&nbsp;     *  DESC: Eliminazione di una richiesta
+<i class="no-highlight">585</i>&nbsp;     *  PARAMS: idRichiesta è l&#39;id della richiesta
+<i class="no-highlight">586</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">587</i>&nbsp;     */
+<i class="no-highlight">588</i>&nbsp;    @RequestMapping(value = &quot;/elimina-richiesta/{idRichiesta}&quot;)
+<i class="no-highlight">589</i>&nbsp;    public String deleteRequest(
+<i class="no-highlight">590</i>&nbsp;            @PathVariable(name = &quot;idRichiesta&quot;) long requestID,
+<i class="no-highlight">591</i>&nbsp;            Model model
+<i class="no-highlight">592</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">593</i>&nbsp;        Request request = requestRepository.findById(requestID);</b>
+<b class="fc"><i class="no-highlight">594</i>&nbsp;        if(request != null){</b>
+<i class="no-highlight">595</i>&nbsp;            /*Patient patient = request.getPatient();
+<i class="no-highlight">596</i>&nbsp;            requestRepository.deleteById(requestID);
+<i class="no-highlight">597</i>&nbsp;            patientRepository.deleteById(patient.getPatientID());*/
+<b class="fc"><i class="no-highlight">598</i>&nbsp;            request.setActive(false);</b>
+<b class="fc"><i class="no-highlight">599</i>&nbsp;            requestRepository.save(request);</b>
+<b class="fc"><i class="no-highlight">600</i>&nbsp;            return &quot;redirect:/&quot;;</b>
+<i class="no-highlight">601</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">602</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">603</i>&nbsp;        }
+<i class="no-highlight">604</i>&nbsp;    }
+<i class="no-highlight">605</i>&nbsp;
+<i class="no-highlight">606</i>&nbsp;    /*  ROUTE: /nuova-comunicazione/{idAppuntamento}
+<i class="no-highlight">607</i>&nbsp;     *  METHOD: GET
+<i class="no-highlight">608</i>&nbsp;     *  DESC: Form nuova comunicazione
+<i class="no-highlight">609</i>&nbsp;     *  PARAMS: idAppuntamento è l&#39;id dell&#39;appuntamento
+<i class="no-highlight">610</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">611</i>&nbsp;     */
+<i class="no-highlight">612</i>&nbsp;    @RequestMapping(value = &quot;/nuova-comunicazione/{idAppuntamento}&quot;, method = RequestMethod.GET)
+<i class="no-highlight">613</i>&nbsp;    public String formNewCommunication(
+<i class="no-highlight">614</i>&nbsp;            @PathVariable(name = &quot;idAppuntamento&quot;) long appointmentID,
+<i class="no-highlight">615</i>&nbsp;            Model model
+<i class="no-highlight">616</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">617</i>&nbsp;        Appointment appointment = appointmentRepository.findById(appointmentID);</b>
+<b class="fc"><i class="no-highlight">618</i>&nbsp;        if(appointment != null){</b>
+<i class="no-highlight">619</i>&nbsp;
+<b class="fc"><i class="no-highlight">620</i>&nbsp;            model.addAttribute(&quot;appointment&quot;, appointment);</b>
+<b class="fc"><i class="no-highlight">621</i>&nbsp;            return &quot;communications/form_comunicazione&quot;;</b>
+<i class="no-highlight">622</i>&nbsp;
+<i class="no-highlight">623</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">624</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">625</i>&nbsp;        }
+<i class="no-highlight">626</i>&nbsp;    }
+<i class="no-highlight">627</i>&nbsp;
+<i class="no-highlight">628</i>&nbsp;    /*  ROUTE: /nuova-comunicazione/{idAppuntamento}
+<i class="no-highlight">629</i>&nbsp;     *  METHOD: POST
+<i class="no-highlight">630</i>&nbsp;     *  DESC: Inserimento nuova comunicazione
+<i class="no-highlight">631</i>&nbsp;     *  PARAMS: idAppuntamento è l&#39;id dell&#39;appuntamento
+<i class="no-highlight">632</i>&nbsp;     *  ATTRIBUTES: -
+<i class="no-highlight">633</i>&nbsp;     */
+<i class="no-highlight">634</i>&nbsp;    @RequestMapping(value = &quot;/nuova-comunicazione/{idAppuntamento}&quot;, method = RequestMethod.POST)
+<i class="no-highlight">635</i>&nbsp;    public String insertNewCommunication(
+<i class="no-highlight">636</i>&nbsp;            @PathVariable(name = &quot;idAppuntamento&quot;) long appointmentID,
+<i class="no-highlight">637</i>&nbsp;            @RequestParam(name = &quot;testoComunicazione&quot;, required = true) String communicationText,
+<i class="no-highlight">638</i>&nbsp;            @RequestParam(name = &quot;checkMedico&quot;, required = false) boolean medicCheck,
+<i class="no-highlight">639</i>&nbsp;            @RequestParam(name = &quot;checkPaziente&quot;, required = false) boolean patientCheck
+<i class="no-highlight">640</i>&nbsp;    ){
+<b class="fc"><i class="no-highlight">641</i>&nbsp;        Appointment appointment = appointmentRepository.findById(appointmentID);</b>
+<b class="fc"><i class="no-highlight">642</i>&nbsp;        if(appointment != null){</b>
+<b class="fc"><i class="no-highlight">643</i>&nbsp;            Communication communication = new Communication(appointment, dtf.format(LocalDate.now()), communicationText, medicCheck, patientCheck);</b>
+<b class="fc"><i class="no-highlight">644</i>&nbsp;            communicationRepository.save(communication);</b>
+<i class="no-highlight">645</i>&nbsp;
+<b class="fc"><i class="no-highlight">646</i>&nbsp;            return &quot;redirect:/appuntamento/&quot; + appointmentID;</b>
+<i class="no-highlight">647</i>&nbsp;        }else{
+<b class="nc"><i class="no-highlight">648</i>&nbsp;            return &quot;redirect:/?error=true&quot;;</b>
+<i class="no-highlight">649</i>&nbsp;        }
+<i class="no-highlight">650</i>&nbsp;    }
+<i class="no-highlight">651</i>&nbsp;
+<i class="no-highlight">652</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-29 16:35</div>
+</div>
+</body>
+</html>
