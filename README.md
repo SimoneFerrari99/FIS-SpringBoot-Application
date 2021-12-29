@@ -148,7 +148,7 @@ In particolare:
 - Extra: 3 test. 
 
 ### Coverage
-Il report dettagliato della coverage dei test è contenuto nel file *\MentcareApplication\Coverage\index.html* .
+Il report dettagliato della coverage dei test è contenuto nel file `\MentcareApplication\Coverage\index.html` .
 
 ## Tecnologie impiegate
 
