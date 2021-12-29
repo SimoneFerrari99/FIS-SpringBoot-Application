@@ -50,7 +50,6 @@ public class AppController {
             Patient patient3 = new Patient(medic1, "Robert", "De Niro", "RD75TO", "07/08/1943", "Verona", "Attacchi di ira", "Repentini cambio d'umore caratterizzano la persona, spesso rendendola aggressiva e pericolosa.", true);
             patientRepository.save(patient3);
 
-
             LocalDate now = LocalDate.now();
 
             Patient patient4 = new Patient(null, "Harrison", "Ford", "HF75ND", "13/07/1942", "Belluno", "", "Difficoltà nel mantenere l'attenzione, anche per brevi periodi di tempo", false);
@@ -85,6 +84,24 @@ public class AppController {
 
         }
     }
+
+    /* ROUTE: /clean-database
+     *  METHOD: GET
+     *  DESC: route temporanea di sviluppo per svuotare il database.
+     *  PARAMS: -
+     *  ATTRIBUTES: -
+     *
+    @RequestMapping("/clean-database")
+    public String cleanDatabase(){
+        requestRepository.deleteAll();
+        communicationRepository.deleteAll();
+        appointmentRepository.deleteAll();
+        patientRepository.deleteAll();
+        medicRepository.deleteAll();
+        return "redirect:/";
+    }*/
+
+    // ****************************************************************************************************************
 
     /* ROUTE: /
     *  METHOD: GET
