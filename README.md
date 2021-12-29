@@ -127,6 +127,8 @@ Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali
 
 ## Testing
 ### Test effettuati
+Sono stati scritti Unit Test e Acceptance Test, di seguito dettagliati.
+La covergate totale ammonta a 100% (92/92) sui metodi e 95% (326/341) sulle righe di codice totali.
 #### Unit Test
 Sono stati eseguiti Unit test per:
 - Models: 64 test con coverage 100% (72/72) sui metodi e 100% (102/102) sulle righe di codice totali.
@@ -134,17 +136,19 @@ Sono stati eseguiti Unit test per:
 - Utils: ******TODO******
 
 #### Acceptance Test
-Sono stati eseguiti gli Acceptance Test per gli scenari descritti in precedenza. In particolare:
-- Generale: 13 test con coverage 85% (17/20) sui metodi e 86% (204/237) sulle righe di codice totali;
+Sono stati eseguiti gli Acceptance Test per gli scenari descritti in precedenza. Inoltre, sono stati inseriti alcuni test extra utili a coprire tutti i controller.
+In particolare:
+- Generale: 16 test con coverage 100% (20/20) sui metodi e 94% (223/237) sulle righe di codice totali;
 - Scenario 1: 3 test.
 - Scenario 2: 1 test.
 - Scenario 3: 1 test.
 - Scenario 4: 3 test.
 - Scenario 5: 4 test.
 - Scenario 6: 1 test.
+- Extra: 3 test. 
 
 ### Coverage
-Il report dettagliato della coverage dei test è contenuto nel file *\MentcareApplication\coverage.html* .
+Il report dettagliato della coverage dei test è contenuto nel file *\MentcareApplication\Coverage\index.html* .
 
 ## Tecnologie impiegate
 
