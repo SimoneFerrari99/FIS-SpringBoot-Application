@@ -1,5 +1,6 @@
 package MentcareApplication.Controllers;
 
+import MentcareApplication.Controllers.Utils.*;
 import MentcareApplication.Models.*;
 import MentcareApplication.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,21 +115,8 @@ public class AppController {
             @RequestParam(name="error", required = false) boolean error,
             Model model
     ){
-
-        List<Appointment> appointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()){
-            if(a.isActive() && a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) == 0){
-                appointments.add(a);
-            }
-        }
-
-        List<Request> requests = new ArrayList<>();
-        for(Request r : requestRepository.findAll()){
-            if(r.isActive()) requests.add(r);
-        }
-
-        model.addAttribute("appointments", appointments);
-        model.addAttribute("requests", requests);
+        model.addAttribute("appointments", Utils.getTodayAppointments(appointmentRepository));
+        model.addAttribute("requests", Utils.getRequests(requestRepository));
 
         if(error) model.addAttribute("error", true);
 
@@ -143,13 +131,7 @@ public class AppController {
      */
     @RequestMapping("/medici")
     public String medics(Model model){
-
-        List<Medic> medics = new ArrayList<>();
-        for(Medic m : medicRepository.findAll()){
-            medics.add(m);
-        }
-
-        model.addAttribute("medics", medics);
+        model.addAttribute("medics", medicRepository.findAll());
         return "medics/medici";
     }
 
@@ -161,16 +143,7 @@ public class AppController {
      */
     @RequestMapping("/pazienti")
     public String patients(Model model){
-
-        List<Patient> patients = new ArrayList<>();
-        for(Patient p : patientRepository.findAll()){
-            if(p.isConfirmed()){
-                patients.add(p);
-            }
-        }
-
-        model.addAttribute("patients", patients);
-
+        model.addAttribute("patients", Utils.getPatients(patientRepository));
         return "patients/pazienti";
     }
 
@@ -182,31 +155,9 @@ public class AppController {
      */
     @RequestMapping("/appuntamenti")
     public String appointments(Model model){
-
-        List<Appointment> appointments = new ArrayList<>();
-        for(Appointment a : appointmentRepository.findAll()){
-            if(a.isActive() && a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0){
-                appointments.add(a);
-            }
-        }
-
-        appointments.sort(Comparator.comparing((Appointment a) -> LocalDate.parse(a.getAppointmentDate(), dtf)));
-
-        List<Medic> medics = new ArrayList<>();
-        for(Medic m : medicRepository.findAll()){
-            medics.add(m);
-        }
-
-        List<Patient> patients = new ArrayList<>();
-        for(Patient p : patientRepository.findAll()){
-            if(p.isConfirmed()){
-                patients.add(p);
-            }
-        }
-
-        model.addAttribute("appointments", appointments);
-        model.addAttribute("medics", medics);
-        model.addAttribute("patients", patients);
+        model.addAttribute("appointments", Utils.getFutureAppointments(appointmentRepository, true));
+        model.addAttribute("medics", medicRepository.findAll());
+        model.addAttribute("patients", Utils.getPatients(patientRepository));
 
         return "appointments/appuntamenti";
     }
@@ -223,31 +174,13 @@ public class AppController {
             Model model
     ){
         Medic medic = medicRepository.findById(medicID);
+
         if(medic != null){
-            List<Appointment> appointments = appointmentRepository.findByMedicMedicID(medicID);
-            List<Appointment> futureAppointments = new ArrayList<>();
-            List<Appointment> pastAppointments = new ArrayList<>();
-            for(Appointment a : appointments){
-                if(a.isActive()){
-                    if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
-                        futureAppointments.add(a);
-                    } else {
-                        pastAppointments.add(a);
-                    }
-                }
-            }
-
-            futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
-            pastAppointments.sort((Appointment a1, Appointment a2) -> LocalDate.parse(a2.getAppointmentDate(), dtf).compareTo(LocalDate.parse(a1.getAppointmentDate(), dtf)));
-            List<Patient> patients = patientRepository.findByMedicMedicID(medicID);
-
-
             model.addAttribute("medic", medic);
-            model.addAttribute("patients", patients);
-            model.addAttribute("futureAppointments", futureAppointments);
-            model.addAttribute("pastAppointments", pastAppointments);
+            model.addAttribute("patients", patientRepository.findByMedicMedicID(medicID));
+            model.addAttribute("futureAppointments", Utils.getAppointmentsByMedicID(appointmentRepository, medicID, false));
+            model.addAttribute("pastAppointments", Utils.getAppointmentsByMedicID(appointmentRepository, medicID, true));
             return "medics/medico";
-
         }else{
             return "redirect:/?error=true";
         }
@@ -266,28 +199,12 @@ public class AppController {
     ){
         Patient patient = patientRepository.findById(patientID);
         if(patient != null){
-            List<Appointment> appointments = appointmentRepository.findByPatientPatientID(patientID);
-            List<Appointment> futureAppointments = new ArrayList<>();
-            List<Appointment> pastAppointments = new ArrayList<>();
-            for(Appointment a : appointments){
-                if(a.isActive()){
-                    if (a.getAppointmentDateToLocalDate().compareTo(LocalDate.now()) >= 0) {
-                        futureAppointments.add(a);
-                    } else {
-                        pastAppointments.add(a);
-                    }
-                }
-            }
-
-            futureAppointments.sort(Comparator.comparing((Appointment a1) -> LocalDate.parse(a1.getAppointmentDate(), dtf)));
-            pastAppointments.sort((Appointment a1, Appointment a2) -> LocalDate.parse(a2.getAppointmentDate(), dtf).compareTo(LocalDate.parse(a1.getAppointmentDate(), dtf)));
-
             Medic medic = patient.getMedic();
 
             model.addAttribute("patient", patient);
             model.addAttribute("medic", medic);
-            model.addAttribute("futureAppointments", futureAppointments);
-            model.addAttribute("pastAppointments", pastAppointments);
+            model.addAttribute("futureAppointments", Utils.getAppointmentsByPatientID(appointmentRepository, patientID, false));
+            model.addAttribute("pastAppointments", Utils.getAppointmentsByPatientID(appointmentRepository, patientID, true));
             return "patients/paziente";
 
         }else{
@@ -310,7 +227,6 @@ public class AppController {
         if(appointment != null){
             List<Communication> communications = communicationRepository.findByAppointmentAppointmentID(appointmentID);
             communications.sort((Communication c1, Communication c2) -> ((int) c2.getCommunicationID()) - ((int) c1.getCommunicationID()));
-
 
             model.addAttribute("appointment", appointment);
             model.addAttribute("communications", communications);
@@ -338,15 +254,9 @@ public class AppController {
         if(medicID != -1){
             Medic medic = medicRepository.findById(medicID);
             if(medic != null){
-                List<Patient> patients = new ArrayList<>();
-                for(Patient p : patientRepository.findAll()){
-                    if(p.isConfirmed() && p.getMedic().getMedicID()==medicID){
-                        patients.add(p);
-                    }
-                }
                 model.addAttribute("byMedic", true);
                 model.addAttribute("medic", medic);
-                model.addAttribute("medicPatients", patients);
+                model.addAttribute("medicPatients", Utils.getPatientsByMedicID(patientRepository, medicID));
             }else{
                 error = true;
             }
@@ -382,9 +292,7 @@ public class AppController {
             @RequestParam(name = "appointmentDate", required = true) String appointmentDate,
             Model model
     ){
-
-        String[] parts = appointmentDate.split("-");
-        appointmentDate = parts[2]+'/'+parts[1]+'/'+parts[0];
+        appointmentDate = Utils.convertDateToSlash(appointmentDate);
 
         Appointment appointment = new Appointment(medicRepository.findById(Long.parseLong(medicID)), patientRepository.findById(Long.parseLong(patientID)), appointmentDate, clinic);
         appointmentRepository.save(appointment);
@@ -423,8 +331,7 @@ public class AppController {
             @RequestParam(name = "medico", required = true) String medicID,
             @RequestParam(name = "pericoloso", defaultValue = "false") boolean dangerous
     ){
-        String[] parts = birthDate.split("-");
-        birthDate = parts[2]+'/'+parts[1]+'/'+parts[0];
+        birthDate = Utils.convertDateToSlash(birthDate);
 
         Patient patient = new Patient(medicRepository.findById(Long.parseLong(medicID)), firstname, lastname, cf, birthDate, cityOfResidence, problemCategory, problemDescription, dangerous);
         patientRepository.save(patient);
@@ -473,8 +380,7 @@ public class AppController {
             @RequestParam(name = "medico", required = true) String medicID,
             @RequestParam(name = "pericoloso", defaultValue = "false") boolean dangerous
     ){
-        String[] parts = birthDate.split("-");
-        birthDate = parts[2]+'/'+parts[1]+'/'+parts[0];
+        birthDate = Utils.convertDateToSlash(birthDate);
 
         Patient patient = patientRepository.findById(patientID);
         if(patient != null){
@@ -539,9 +445,7 @@ public class AppController {
             @RequestParam(name = "appointmentDate", required = true) String appointmentDate,
             Model model
     ){
-
-        String[] parts = appointmentDate.split("-");
-        appointmentDate = parts[2]+'/'+parts[1]+'/'+parts[0];
+        appointmentDate = Utils.convertDateToSlash(appointmentDate);
 
         Appointment appointment = appointmentRepository.findById(appointmentID);
         if(appointment != null){
@@ -567,9 +471,6 @@ public class AppController {
     ){
         Appointment appointment = appointmentRepository.findById(appointmentID);
         if(appointment != null){
-            List<Communication> communications = communicationRepository.findByAppointmentAppointmentID(appointmentID);
-            /*communicationRepository.deleteAll(communications);
-            appointmentRepository.deleteById(appointmentID);*/
             appointment.setActive(false);
             appointmentRepository.save(appointment);
 
@@ -592,9 +493,6 @@ public class AppController {
     ){
         Request request = requestRepository.findById(requestID);
         if(request != null){
-            /*Patient patient = request.getPatient();
-            requestRepository.deleteById(requestID);
-            patientRepository.deleteById(patient.getPatientID());*/
             request.setActive(false);
             requestRepository.save(request);
             return "redirect:/";
@@ -616,10 +514,8 @@ public class AppController {
     ){
         Appointment appointment = appointmentRepository.findById(appointmentID);
         if(appointment != null){
-
             model.addAttribute("appointment", appointment);
             return "communications/form_comunicazione";
-
         }else{
             return "redirect:/?error=true";
         }
@@ -642,7 +538,6 @@ public class AppController {
         if(appointment != null){
             Communication communication = new Communication(appointment, dtf.format(LocalDate.now()), communicationText, medicCheck, patientCheck);
             communicationRepository.save(communication);
-
             return "redirect:/appuntamento/" + appointmentID;
         }else{
             return "redirect:/?error=true";
