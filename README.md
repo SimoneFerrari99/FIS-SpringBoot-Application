@@ -112,7 +112,7 @@ Un requisito importante risiede nel fatto che "*Alcuni pazienti potrebbero prese
 A tale scopo, il Model del paziente contiene un flag booleano che indica se il paziente è pericoloso o meno. Tale flag può essere gestito sia dal medico, che dal Receptionist, e, ove attivo per un paziente, farà comparire un simbolo rosso <i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i>, accanto ad ogni occorrenza del paziente, all'interno dell'intero sistema (ad esempio, nel dettaglio di un appuntamento). 
 ### 6. Traccia delle eliminazioni
 Per questioni leegali, "*si deve sempre tenere traccia delle azioni svolte dal medico all'interno della cartella clinica, le quali, in caso di eventuale indagine di polizia o revisione giudiziaria, devono poter essere estratte.*". In risposta, quindi, si è pensato di implementare le azioni di DELETE di appuntamenti/pazienti/richieste come azioni di PUT, le quali andranno semplicemente a disattivare i record coinvolti. Infatti, ogni paziente e ogni appuntamento contengono all'interno del Model un flag booleano che indica se il record è attivo o meno. A Front-End, sono visualizzati solo i dati attivi, mentre quelli disattivati sono esplusi, ma presenti a Back-End e recuperabili per eventuali estrazioni (ed utilizzabili in possibili applicazioni amministrative). 
-### 8. Funzionalità secondarie implementate
+### 7. Funzionalità secondarie implementate
 Per rendere il modulo sviluppato usabile, è stato necessario implementare ulteriori route e funzionalità all'interno del sistema.  
 In particolare, sono presenti le routes utili alla visualizzazione dei dettagli di un medico e di un paziente. Inoltre, vi sono le routes per la visualizzazione dei pazienti, degli appuntamenti e dei medici.  
 Per comodità di navigazione, inoltre, ogniqualvolta appaia il nome e cognome di un medico/paziente, effettuando un click su di esso si può accedere direttamente a maggiori dettagli.  
@@ -151,9 +151,27 @@ In particolare:
 Il report dettagliato della coverage dei test è contenuto nel file `\MentcareApplication\Coverage\index.html` .
 
 ## Tecnologie impiegate
+Lo sviluppo del progetto ha richiesto l'uso di diverse tecnologie, di seguito descritte:
+- Java: Linguaggio di programmazione utilizzato per la scrittura della business logic.
+- Spring-MVC: Framework Java impiegato per la creazione di applicazioni web secondo il pattern Model View Controller.
+- H2Database: DBMS scritto in Java eseguito in modalità "in-memory".
+- Gradle: Build Automation Tool.
+- JPA: Java Persistence API, Framework Java che si occupa dell'interazione e della persistenza dei dati nel DBMS d'appoggio.
+- Junit: Framework di Testing per applicazioni Java (Unit Test).
+- Selenium: Framework di Testing per la validazione di una applicazione Java (Acceptance Test).
+- Thymeleaf: Template engine per la renderizzazione delle Views.
+- HTML5: Linguaggio di markup per la definizione dell'interfaccia grafica.
+- Bootstrap5: Framework CSS per la definizione dello stile dell'interfaccia grafica.
+- IntelliJ IDEA: IDE di sviluppo per la parte di Backend, esecuzione dei test e calcolo della coverage.
+- Visual Studio Code: Editor di sviluppo per la prate Frontend.
+- Git  & GitHub: Sistema di controllo di versione del codice e gestore remoto di repositories. 
 
 ## Avvio del progetto
-
+Di seguito la procedura per l'avvio del progetto: 
+- Clonare la repository con `git clone https://github.com/SimoneFerrari99/MentcareApplication.git`
+- Aprire il progetto con IntelliJ IDEA
+- Nel menù di Gradle, eseguire la Task `application > bootRun`
+- Collegarsi tramite un web browser (ad es. Google Chrome) all'indirizzo `http://http://localhost:8080/`
 
 
 <link
