@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -352,6 +350,9 @@ public class AppController {
     ){
         Patient patient = patientRepository.findById(patientID);
         if(patient != null){
+
+            model.addAttribute("active", patient.isConfirmed());
+            System.out.println(patient.isConfirmed());
             model.addAttribute("patient", patient);
             model.addAttribute("medics", medicRepository.findAll());
             model.addAttribute("nuovo", false);
