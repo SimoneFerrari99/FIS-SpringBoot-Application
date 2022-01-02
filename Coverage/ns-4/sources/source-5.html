@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > PatientRepository</title>
+  <title>Coverage Report > Request</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,19 +17,104 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">MentcareApplication.Repositories</a>
+    <a href="../index.html">MentcareApplication.Models</a>
 </div>
 
-<h1>Coverage Summary for Class: PatientRepository (MentcareApplication.Repositories)</h1>
+<h1>Coverage Summary for Class: Request (MentcareApplication.Models)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
 </tr>
 <tr>
-  <td class="name">PatientRepository</td>
+  <td class="name">Request</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
 </tr>
-
+  <tr>
+    <td class="name">Request$HibernateProxy$6zsNfqwt</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$BvTRzjQN</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$DhxAD5yj</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$DQoDp5io</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$IYsR1L9x</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$MdlE2ir5</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$QuTLEkbq</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$R9vgrCnQ</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$rvGhr8uh</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$sX7KzNSu</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$ULSuf6F9</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$wtF06PJJ</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$yc6U5xwv</td>
+  </tr>
+  <tr>
+    <td class="name">Request$HibernateProxy$zh7Rg4oE</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -37,17 +122,58 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package MentcareApplication.Repositories;
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package MentcareApplication.Models;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import MentcareApplication.Models.Patient;
-<i class="no-highlight">4</i>&nbsp;import org.springframework.data.repository.CrudRepository;
-<i class="no-highlight">5</i>&nbsp;
-<i class="no-highlight">6</i>&nbsp;import java.util.List;
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;public interface PatientRepository extends CrudRepository&lt;Patient, Long&gt; {
-<i class="no-highlight">9</i>&nbsp;    Patient findById(long id);
-<i class="no-highlight">10</i>&nbsp;    List&lt;Patient&gt; findByMedicMedicID(long medicID);
-<i class="no-highlight">11</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import javax.persistence.*;
+<i class="no-highlight">4</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">5</i>&nbsp;import java.time.format.DateTimeFormatter;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;@Entity
+<i class="no-highlight">8</i>&nbsp;public class Request {
+<i class="no-highlight">9</i>&nbsp;    @Id
+<i class="no-highlight">10</i>&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<i class="no-highlight">11</i>&nbsp;    @Column(unique = true, name = &quot;REQUEST_ID&quot;)
+<i class="no-highlight">12</i>&nbsp;    private long requestID;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    @OneToOne(targetEntity = Patient.class)
+<i class="no-highlight">15</i>&nbsp;    @JoinColumn(name = &quot;PATIENT_ID&quot;)
+<i class="no-highlight">16</i>&nbsp;    private Patient patient;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    private String requestDate;
+<i class="no-highlight">19</i>&nbsp;    private boolean active;
+<i class="no-highlight">20</i>&nbsp;
+<b class="fc"><i class="no-highlight">21</i>&nbsp;    private Request(){}</b>
+<i class="no-highlight">22</i>&nbsp;
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    public Request(Patient patient, String requestDate) {</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        this.patient = patient;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        this.requestDate = requestDate;</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        this.active = true;</b>
+<i class="no-highlight">27</i>&nbsp;    }
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    public long getRequestID() {
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        return requestID;</b>
+<i class="no-highlight">31</i>&nbsp;    }
+<i class="no-highlight">32</i>&nbsp;
+<i class="no-highlight">33</i>&nbsp;    public Patient getPatient() {
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        return patient;</b>
+<i class="no-highlight">35</i>&nbsp;    }
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    public String getRequestDate() {
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        return requestDate;</b>
+<i class="no-highlight">39</i>&nbsp;    }
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;    public LocalDate getRequestDateToLocalDate() {
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        return LocalDate.parse(requestDate, DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;));</b>
+<i class="no-highlight">43</i>&nbsp;    }
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    public boolean isActive() {
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        return active;</b>
+<i class="no-highlight">47</i>&nbsp;    }
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;    public void setActive(boolean active) {
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        this.active = active;</b>
+<i class="no-highlight">51</i>&nbsp;    }
+<i class="no-highlight">52</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -74,7 +200,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-12-29 16:35</div>
+    <div style="float:right;">generated on 2022-01-02 18:21</div>
 </div>
 </body>
 </html>

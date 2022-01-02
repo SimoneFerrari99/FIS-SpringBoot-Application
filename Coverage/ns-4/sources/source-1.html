@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > CommunicationRepository</title>
+  <title>Coverage Report > Appointment</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -17,19 +17,104 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">MentcareApplication.Repositories</a>
+    <a href="../index.html">MentcareApplication.Models</a>
 </div>
 
-<h1>Coverage Summary for Class: CommunicationRepository (MentcareApplication.Repositories)</h1>
+<h1>Coverage Summary for Class: Appointment (MentcareApplication.Models)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
 </tr>
 <tr>
-  <td class="name">CommunicationRepository</td>
+  <td class="name">Appointment</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/23)
+  </span>
+</td>
 </tr>
-
+  <tr>
+    <td class="name">Appointment$HibernateProxy$4iLZkheK</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$4JvgBF2K</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$5skdn7pM</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$9YMy7eFJ</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$bixoosEU</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$cwV0DoFX</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$i7pCWO8G</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$ILAojoi6</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$ILtQoGC2</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$o8wRGGPr</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$ojkuWRdm</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$U0HkYXxt</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$uJje1JGz</td>
+  </tr>
+  <tr>
+    <td class="name">Appointment$HibernateProxy$ZZEEIJod</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/23)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -37,18 +122,110 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package MentcareApplication.Repositories;
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package MentcareApplication.Models;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import MentcareApplication.Models.Communication;
-<i class="no-highlight">4</i>&nbsp;import org.springframework.data.repository.CrudRepository;
-<i class="no-highlight">5</i>&nbsp;
-<i class="no-highlight">6</i>&nbsp;import java.util.List;
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;public interface CommunicationRepository extends CrudRepository&lt;Communication, Long&gt; {
-<i class="no-highlight">9</i>&nbsp;    Communication findById(long id);
-<i class="no-highlight">10</i>&nbsp;
-<i class="no-highlight">11</i>&nbsp;    List&lt;Communication&gt; findByAppointmentAppointmentID(long appointmentID);
-<i class="no-highlight">12</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import javax.persistence.*;
+<i class="no-highlight">4</i>&nbsp;import java.time.LocalDate;
+<i class="no-highlight">5</i>&nbsp;import java.time.format.DateTimeFormatter;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;@Entity
+<i class="no-highlight">8</i>&nbsp;public class Appointment {
+<i class="no-highlight">9</i>&nbsp;    @Id
+<i class="no-highlight">10</i>&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<i class="no-highlight">11</i>&nbsp;    @Column(unique = true, name = &quot;APPOINTMENT_ID&quot;)
+<i class="no-highlight">12</i>&nbsp;    private long appointmentID;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    @ManyToOne(targetEntity = Medic.class)
+<i class="no-highlight">15</i>&nbsp;    @JoinColumn(name = &quot;MEDIC_ID&quot;)
+<i class="no-highlight">16</i>&nbsp;    private Medic medic;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    @ManyToOne(targetEntity = Patient.class)
+<i class="no-highlight">19</i>&nbsp;    @JoinColumn(name = &quot;PATIENT_ID&quot;)
+<i class="no-highlight">20</i>&nbsp;    private Patient patient;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    private String appointmentDate;
+<i class="no-highlight">23</i>&nbsp;    private String clinic;
+<i class="no-highlight">24</i>&nbsp;    private boolean active;
+<i class="no-highlight">25</i>&nbsp;
+<b class="fc"><i class="no-highlight">26</i>&nbsp;    private Appointment(){}</b>
+<i class="no-highlight">27</i>&nbsp;
+<b class="fc"><i class="no-highlight">28</i>&nbsp;    public Appointment(Medic medic, Patient patient, String appointmentDate, String clinic) {</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        this.medic = medic;</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        this.patient = patient;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        this.appointmentDate = appointmentDate;</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        this.clinic = clinic;</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        this.active = true;</b>
+<i class="no-highlight">34</i>&nbsp;    }
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    public long getAppointmentID() {
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        return appointmentID;</b>
+<i class="no-highlight">38</i>&nbsp;    }
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    public Medic getMedic() {
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        return medic;</b>
+<i class="no-highlight">42</i>&nbsp;    }
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    public void setMedic(Medic medic) {
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        this.medic = medic;</b>
+<i class="no-highlight">46</i>&nbsp;    }
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;    public Patient getPatient() {
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        return patient;</b>
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    public void setPatient(Patient patient) {
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        this.patient = patient;</b>
+<i class="no-highlight">54</i>&nbsp;    }
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;    public String getAppointmentDate() {
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        return appointmentDate;</b>
+<i class="no-highlight">58</i>&nbsp;    }
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;    public LocalDate getAppointmentDateToLocalDate() {
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        return LocalDate.parse(appointmentDate, DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;));</b>
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    public String getAppointmentDateToDate(){
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        String[] parts = appointmentDate.split(&quot;/&quot;);</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        return parts[2]+&#39;-&#39;+parts[1]+&#39;-&#39;+parts[0];</b>
+<i class="no-highlight">67</i>&nbsp;    }
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;    public void setAppointmentDate(String appointmentDate) {
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        this.appointmentDate = appointmentDate;</b>
+<i class="no-highlight">71</i>&nbsp;    }
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;    public void setAppointmentDate(LocalDate appointmentDate) {
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        this.appointmentDate = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;).format(appointmentDate);</b>
+<i class="no-highlight">75</i>&nbsp;    }
+<i class="no-highlight">76</i>&nbsp;
+<i class="no-highlight">77</i>&nbsp;
+<i class="no-highlight">78</i>&nbsp;    public String getClinic() {
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        return clinic;</b>
+<i class="no-highlight">80</i>&nbsp;    }
+<i class="no-highlight">81</i>&nbsp;
+<i class="no-highlight">82</i>&nbsp;    public void setClinic(String clinic) {
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        this.clinic = clinic;</b>
+<i class="no-highlight">84</i>&nbsp;    }
+<i class="no-highlight">85</i>&nbsp;
+<i class="no-highlight">86</i>&nbsp;    public boolean isActive() {
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        return active;</b>
+<i class="no-highlight">88</i>&nbsp;    }
+<i class="no-highlight">89</i>&nbsp;
+<i class="no-highlight">90</i>&nbsp;    public void setActive(boolean active) {
+<b class="fc"><i class="no-highlight">91</i>&nbsp;        this.active = active;</b>
+<i class="no-highlight">92</i>&nbsp;    }
+<i class="no-highlight">93</i>&nbsp;
+<i class="no-highlight">94</i>&nbsp;    @Override
+<i class="no-highlight">95</i>&nbsp;    public String toString() {
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        return &quot;Appointment{&quot; +</b>
+<i class="no-highlight">97</i>&nbsp;                &quot;appointmentID=&quot; + appointmentID +
+<i class="no-highlight">98</i>&nbsp;                &quot;, medic=&quot; + medic +
+<i class="no-highlight">99</i>&nbsp;                &quot;, patient=&quot; + patient +
+<i class="no-highlight">100</i>&nbsp;                &quot;, appointmentDate=&quot; + appointmentDate +
+<i class="no-highlight">101</i>&nbsp;                &quot;, clinic=&#39;&quot; + clinic + &#39;\&#39;&#39; +
+<i class="no-highlight">102</i>&nbsp;                &#39;}&#39;;
+<i class="no-highlight">103</i>&nbsp;    }
+<i class="no-highlight">104</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -75,7 +252,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-12-29 16:35</div>
+    <div style="float:right;">generated on 2022-01-02 18:21</div>
 </div>
 </body>
 </html>
