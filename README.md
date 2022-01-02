@@ -128,17 +128,17 @@ Nel corso dello sviluppo del modulo sono state prese delle decisioni progettuali
 ## Testing
 ### Test effettuati
 Sono stati scritti Unit Test e Acceptance Test, di seguito dettagliati.
-La covergate totale ammonta a 100% (92/92) sui metodi e 95% (326/341) sulle righe di codice totali.
+La covergate totale ammonta a 100% (100/100) sui metodi e 95% (322/337) sulle righe di codice totali.
 #### Unit Test
 Sono stati eseguiti Unit test per:
 - Models: 64 test con coverage 100% (72/72) sui metodi e 100% (102/102) sulle righe di codice totali.
 - Repositories: 6 test con coverage 85% (17/20) sui metodi e 86% (204/237) sulle righe di codice totali;
-- Utils: ******TODO******
+- Utils: 10 test con coverage 100% (8/8) sui metodi e 100% (61/61) sulle righe di codice totali;
 
 #### Acceptance Test
 Sono stati eseguiti gli Acceptance Test per gli scenari descritti in precedenza. Inoltre, sono stati inseriti alcuni test extra utili a coprire tutti i controller.
 In particolare:
-- Generale: 16 test con coverage 100% (20/20) sui metodi e 94% (223/237) sulle righe di codice totali;
+- Generale: 16 test con coverage 100% (20/20) sui metodi e 91% (158/172) sulle righe di codice totali;
 - Scenario 1: 3 test.
 - Scenario 2: 1 test.
 - Scenario 3: 1 test.
