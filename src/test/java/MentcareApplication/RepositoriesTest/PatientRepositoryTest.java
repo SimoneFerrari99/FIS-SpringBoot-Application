@@ -1,9 +1,7 @@
 package MentcareApplication.RepositoriesTest;
 
-import MentcareApplication.Models.Appointment;
 import MentcareApplication.Models.Medic;
 import MentcareApplication.Models.Patient;
-import MentcareApplication.Repositories.AppointmentRepository;
 import MentcareApplication.Repositories.MedicRepository;
 import MentcareApplication.Repositories.PatientRepository;
 import org.junit.Before;
@@ -13,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -50,8 +46,8 @@ public class PatientRepositoryTest {
         assertEquals(patient1, patientRepository.findById(patient1.getPatientID()));
         assertEquals(patient2, patientRepository.findById(patient2.getPatientID()));
 
-        List<Patient> l1 = patientRepository.findByMedicMedicID(patient1.getPatientID());
-        List<Patient> l2 = patientRepository.findByMedicMedicID(patient2.getPatientID());
+        List<Patient> l1 = patientRepository.findByMedicMedicID(patient1.getMedic().getMedicID());
+        List<Patient> l2 = patientRepository.findByMedicMedicID(patient2.getMedic().getMedicID());
         assertEquals(l1.get(0), patient1);
         assertEquals(l2.get(0), patient2);
     }

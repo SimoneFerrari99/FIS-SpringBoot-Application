@@ -1,9 +1,6 @@
 package MentcareApplication.RepositoriesTest;
 
-import MentcareApplication.Models.Appointment;
-import MentcareApplication.Models.Communication;
 import MentcareApplication.Models.Medic;
-import MentcareApplication.Models.Patient;
 import MentcareApplication.Repositories.MedicRepository;
 import org.junit.Before;
 import org.junit.Test;

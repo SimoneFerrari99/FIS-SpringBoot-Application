@@ -116,12 +116,9 @@ public class Utils {
         return patients;
     }
 
-
-
     public static String convertDateToSlash(String originalDate){
         String[] parts = originalDate.split("-");
         return parts[2]+'/'+parts[1]+'/'+parts[0];
     }
-
 
 }

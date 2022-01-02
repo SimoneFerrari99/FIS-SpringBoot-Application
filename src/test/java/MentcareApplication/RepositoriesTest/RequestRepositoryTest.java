@@ -1,6 +1,5 @@
 package MentcareApplication.RepositoriesTest;
 
-import MentcareApplication.Models.Appointment;
 import MentcareApplication.Models.Patient;
 import MentcareApplication.Models.Request;
 import MentcareApplication.Repositories.PatientRepository;
@@ -14,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
