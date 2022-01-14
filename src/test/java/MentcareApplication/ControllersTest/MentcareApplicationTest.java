@@ -1,17 +1,15 @@
 package MentcareApplication.ControllersTest;
 
+import MentcareApplication.ControllersTest.PageObjects.*;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -59,288 +57,243 @@ public class MentcareApplicationTest {
     @Test
     public void scenario1_MoreDetils() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
-        WebElement moreDetails = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
-        moreDetails.click();
-        String title1 = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("DETTAGLI APPUNTAMENTO", title1);
+        AppointmentPage appointmentPage = homePage.navigateToMoreAppointmentDetails();
+
+        String confirmationAppointmentHeader = appointmentPage.getConfirmationHeader();
+        assertEquals("DETTAGLI APPUNTAMENTO", confirmationAppointmentHeader);
     }
 
     @Test
-    @DirtiesContext
     public void scenario1_EditAppointment() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
-        WebElement edit = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[2]"));
-        edit.click();
-        String title = driver.findElement(By.xpath("//span[contains(text(),'MODIFICA APPUNTAMENTO')]")).getText();
-        assertEquals("MODIFICA APPUNTAMENTO", title);
+        FormAppointmentPage formAppointmentPage = homePage.navigateToEditAppointmentDetails();
+
+        String confirmationFormAppointmentHeader = formAppointmentPage.getConfirmationHeader();
+        assertEquals("MODIFICA APPUNTAMENTO", confirmationFormAppointmentHeader);
     }
 
     @Test
     public void scenario1_AllAppoitments() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
-        WebElement all = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/a[1]"));
-        all.click();
-        String title = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("APPUNTAMENTI", title);
+        AllAppointmentsPage allAppointmentsPage = homePage.navigateToAllAppointments();
+
+        String confirmationAllAppointmentsHeader = allAppointmentsPage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI", confirmationAllAppointmentsHeader);
     }
 
     @Test
     @DirtiesContext
     public void scenario2_AcceptNewRequest() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante di accettazione
-        WebElement accept = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/a[1]"));
-        accept.click();
+        FormPatientPage formPatientPage = homePage.acceptNewRequest();
 
-        String title = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("Harrison Ford", title);
+        String confirmationEditPatientHeader = formPatientPage.getConfirmationHeader();
+        assertEquals("Harrison Ford", confirmationEditPatientHeader);
 
-        // Inserimento medico
-        WebElement medic = driver.findElement(By.xpath("//select[@id='medic']"));
-        medic.sendKeys("1");
+        // Inserimento medico e categoria
+        formPatientPage.setMedicInput("1");
+        formPatientPage.setProblemCategoryInput("Categoria di Test");
 
         // Submit del form
-        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
-        submitButton.submit();
+        PatientPage patientPage = formPatientPage.submitPatientFormRedirectToPatientPage();
 
         // Controllo della pagina d'arrivo
-        String patient = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("Harrison Ford", patient);
-
+        String confirmationPatientHeader = patientPage.getConfirmationHeader();
+        assertEquals("Harrison Ford", confirmationPatientHeader);
     }
 
     @Test
     @DirtiesContext
     public void scenario3_newPatient() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
+        NavBarObject navBarObject = new NavBarObject(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante pazienti
-        /*WebElement patientsButton = driver.findElement(By.xpath("//a[contains(text(),'Pazienti')]"));
-        patientsButton.click();*/
-        driver.navigate().to("http://localhost:8080/pazienti/");
+        AllPatientsPage allPatientsPage = navBarObject.navigateToPatientsPage();
 
-        String patientsTitle = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("PAZIENTI", patientsTitle);
+        String confirmationPatientsHeader = allPatientsPage.getConfirmationHeader();
+        assertEquals("PAZIENTI", confirmationPatientsHeader);
 
         // Click pulsante nuovo paziente
-        WebElement newPatientButton = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/a[1]"));
-        newPatientButton.click();
+        FormPatientPage formPatientPage = allPatientsPage.navigateToNewPatientPage();
 
-        String newPatientPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("NUOVO PAZIENTE", newPatientPageTitle);
+        String confirmationFormPatientHeader = formPatientPage.getConfirmationHeader();
+        assertEquals("NUOVO PAZIENTE", confirmationFormPatientHeader);
 
         // Inserimento Nome, cognome, CF, Residenza, Categoria, Problematica, Data Nascita, Medico
-        WebElement name = driver.findElement(By.xpath("//input[@id='nome']"));
-        name.sendKeys("Simone");
-
-        WebElement lastname = driver.findElement(By.xpath("//input[@id='cognome']"));
-        lastname.sendKeys("Ferrari");
-
-        WebElement cf = driver.findElement(By.xpath("//input[@id='codiceFiscale']"));
-        cf.sendKeys("SF99EI");
-
-        WebElement residence = driver.findElement(By.xpath("//input[@id='residenza']"));
-        residence.sendKeys("Venezia");
-
-        WebElement problemCategory = driver.findElement(By.xpath("//input[@id='categoria']"));
-        problemCategory.sendKeys("Problema");
-
-        WebElement problemDescription = driver.findElement(By.xpath("//input[@id='categoria']"));
-        problemDescription.sendKeys("Descrizione Problema");
-
-        WebElement birthDate = driver.findElement(By.xpath("//input[@id='dataNascita']"));
-        birthDate.sendKeys("09/06/1999");
-
-        WebElement medic = driver.findElement(By.xpath("//select[@id='medic']"));
-        medic.sendKeys("1");
+        formPatientPage.setNameInput("Simone");
+        formPatientPage.setLastnameInput("Ferrari");
+        formPatientPage.setCfInput("SF99EI");
+        formPatientPage.setResidenceInput("Venezia");
+        formPatientPage.setProblemCategoryInput("Problema");
+        formPatientPage.setProblemDescriptionInput("Descrizione Problema");
+        formPatientPage.setBirthDateInput("09/06/1999");
+        formPatientPage.setMedicInput("1");
 
         // Submit del form
-        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
-        submitButton.submit();
+        AllPatientsPage allPatientsPage1 = formPatientPage.submitPatientFormRedirectToAllPatientsPage();
 
         // Controllo redirect alla pagina pazienti
-        String patientsTitle2 = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("PAZIENTI", patientsTitle2);
+        String confirmationPatientHeader = allPatientsPage1.getConfirmationHeader();
+        assertEquals("PAZIENTI", confirmationPatientHeader);
 
         // Controllo presenza nuovo paziente
-        String patientCF = driver.findElement(By.xpath("//th[contains(text(),'SF99EI')]")).getText();
-        assertEquals("SF99EI", patientCF);
+        assertEquals("SF99EI", allPatientsPage1.findPatientByCf("SF99EI"));
     }
 
     @Test
     @DirtiesContext
-    public void scenario4_newAppointmentFromAppointmentsPage() {
+    public void scenario4_newAppointmentFromAppointmentsPage(){
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
+        NavBarObject navBarObject = new NavBarObject(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante appuntamenti
-        /*WebElement appointmentsButton = driver.findElement(By.xpath("//a[contains(text(),'Appuntamenti')]"));
-        appointmentsButton.click();*/
-        driver.navigate().to("http://localhost:8080/appuntamenti/");
+        AllAppointmentsPage allAppointmentsPage = navBarObject.navigateToAppointmentsPage();
 
         // Pagina appuntamenti
-        String appointentsPageTitle = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("APPUNTAMENTI", appointentsPageTitle);
+        String confirmationAllAppointmentsHeader = allAppointmentsPage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI", confirmationAllAppointmentsHeader);
 
         // Click pulsante nuovo appuntamento
-        WebElement newAppointmentButton = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[2]/a[1]"));
-        newAppointmentButton.click();
+        allAppointmentsPage.clickNewAppointmentPage();
+        FormAppointmentPage formAppointmentPage = allAppointmentsPage.clickFromMedicButton();
 
-        WebElement fromMedicButton = driver.findElement(By.xpath("//body/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/form[1]/button[1]"));
-        fromMedicButton.submit();
-
-        String newAppointmentPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("NUOVO APPUNTAMENTO", newAppointmentPageTitle);
+        String confirmationFormAppointmentHeader = formAppointmentPage.getConfirmationHeader();
+        assertEquals("NUOVO APPUNTAMENTO", confirmationFormAppointmentHeader);
 
         // Inserimento Paziente, Clinica, Data
-        WebElement patient = driver.findElement(By.xpath("//select[@id='patient']"));
-        patient.sendKeys("1");
-
-        WebElement clinic = driver.findElement(By.xpath("//input[@id='clinic']"));
-        clinic.sendKeys("ClinicaDiProva");
-
-        WebElement appointmentDateForm = driver.findElement(By.xpath("//input[@id='appointmentDate']"));
-        appointmentDateForm.sendKeys(dtf.format(LocalDate.now()));
-
-        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
-        submitButton.submit();
+        formAppointmentPage.setPatientInput("1");
+        formAppointmentPage.setClinicInput("ClinicaDiProva");
+        formAppointmentPage.setAppointmentDateInput(dtf.format(LocalDate.now()));
+        AllAppointmentsPage allAppointmentsPage1 = formAppointmentPage.submitPatientForm();
 
         // Controllo redirect a pagina appuntamenti e presenza nuovo appuntamento
-        String appointmentsPageTitle2 = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("APPUNTAMENTI", appointmentsPageTitle2);
+        String confirmationAllAppointments1Header = allAppointmentsPage1.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI", confirmationAllAppointments1Header);
 
-        String newAppointmentByClinic = driver.findElement(By.xpath("//td[contains(text(),'ClinicaDiProva')]")).getText();
-        assertEquals("ClinicaDiProva", newAppointmentByClinic);
+        assertEquals("ClinicaDiProva", allAppointmentsPage1.findAppointmentByClinic("ClinicaDiProva"));
     }
 
     @Test
     @DirtiesContext
     public void scenario4_newAppointmentFromMedicPage() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
+        NavBarObject navBarObject = new NavBarObject(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante medici
-        /*WebElement medicsButton = driver.findElement(By.xpath("//a[contains(text(),'Medici')]"));
-        medicsButton.click();*/
-        driver.navigate().to("http://localhost:8080/medici/");
+        AllMedicsPage allMedicsPage = navBarObject.navigateToMedicsPage();
 
         // Pagina medici
-        String medicsPageTitle = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]")).getText();
-        assertEquals("MEDICI", medicsPageTitle);
+        String confirmationMedicsHeader = allMedicsPage.getConfirmationHeader();
+        assertEquals("MEDICI", confirmationMedicsHeader);
 
         // Click pulsante dettaglio medico
-        WebElement medicDetailsButton = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/a[1]"));
-        medicDetailsButton.click();
+        MedicPage medicPage = allMedicsPage.navigateToMoreMedicDetails();
 
-        String medicPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("Dott. BRAD PITT", medicPageTitle);
+        String confirmationMedicHeader = medicPage.getConfirmationHeader();
+        assertEquals("Dott. BRAD PITT", confirmationMedicHeader);
 
         // Click aggiunta appuntamento
-        WebElement newAppointmentButton = driver.findElement(By.xpath("//body/div[2]/div[4]/div[1]/div[1]/div[1]/div[2]/form[1]/button[1]"));
-        newAppointmentButton.click();
+        FormAppointmentPage formAppointmentPage = medicPage.navigateToNewAppointmentPage();
 
-        String newAppointmentPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("NUOVO APPUNTAMENTO", newAppointmentPageTitle);
+        String confirmationFormAppointmentHeader = formAppointmentPage.getConfirmationHeader();
+        assertEquals("NUOVO APPUNTAMENTO", confirmationFormAppointmentHeader);
 
         // Inserimento Paziente, Clinica, Data
-        WebElement patient = driver.findElement(By.xpath("//select[@id='patient']"));
-        patient.sendKeys("1");
-
-        WebElement clinic = driver.findElement(By.xpath("//input[@id='clinic']"));
-        clinic.sendKeys("ClinicaDiProva");
-
-        WebElement appointmentDateForm = driver.findElement(By.xpath("//input[@id='appointmentDate']"));
-        appointmentDateForm.sendKeys(dtf.format(LocalDate.now()));
-
-        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
-        submitButton.submit();
+        formAppointmentPage.setPatientInput("1");
+        formAppointmentPage.setClinicInput("ClinicaDiProva");
+        formAppointmentPage.setAppointmentDateInput(dtf.format(LocalDate.now()));
+        AllAppointmentsPage allAppointmentsPage1 = formAppointmentPage.submitPatientForm();
 
         // Controllo redirect a pagina appuntamenti e presenza nuovo appuntamento
-        String appointmentsPageTitle2 = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("APPUNTAMENTI", appointmentsPageTitle2);
+        String confirmationAllAppointments1Header = allAppointmentsPage1.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI", confirmationAllAppointments1Header);
 
-        String newAppointmentByClinic = driver.findElement(By.xpath("//td[contains(text(),'ClinicaDiProva')]")).getText();
-        assertEquals("ClinicaDiProva", newAppointmentByClinic);
+        assertEquals("ClinicaDiProva", allAppointmentsPage1.findAppointmentByClinic("ClinicaDiProva"));
     }
 
     @Test
     @DirtiesContext
     public void scenario4_newAppointmentFromPatientPage() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
+        NavBarObject navBarObject = new NavBarObject(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante pazienti
-        /*WebElement patientsButton = driver.findElement(By.xpath("//a[contains(text(),'Medici')]"));
-        patientsButton.click();*/
-        driver.navigate().to("http://localhost:8080/pazienti/");
+        AllPatientsPage allPatientsPage = navBarObject.navigateToPatientsPage();
 
         // Pagina pazienti
-        String patientsPageTitle = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("PAZIENTI", patientsPageTitle);
+        String confirmationPatientsHeader = allPatientsPage.getConfirmationHeader();
+        assertEquals("PAZIENTI", confirmationPatientsHeader);
 
         // Click pulsante dettaglio paziente
-        WebElement patientDetailsButton = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
-        patientDetailsButton.click();
+        PatientPage patientPage = allPatientsPage.navigateToMorePatientsDetails();
 
-        String patientPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("Johnny Depp", patientPageTitle);
+        String confirmationPatientHeader = patientPage.getConfirmationHeader();
+        assertEquals("Johnny Depp", confirmationPatientHeader);
 
         // Click aggiunta appuntamento
-        WebElement newAppointmentButton = driver.findElement(By.xpath("//body/div[2]/div[4]/div[1]/div[2]/form[1]/button[1]"));
-        newAppointmentButton.click();
+        FormAppointmentPage formAppointmentPage = patientPage.navigateToNewAppointmentPage();
 
-        String newAppointmentPageTitle = driver.findElement(By.xpath("//body[1]/div[2]/div[1]/div[1]")).getText();
-        assertEquals("NUOVO APPUNTAMENTO", newAppointmentPageTitle);
+        String confirmationFormAppointmentHeader = formAppointmentPage.getConfirmationHeader();
+        assertEquals("NUOVO APPUNTAMENTO", confirmationFormAppointmentHeader);
 
-        // Inserimento Clinica, Data
-        WebElement clinic = driver.findElement(By.xpath("//input[@id='clinic']"));
-        clinic.sendKeys("ClinicaDiProva");
-
-        WebElement appointmentDateForm = driver.findElement(By.xpath("//input[@id='appointmentDate']"));
-        appointmentDateForm.sendKeys(dtf.format(LocalDate.now()));
-
-        WebElement submitButton = driver.findElement(By.xpath("//body/div[2]/div[2]/form[1]/div[1]/div[2]/div[1]/div[1]/button[1]"));
-        submitButton.submit();
+        // Inserimento Paziente, Clinica, Data
+        formAppointmentPage.setPatientInput("1");
+        formAppointmentPage.setClinicInput("ClinicaDiProva");
+        formAppointmentPage.setAppointmentDateInput(dtf.format(LocalDate.now()));
+        AllAppointmentsPage allAppointmentsPage1 = formAppointmentPage.submitPatientForm();
 
         // Controllo redirect a pagina appuntamenti e presenza nuovo appuntamento
-        String appointmentsPageTitle2 = driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]")).getText();
-        assertEquals("APPUNTAMENTI", appointmentsPageTitle2);
+        String confirmationAllAppointments1Header = allAppointmentsPage1.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI", confirmationAllAppointments1Header);
 
-        String newAppointmentByClinic = driver.findElement(By.xpath("//td[contains(text(),'ClinicaDiProva')]")).getText();
-        assertEquals("ClinicaDiProva", newAppointmentByClinic);
+        assertEquals("ClinicaDiProva", allAppointmentsPage1.findAppointmentByClinic("ClinicaDiProva"));
     }
 
     @Test
     public void scenario5_appointmentDetailsFromHome() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante maggiori dettagli di un appuntamento
         WebElement moreDetails = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
@@ -355,9 +308,10 @@ public class MentcareApplicationTest {
     @DirtiesContext
     public void scenario5_appointmentDetailsFromAppointments() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante appuntamenti
         /*WebElement appointmentsButton = driver.findElement(By.xpath("//a[contains(text(),'Appuntamenti')]"));
@@ -381,9 +335,10 @@ public class MentcareApplicationTest {
     @DirtiesContext
     public void scenario5_appointmentDetailsFromPatient() throws InterruptedException {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante pazienti
         /*WebElement patientsButton = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/nav[1]/div[1]/div[1]/ul[1]/li[2]"));
@@ -414,9 +369,10 @@ public class MentcareApplicationTest {
     @Test
     public void scenario5_appointmentDetailsFromMedic() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante medici
         /*WebElement medicButton = driver.findElement(By.xpath("//a[contains(text(),'Medici')]"));
@@ -447,9 +403,10 @@ public class MentcareApplicationTest {
     @DirtiesContext
     public void scenario6_newCommunication() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante maggiori dettagli di un appuntamento
         WebElement moreDetails = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
@@ -489,9 +446,10 @@ public class MentcareApplicationTest {
     @DirtiesContext
     public void extra1_editAppointment() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click modifica appuntamento
         WebElement edit = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[2]"));
@@ -524,9 +482,10 @@ public class MentcareApplicationTest {
     @DirtiesContext
     public void extra2_deleteAppointment() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click maggiori dettagli appuntamento
         WebElement moreDetails = driver.findElement(By.xpath("//tbody/tr[1]/td[4]/a[1]"));
@@ -548,9 +507,10 @@ public class MentcareApplicationTest {
     @DirtiesContext
     public void extra3_deleteRequest() {
         driver.get("http://localhost:8080/");
+        HomePage homePage = new HomePage(driver);
 
-        String todayAppointments1 = driver.findElement(By.xpath("//b[contains(text(),'APPUNTAMENTI DI OGGI')]")).getText();
-        assertEquals("APPUNTAMENTI DI OGGI", todayAppointments1);
+        String confirmationHomeHeader = homePage.getConfirmationHeader();
+        assertEquals("APPUNTAMENTI DI OGGI", confirmationHomeHeader);
 
         // Click pulsante di rifiuto
         WebElement reject = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/a[2]"));
