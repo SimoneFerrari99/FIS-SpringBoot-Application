@@ -16,6 +16,8 @@ public class AllAppointmentsPage extends PageObject{
     @FindBy(xpath="//body/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/form[1]/button[1]")
     private WebElement fromMedicButton;
 
+    @FindBy(xpath="//tbody/tr[1]/td[4]/a[1]")
+    private WebElement moreAppointmentDetailsButton;
 
     public AllAppointmentsPage(WebDriver driver) {
         super(driver);
@@ -36,5 +38,10 @@ public class AllAppointmentsPage extends PageObject{
 
     public String findAppointmentByClinic(String clinic){
         return driver.findElement(By.xpath(String.format("//td[contains(text(),'%s')]", clinic))).getText();
+    }
+
+    public AppointmentPage navigateToMoreAppointmentDetails() {
+        moreAppointmentDetailsButton.click();
+        return new AppointmentPage(driver);
     }
 }

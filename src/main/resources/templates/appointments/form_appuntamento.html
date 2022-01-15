@@ -27,7 +27,9 @@
 		<div class="container-lg">
 			<div class="d-flex justify-content-center pb-3 fw-bold fs-4">
 				<div th:if="${nuovo == false}"><span>MODIFICA APPUNTAMENTO</span> ID: <b th:text="${appointment.appointmentID}">ID</b></div>
-				<div th:if="${nuovo == true}"><b>NUOVO APPUNTAMENTO</b></div>
+				<div th:if="${nuovo == true}">
+					<span><b>NUOVO APPUNTAMENTO</b></span>
+				</div>
 			</div>
 
 			<div class="card">

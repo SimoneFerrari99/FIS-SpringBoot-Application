@@ -41,9 +41,14 @@ public class FormAppointmentPage extends PageObject{
         appointmentDateInput.sendKeys(appointmentDate);
     }
 
-    public AllAppointmentsPage submitPatientForm(){
+    public AllAppointmentsPage submitPatientFormRedirectToAllAppointmentsPage(){
         submitFormButton.submit();
         return new AllAppointmentsPage(driver);
+    }
+
+    public AppointmentPage submitPatientFormRedirectToAppointmentPage(){
+        submitFormButton.submit();
+        return new AppointmentPage(driver);
     }
 
 }

@@ -1,5 +1,6 @@
 package MentcareApplication.ControllersTest.PageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +21,9 @@ public class HomePage extends PageObject{
 
     @FindBy(xpath="//tbody/tr[1]/td[3]/a[1]")
     private WebElement acceptNewRequestButton;
+
+    @FindBy(xpath="//tbody/tr[1]/td[3]/a[2]")
+    private WebElement rejectNewRequestButton;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -47,7 +51,15 @@ public class HomePage extends PageObject{
 
     public FormPatientPage acceptNewRequest(){
         acceptNewRequestButton.click();
-
         return new FormPatientPage(driver);
+    }
+
+    public HomePage RejectNewRequest(){
+        rejectNewRequestButton.click();
+        return new HomePage(driver);
+    }
+
+    public WebElement findDeletedElement(String s) {
+        return driver.findElement(By.xpath(s));
     }
 }
