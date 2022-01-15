@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > MedicRepository</title>
+  <title>Coverage Report > AppointmentRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,14 +20,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">MentcareApplication.Repositories</a>
 </div>
 
-<h1>Coverage Summary for Class: MedicRepository (MentcareApplication.Repositories)</h1>
+<h1>Coverage Summary for Class: AppointmentRepository (MentcareApplication.Repositories)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">MedicRepository</td>
+  <td class="name">AppointmentRepository</td>
 </tr>
 
 </table>
@@ -39,12 +39,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package MentcareApplication.Repositories;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import MentcareApplication.Models.Medic;
+<i class="no-highlight">3</i>&nbsp;import MentcareApplication.Models.Appointment;
 <i class="no-highlight">4</i>&nbsp;import org.springframework.data.repository.CrudRepository;
 <i class="no-highlight">5</i>&nbsp;
-<i class="no-highlight">6</i>&nbsp;public interface MedicRepository extends CrudRepository&lt;Medic, Long&gt; {
-<i class="no-highlight">7</i>&nbsp;    Medic findById(long id);
-<i class="no-highlight">8</i>&nbsp;}
+<i class="no-highlight">6</i>&nbsp;import java.util.List;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;public interface AppointmentRepository extends CrudRepository&lt;Appointment, Long&gt; {
+<i class="no-highlight">9</i>&nbsp;    Appointment findById(long id);
+<i class="no-highlight">10</i>&nbsp;    List&lt;Appointment&gt; findByMedicMedicID(long id);
+<i class="no-highlight">11</i>&nbsp;    List&lt;Appointment&gt; findByPatientPatientID(long patientID);
+<i class="no-highlight">12</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -71,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-01-02 18:21</div>
+    <div style="float:right;">generated on 2022-01-15 15:58</div>
 </div>
 </body>
 </html>
