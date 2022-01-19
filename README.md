@@ -1,6 +1,7 @@
 # Progetto di Fondamenti di Ingegneria del Software
 **Simone Ferrari VR479921**
 
+_Nota: a causa delle politiche di sicurezza di GitHub, le icone CSS non sono visibili nel documento. Leggere questo file all'esterno di GitHub per visualizzare le icone dei pulsanti a cui si fa riferimento._
 ## Indice
 [1. Il sistema Mentcare](#il-sistema-mentcare)  
 [2. Ingegneria dei requisiti: scenari](#ingegneria-dei-requisiti-scenari)  
@@ -109,7 +110,7 @@ Una possibile idea, non sviluppata perchè non ritenuta di fondamentale importan
 Una possibile soluzione a "*Ne segue che il paziente (o il tutore) debba poter essere contattato da parte del medico o della segreteria con delle comunicazioni di qualsiasi genere.*" risiede nella funzionalità di invio comunicazioni, descritta anche nello Scenario 6. In questo modo, un Receptionist può sempre comunicare con medico e paziente, o eventualmente il suo tutor.
 ### 5. Pericolosità dei pazienti
 Un requisito importante risiede nel fatto che "*Alcuni pazienti potrebbero presentare delle problematiche gravi, che li renda classificabili come "pericolosi". In tal caso, l'intero staff (medico e non) deve essere sempre avvertito, in maniera tale che si possano prendere le dovute precauzioni a tutela del medico, del personale di segreteria e degli altri pazienti.*".
-A tale scopo, il Model del paziente contiene un flag booleano che indica se il paziente è pericoloso o meno. Tale flag può essere gestito sia dal medico, che dal Receptionist, e, ove attivo per un paziente, farà comparire un simbolo rosso <i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i>, accanto ad ogni occorrenza del paziente, all'interno dell'intero sistema (ad esempio, nel dettaglio di un appuntamento). 
+A tale scopo, il Model del paziente contiene un flag booleano che indica se il paziente è pericoloso o meno. Tale flag può essere gestito sia dal medico, che dal Receptionist, e, ove attivo per un paziente, farà comparire un simbolo di avvertimento rosso <i class="fas fa-exclamation-triangle text-danger" title="Pericoloso"></i>, accanto ad ogni occorrenza del paziente, all'interno dell'intero sistema (ad esempio, nel dettaglio di un appuntamento). 
 ### 6. Traccia delle eliminazioni
 Per questioni leegali, "*si deve sempre tenere traccia delle azioni svolte dal medico all'interno della cartella clinica, le quali, in caso di eventuale indagine di polizia o revisione giudiziaria, devono poter essere estratte.*". In risposta, quindi, si è pensato di implementare le azioni di DELETE di appuntamenti/pazienti/richieste come azioni di PUT, le quali andranno semplicemente a disattivare i record coinvolti. Infatti, ogni paziente e ogni appuntamento contengono all'interno del Model un flag booleano che indica se il record è attivo o meno. A Front-End, sono visualizzati solo i dati attivi, mentre quelli disattivati sono esplusi, ma presenti a Back-End e recuperabili per eventuali estrazioni (ed utilizzabili in possibili applicazioni amministrative). 
 ### 7. Funzionalità secondarie implementate
@@ -136,35 +137,36 @@ Sono stati eseguiti Unit test per:
 - Utils: 10 test con coverage 100% (8/8) sui metodi e 100% (61/61) sulle righe di codice totali;
 
 #### Acceptance Test
-Sono stati eseguiti gli Acceptance Test per gli scenari descritti in precedenza. Inoltre, sono stati inseriti alcuni test extra utili a coprire tutti i controller.
+Sono stati eseguiti gli Acceptance Test per gli scenari descritti in precedenza. Inoltre, sono stati inseriti alcuni test extra utili a coprire tutti i controller.  
 In particolare:
-- Generale: 16 test con coverage 100% (20/20) sui metodi e 91% (158/172) sulle righe di codice totali;
 - Scenario 1: 3 test.
 - Scenario 2: 1 test.
 - Scenario 3: 1 test.
 - Scenario 4: 3 test.
 - Scenario 5: 4 test.
 - Scenario 6: 1 test.
-- Extra: 3 test. 
+- Extra: 3 test.  
+
+TOTALE: 16 test con coverage 100% (20/20) sui metodi e 91% (158/172) sulle righe di codice totali;
 
 ### Coverage
 Il report dettagliato della coverage dei test è contenuto nel file `\MentcareApplication\Coverage\index.html` .
 
 ## Tecnologie impiegate
 Lo sviluppo del progetto ha richiesto l'uso di diverse tecnologie, di seguito descritte:
-- Java: Linguaggio di programmazione utilizzato per la scrittura della business logic.
-- Spring-MVC: Framework Java impiegato per la creazione di applicazioni web secondo il pattern Model View Controller.
-- H2Database: DBMS scritto in Java eseguito in modalità "in-memory".
-- Gradle: Build Automation Tool.
-- JPA: Java Persistence API, Framework Java che si occupa dell'interazione e della persistenza dei dati nel DBMS d'appoggio.
-- Junit: Framework di Testing per applicazioni Java (Unit Test).
-- Selenium: Framework di Testing per la validazione di una applicazione Java (Acceptance Test).
-- Thymeleaf: Template engine per la renderizzazione delle Views.
-- HTML5: Linguaggio di markup per la definizione dell'interfaccia grafica.
-- Bootstrap5: Framework CSS per la definizione dello stile dell'interfaccia grafica.
-- IntelliJ IDEA: IDE di sviluppo per la parte di Backend, esecuzione dei test e calcolo della coverage.
-- Visual Studio Code: Editor di sviluppo per la prate Frontend.
-- Git  & GitHub: Sistema di controllo di versione del codice e gestore remoto di repositories. 
+- **Java**: Linguaggio di programmazione utilizzato per la scrittura della business logic.
+- **Spring-MVC**: Framework Java impiegato per la creazione di applicazioni web secondo il pattern Model View Controller.
+- **H2Database**: DBMS scritto in Java eseguito in modalità "in-memory".
+- **Gradle**: Build Automation Tool.
+- **JPA**: Java Persistence API, Framework Java che si occupa dell'interazione e della persistenza dei dati nel DBMS d'appoggio.
+- **Junit**: Framework di Testing per applicazioni Java (Unit Test).
+- **Selenium**: Framework di Testing per la validazione di una applicazione Java (Acceptance Test).
+- **Thymeleaf**: Template engine per la renderizzazione delle Views.
+- **HTML5**: Linguaggio di markup per la definizione dell'interfaccia grafica.
+- **Bootstrap5**: Framework CSS per la definizione dello stile dell'interfaccia grafica.
+- **IntelliJ IDEA**: IDE di sviluppo impiegato per la parte di Backend, esecuzione dei test e calcolo della coverage.
+- **Visual Studio Code**: Editor di sviluppo impiegato per la prate Frontend.
+- **Git & GitHub**: Sistema di controllo di versione del codice e gestore remoto di repositories. 
 
 ## Avvio del progetto
 Di seguito la procedura per l'avvio del progetto: 
