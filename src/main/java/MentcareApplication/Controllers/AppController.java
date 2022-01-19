@@ -85,29 +85,11 @@ public class AppController {
         }
     }
 
-    /* ROUTE: /clean-database
-     *  METHOD: GET
-     *  DESC: route temporanea di sviluppo per svuotare il database.
-     *  PARAMS: -
-     *  ATTRIBUTES: -
-     *
-    @RequestMapping("/clean-database")
-    public String cleanDatabase(){
-        requestRepository.deleteAll();
-        communicationRepository.deleteAll();
-        appointmentRepository.deleteAll();
-        patientRepository.deleteAll();
-        medicRepository.deleteAll();
-        return "redirect:/";
-    }*/
-
-    // ****************************************************************************************************************
-
-    /* ROUTE: /
-    *  METHOD: GET
-    *  DESC: Homepage dell'applicazione web.
-    *  PARAMS: -
-    *  ATTRIBUTES: -
+    /** ROUTE: /
+    *   METHOD: GET
+    *   DESC: Homepage dell'applicazione web.
+    *   PARAMS: -
+    *   ATTRIBUTES: -
     */
     @RequestMapping("/")
     public String home(
@@ -122,11 +104,12 @@ public class AppController {
         return "home";
     }
 
-    /*  ROUTE: /medici
-     *  METHOD: GET
-     *  DESC: Lista dei medici
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /medici
+     *   METHOD: GET
+     *   DESC: Lista dei medici
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping("/medici")
     public String medics(Model model){
@@ -134,11 +117,12 @@ public class AppController {
         return "medics/medici";
     }
 
-    /*  ROUTE: /pazienti
-     *  METHOD: GET
-     *  DESC: Lista dei pazienti
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /pazienti
+     *   METHOD: GET
+     *   DESC: Lista dei pazienti
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping("/pazienti")
     public String patients(Model model){
@@ -146,11 +130,12 @@ public class AppController {
         return "patients/pazienti";
     }
 
-    /*  ROUTE: /appuntamenti
-     *  METHOD: GET
-     *  DESC: Lista degli appuntamenti
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /appuntamenti
+     *   METHOD: GET
+     *   DESC: Lista degli appuntamenti
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping("/appuntamenti")
     public String appointments(Model model){
@@ -161,11 +146,12 @@ public class AppController {
         return "appointments/appuntamenti";
     }
 
-    /*  ROUTE: /medico/{idMedico}
-     *  METHOD: GET
-     *  DESC: Dettaglio di un medico
-     *  PARAMS: idMedico è l'id del medico
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /medico/{idMedico}
+     *   METHOD: GET
+     *   DESC: Dettaglio di un medico
+     *   PARAMS: idMedico è l'id del medico
+     *   ATTRIBUTES: -
      */
     @RequestMapping("/medico/{idMedico}")
     public String medicById(
@@ -185,11 +171,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /paziente/{idPaziente}
-     *  METHOD: GET
-     *  DESC: Dettaglio di un paziente
-     *  PARAMS: idPaziente è l'id del paziente
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /paziente/{idPaziente}
+     *   METHOD: GET
+     *   DESC: Dettaglio di un paziente
+     *   PARAMS: idPaziente è l'id del paziente
+     *   ATTRIBUTES: -
      */
     @RequestMapping("/paziente/{idPaziente}")
     public String patientById(
@@ -211,11 +198,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /appuntamento/{idAppuntamento}
-     *  METHOD: GET
-     *  DESC: Dettaglio di un Appuntamento
-     *  PARAMS: idAppuntamento è l'id dell'appuntamento
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /appuntamento/{idAppuntamento}
+     *   METHOD: GET
+     *   DESC: Dettaglio di un Appuntamento
+     *   PARAMS: idAppuntamento è l'id dell'appuntamento
+     *   ATTRIBUTES: -
      */
     @RequestMapping("/appuntamento/{idAppuntamento}")
     public String appointmentById(
@@ -236,11 +224,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /nuovo-appuntamento
-     *  METHOD: GET
-     *  DESC: Form nuovo appuntamento
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /nuovo-appuntamento
+     *   METHOD: GET
+     *   DESC: Form nuovo appuntamento
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.GET)
     public String formNewAppointment(
@@ -277,11 +266,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /nuovo-appuntamento
-     *  METHOD: POST
-     *  DESC: Inserimento nuovo appuntamento
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /nuovo-appuntamento
+     *   METHOD: POST
+     *   DESC: Inserimento nuovo appuntamento
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuovo-appuntamento", method = RequestMethod.POST)
     public String insertNewAppointment(
@@ -299,11 +289,12 @@ public class AppController {
         return "redirect:/appuntamenti";
     }
 
-    /*  ROUTE: /nuovo-paziente
-     *  METHOD: GET
-     *  DESC: Form nuovo paziente
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /nuovo-paziente
+     *   METHOD: GET
+     *   DESC: Form nuovo paziente
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuovo-paziente", method = RequestMethod.GET)
     public String formNewPatient(Model model){
@@ -312,11 +303,12 @@ public class AppController {
         return "patients/form_paziente";
     }
 
-    /*  ROUTE: /nuovo-paziente
-     *  METHOD: POST
-     *  DESC: Inserimento nuovo paziente
-     *  PARAMS: -
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /nuovo-paziente
+     *   METHOD: POST
+     *   DESC: Inserimento nuovo paziente
+     *   PARAMS: -
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuovo-paziente", method = RequestMethod.POST)
     public String insertNewPatient(
@@ -338,11 +330,12 @@ public class AppController {
         return "redirect:/pazienti";
     }
 
-    /*  ROUTE: /modifica-paziente/{idPaziente}
-     *  METHOD: GET
-     *  DESC: Form modifica paziente
-     *  PARAMS: idPaziente è l'id del paziente
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /modifica-paziente/{idPaziente}
+     *   METHOD: GET
+     *   DESC: Form modifica paziente
+     *   PARAMS: idPaziente è l'id del paziente
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/modifica-paziente/{idPaziente}", method = RequestMethod.GET)
     public String formEditPatient(
@@ -363,11 +356,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /modifica-paziente/{idPaziente}
-     *  METHOD: dovrebbe essere PUT, ma i form HTML permettono solo GET e POST
-     *  DESC: Modifica di un paziente
-     *  PARAMS: idPaziente è l'id del paziente
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /modifica-paziente/{idPaziente}
+     *   METHOD: dovrebbe essere PUT, ma i form HTML permettono solo GET e POST
+     *   DESC: Modifica di un paziente
+     *   PARAMS: idPaziente è l'id del paziente
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/modifica-paziente/{idPaziente}", method = RequestMethod.POST)
     public String editPatient(
@@ -409,11 +403,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /modifica-appuntamento/{idAppuntamento}
-     *  METHOD: GET
-     *  DESC: Form modifica appuntamento
-     *  PARAMS: idAppuntamento è l'id dell'appuntamento
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /modifica-appuntamento/{idAppuntamento}
+     *   METHOD: GET
+     *   DESC: Form modifica appuntamento
+     *   PARAMS: idAppuntamento è l'id dell'appuntamento
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.GET)
     public String formEditAppointment(
@@ -432,11 +427,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /modifica-appuntamento/{idAppuntamento}
-     *  METHOD: dovrebbe essere PUT, ma i form HTML permettono solo GET e POST
-     *  DESC: Modifica di un appuntamento
-     *  PARAMS: idAppuntamento è l'id dell'appuntamento
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /modifica-appuntamento/{idAppuntamento}
+     *   METHOD: dovrebbe essere PUT, ma i form HTML permettono solo GET e POST
+     *   DESC: Modifica di un appuntamento
+     *   PARAMS: idAppuntamento è l'id dell'appuntamento
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/modifica-appuntamento/{idAppuntamento}", method = RequestMethod.POST)
     public String editAppointment(
@@ -460,11 +456,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /elimina-appuntamento/{idAppuntamento}
-     *  METHOD: dovrebbe essere DELETE, ma i form HTML permettono solo GET e POST
-     *  DESC: Eliminazione di un appuntamento
-     *  PARAMS: idAppuntamento è l'id dell'appuntamento
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /elimina-appuntamento/{idAppuntamento}
+     *   METHOD: dovrebbe essere DELETE, ma i form HTML permettono solo GET e POST
+     *   DESC: Eliminazione di un appuntamento
+     *   PARAMS: idAppuntamento è l'id dell'appuntamento
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/elimina-appuntamento/{idAppuntamento}", method = RequestMethod.GET)
     public String deleteAppointment(
@@ -482,11 +479,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /elimina-richiesta/{idRichiesta}
-     *  METHOD: dovrebbe essere DELETE, ma i form HTML permettono solo GET e POST
-     *  DESC: Eliminazione di una richiesta
-     *  PARAMS: idRichiesta è l'id della richiesta
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /elimina-richiesta/{idRichiesta}
+     *   METHOD: dovrebbe essere DELETE, ma i form HTML permettono solo GET e POST
+     *   DESC: Eliminazione di una richiesta
+     *   PARAMS: idRichiesta è l'id della richiesta
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/elimina-richiesta/{idRichiesta}")
     public String deleteRequest(
@@ -503,11 +501,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /nuova-comunicazione/{idAppuntamento}
-     *  METHOD: GET
-     *  DESC: Form nuova comunicazione
-     *  PARAMS: idAppuntamento è l'id dell'appuntamento
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /nuova-comunicazione/{idAppuntamento}
+     *   METHOD: GET
+     *   DESC: Form nuova comunicazione
+     *   PARAMS: idAppuntamento è l'id dell'appuntamento
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuova-comunicazione/{idAppuntamento}", method = RequestMethod.GET)
     public String formNewCommunication(
@@ -523,11 +522,12 @@ public class AppController {
         }
     }
 
-    /*  ROUTE: /nuova-comunicazione/{idAppuntamento}
-     *  METHOD: POST
-     *  DESC: Inserimento nuova comunicazione
-     *  PARAMS: idAppuntamento è l'id dell'appuntamento
-     *  ATTRIBUTES: -
+
+    /**  ROUTE: /nuova-comunicazione/{idAppuntamento}
+     *   METHOD: POST
+     *   DESC: Inserimento nuova comunicazione
+     *   PARAMS: idAppuntamento è l'id dell'appuntamento
+     *   ATTRIBUTES: -
      */
     @RequestMapping(value = "/nuova-comunicazione/{idAppuntamento}", method = RequestMethod.POST)
     public String insertNewCommunication(
@@ -545,5 +545,4 @@ public class AppController {
             return "redirect:/?error=true";
         }
     }
-
 }
