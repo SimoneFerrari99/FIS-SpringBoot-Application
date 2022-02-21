@@ -1,5 +1,5 @@
 # Progetto di Fondamenti di Ingegneria del Software
-**Simone Ferrari VR479921**
+**Simone Ferrari VR479921**  
 
 _Nota: a causa delle politiche di sicurezza di GitHub, le icone CSS non sono visibili nel documento. Leggere questo file all'esterno di GitHub per visualizzare le icone dei pulsanti a cui si fa riferimento._
 ## Indice
